@@ -31,6 +31,7 @@ import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.Currency;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -70,12 +71,12 @@ public class Pedido
     @NotNull
     @ManyToOne
     @JoinColumn(name = "medioPagoId")
-    private MedioPago medioPago;
+    private Mediosdepago medioPago;
 
     @NotNull
     @ManyToOne
     @JoinColumn(name = "domicilioId")
-    private Domicilio domicilio;
+    private Domicilios domicilio;
 
     @Builder.Default
     private BigDecimal totalPagarMonto = BigDecimal.ZERO;
@@ -106,13 +107,15 @@ public class Pedido
      */
     public void updateAmounts()
     {
-        price = Amount.ZERO_AMOUNT.get();
+        totalPagarMonto = BigDecimal.ZERO;
         items.forEach(it ->
         {
-            price = price.add(it.getPrice());
+            totalPagarMonto = totalPagarMonto.add(it.getPrice());
         });
-        this.totalPagarMoneda = this.price.getCurrencyCode();
-        this.totalPagarMonto = this.price.getValue();
+        this.price = Amount.builder()
+                .currency(Currency.getInstance(totalPagarMoneda))
+                .value(totalPagarMonto)
+                .build();
     }
 
     /**
@@ -124,5 +127,11 @@ public class Pedido
     {
         updateAmounts();
         return this.price;
+    }
+    
+    public BigDecimal getTotalPagarMonto()
+    {
+        updateAmounts();
+        return this.totalPagarMonto;
     }
 }

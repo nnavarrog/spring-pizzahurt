@@ -26,6 +26,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -68,10 +69,10 @@ public class Item
      * 
      * @return
      */
-    public Amount getPrice()
+    public BigDecimal getPrice()
     {
-        return tamanio.getPrice()
+        return tamanio.getPrecio()
                 .add(creacion.getPrice())
-                .multiply(cantidad);
+                .multiply(new BigDecimal(cantidad));
     }
 }
