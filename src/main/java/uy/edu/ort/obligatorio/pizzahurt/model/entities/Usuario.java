@@ -20,14 +20,18 @@
  */
 package uy.edu.ort.obligatorio.pizzahurt.model.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -84,9 +88,14 @@ public class Usuario {
     @NotNull
     private boolean activo;
 
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.PERSIST)
+    private List<Domicilios> domicilios = new ArrayList<>();
+  
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.PERSIST)
+    private List<Mediosdepago> mediosdepago = new ArrayList<>();
+
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", email=" + email + ", Nombre=" + Nombre + ", password=" + password + ", Telefono=" + Telefono + ", createDate=" + createDate + ", lstUpdate=" + lstUpdate + ", activo=" + (activo?"Si":"No") + '}';
+        return "Usuario{" + "id=" + id + ", email=" + email + ", Nombre=" + Nombre + ", password=" + password + ", Telefono=" + Telefono + ", createDate=" + createDate + ", lstUpdate=" + lstUpdate + ", activo=" + (activo ? "Si" : "No") + '}';
     }
-    
 }

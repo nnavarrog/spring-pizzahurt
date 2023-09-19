@@ -21,8 +21,10 @@
 package uy.edu.ort.obligatorio.pizzahurt.model.entities;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -62,6 +64,9 @@ public class Domicilios {
     private int apto;
 
     private String observaciones;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Usuario usuario;
 
     @Override
     public String toString() {
