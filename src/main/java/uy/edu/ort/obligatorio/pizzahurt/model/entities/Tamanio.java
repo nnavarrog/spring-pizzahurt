@@ -29,7 +29,7 @@ import lombok.Setter;
 @Setter
 @Builder
 @AllArgsConstructor
-public class Tamanio extends PizaComponent
+public class Tamanio extends PizzaComponent
 {
     
 }
