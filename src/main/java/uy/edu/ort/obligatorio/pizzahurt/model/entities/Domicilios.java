@@ -23,18 +23,13 @@ package uy.edu.ort.obligatorio.pizzahurt.model.entities;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
-import java.sql.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Getter
@@ -42,7 +37,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Usuario {
+public class Domicilios {
 
     @Id
     @GeneratedValue
@@ -50,43 +45,26 @@ public class Usuario {
 
     @NotNull
     @NotEmpty
-    @Email
-//	@Column(length = 20)
-    private String email;
+    private String barrio;
 
     @NotNull
     @NotEmpty
-    private String Nombre;
+    private String codigo_postal;
 
     @NotNull
     @NotEmpty
-//	@Column(length = 20)
-    private String password;
+    private String calle;
 
     @NotNull
     @NotEmpty
-    private String Telefono;
+    private int ndepuerta;
 
-    private String passSalt;
+    private int apto;
 
-    @NotNull
-    @NotEmpty
-    @Past
-    @CreationTimestamp
-    private Timestamp createDate;
-
-    @NotNull
-    @NotEmpty
-//    @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}_\\d{2}:\\d{2}:\\d{2}") YYYY-MM-DD_hh:mm:ss
-    @UpdateTimestamp
-    private Timestamp lstUpdate;
-
-    @NotNull
-    private boolean activo;
+    private String observaciones;
 
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", email=" + email + ", Nombre=" + Nombre + ", password=" + password + ", Telefono=" + Telefono + ", createDate=" + createDate + ", lstUpdate=" + lstUpdate + ", activo=" + (activo?"Si":"No") + '}';
+        return "Domicilios{" + "id=" + id + ", barrio=" + barrio + ", codigo_postal=" + codigo_postal + ", calle=" + calle + ", ndepuerta=" + ndepuerta + ", apto=" + apto + ", observaciones=" + observaciones + '}';
     }
-    
 }

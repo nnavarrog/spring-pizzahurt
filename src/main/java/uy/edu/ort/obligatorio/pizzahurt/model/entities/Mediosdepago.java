@@ -23,18 +23,17 @@ package uy.edu.ort.obligatorio.pizzahurt.model.entities;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
-import java.sql.Timestamp;
+import jakarta.validation.constraints.Size;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import uy.edu.ort.obligatorio.pizzahurt.constraints.creditCard;
 
 @Entity
 @Getter
@@ -42,7 +41,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Usuario {
+public class Mediosdepago {
 
     @Id
     @GeneratedValue
@@ -50,43 +49,23 @@ public class Usuario {
 
     @NotNull
     @NotEmpty
-    @Email
-//	@Column(length = 20)
-    private String email;
+    private String emisor_tarjeta;
 
     @NotNull
-    @NotEmpty
-    private String Nombre;
-
-    @NotNull
-    @NotEmpty
-//	@Column(length = 20)
-    private String password;
-
-    @NotNull
-    @NotEmpty
-    private String Telefono;
-
-    private String passSalt;
-
-    @NotNull
-    @NotEmpty
     @Past
-    @CreationTimestamp
-    private Timestamp createDate;
+    private Date fecha_de_vencimiento;
 
     @NotNull
-    @NotEmpty
-//    @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}_\\d{2}:\\d{2}:\\d{2}") YYYY-MM-DD_hh:mm:ss
-    @UpdateTimestamp
-    private Timestamp lstUpdate;
+    @Size(min = 13, max = 18)
+    @creditCard
+    private String numero_de_tarjeta;
 
     @NotNull
-    private boolean activo;
+    @Size(min = 3, max = 3)
+    private int cvv;
 
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", email=" + email + ", Nombre=" + Nombre + ", password=" + password + ", Telefono=" + Telefono + ", createDate=" + createDate + ", lstUpdate=" + lstUpdate + ", activo=" + (activo?"Si":"No") + '}';
+        return "Mediosdepago{" + "id=" + id + ", emisor_tarjeta=" + emisor_tarjeta + ", fecha_de_vencimiento=" + fecha_de_vencimiento + ", numero_de_tarjeta=" + numero_de_tarjeta + ", cvv=" + cvv + '}';
     }
-    
 }
