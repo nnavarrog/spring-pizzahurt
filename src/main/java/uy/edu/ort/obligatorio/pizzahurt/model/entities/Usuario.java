@@ -31,6 +31,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -87,12 +88,14 @@ public class Usuario {
 
     @NotNull
     private boolean activo;
-
+    
+    @Builder.Default
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.PERSIST)
-    private List<Domicilios> domicilios = new ArrayList<>();
+    private List<Domicilios> domicilios = new LinkedList<>();
   
+    @Builder.Default
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.PERSIST)
-    private List<Mediosdepago> mediosdepago = new ArrayList<>();
+    private List<Mediosdepago> mediosdepago = new LinkedList<>();
 
     @Override
     public String toString() {
