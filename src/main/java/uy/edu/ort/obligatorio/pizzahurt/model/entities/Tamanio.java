@@ -17,19 +17,21 @@ package uy.edu.ort.obligatorio.pizzahurt.model.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
+import java.math.BigDecimal;
 
 
 @Entity
 @Table(name = "tamanios")
 @Getter
 @Setter
-@Builder
-@AllArgsConstructor
-public class Tamanio extends PizzaComponent
-{
+@NoArgsConstructor
+public class Tamanio extends PizzaComponent {
+
+    @Builder
+    public Tamanio(Long id, String nombre, String descripcion, BigDecimal precio){
+        super(id,nombre,descripcion,precio);
+    }
     
 }
