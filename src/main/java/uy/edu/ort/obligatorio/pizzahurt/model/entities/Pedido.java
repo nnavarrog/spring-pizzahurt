@@ -40,6 +40,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import uy.edu.ort.obligatorio.pizzahurt.model.Amount;
 
 /**
@@ -68,12 +70,10 @@ public class Pedido
     @JoinColumn(name = "userId")
     private Usuario user;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "medioPagoId")
     private Mediosdepago medioPago;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "domicilioId")
     private Domicilios domicilio;
@@ -84,14 +84,15 @@ public class Pedido
     @NotNull
     @NotEmpty
     @Column(columnDefinition = "varchar(3) default 'UYU'")
-    private String totalPagarMoneda;
+    @Builder.Default
+    private String totalPagarMoneda = "UYU";
 
-    @NotNull
     @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
     private Date created;
 
-    @NotNull
     @Temporal(TemporalType.TIMESTAMP)
+    @UpdateTimestamp
     private Date lastUpdate;
 
     @Builder.Default

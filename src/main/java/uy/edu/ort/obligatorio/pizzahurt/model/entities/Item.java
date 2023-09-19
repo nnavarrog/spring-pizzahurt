@@ -32,7 +32,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import uy.edu.ort.obligatorio.pizzahurt.model.Amount;
 
 
 @Entity
@@ -63,6 +62,10 @@ public class Item
     @ManyToOne
     @JoinColumn(name = "tamanioId")
     private Tamanio tamanio;
+    
+    @ManyToOne
+    @JoinColumn(name = "pedidoId")
+    private Pedido pedido;
     
     /**
      * Devuelve el precio total del item
