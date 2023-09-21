@@ -27,12 +27,12 @@ import jakarta.validation.ConstraintValidatorContext;
  *
  * @author jobs
  */
-public class creditCardValidator implements ConstraintValidator<creditCard, String> {
+public class CreditCardValidator implements ConstraintValidator<CreditCard, String> {
 
     private int sum;
     
     @Override
-    public void initialize(creditCard constraintAnnotation) {
+    public void initialize(CreditCard constraintAnnotation) {
         // TODO Auto-generated method stub
     }
     

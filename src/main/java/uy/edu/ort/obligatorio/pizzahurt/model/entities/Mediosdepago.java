@@ -35,7 +35,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import uy.edu.ort.obligatorio.pizzahurt.constraints.creditCard;
+import uy.edu.ort.obligatorio.pizzahurt.constraints.CreditCard;
 
 @Entity
 @Getter
@@ -59,7 +59,7 @@ public class Mediosdepago {
 
     @NotNull
     @Size(min = 13, max = 18)
-    @creditCard
+    @CreditCard
     private String numero_de_tarjeta;
 
     @NotNull

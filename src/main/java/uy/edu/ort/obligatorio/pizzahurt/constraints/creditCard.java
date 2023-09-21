@@ -31,8 +31,8 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.CONSTRUCTOR, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Constraint(validatedBy = creditCardValidator.class)
-public @interface creditCard {
+@Constraint(validatedBy = CreditCardValidator.class)
+public @interface CreditCard {
 	
 	String message() default "La tarjeta de credito tiene formato incorrecto";
 	
