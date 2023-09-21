@@ -35,6 +35,10 @@ public class Creacion {
     @JoinTable(name = "creacion_topins" , joinColumns = @JoinColumn(name = "creacion_id") , inverseJoinColumns = @JoinColumn(name = "topin_id"))
     private List<Topins> topins;
 
+    @ManyToOne
+    @JoinColumn(name= "usuario_id")
+    private Usuario usuario;
+
 
     /**
      * Get creation total price
