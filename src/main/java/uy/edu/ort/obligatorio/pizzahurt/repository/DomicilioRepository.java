@@ -16,9 +16,9 @@
 package uy.edu.ort.obligatorio.pizzahurt.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import uy.edu.ort.obligatorio.pizzahurt.model.entities.Item;
+import uy.edu.ort.obligatorio.pizzahurt.model.entities.Domicilio;
 
-public interface DomicilioRepository extends JpaRepository<Item, Long>
+public interface DomicilioRepository extends JpaRepository<Domicilio, Long>
 {
     
 }

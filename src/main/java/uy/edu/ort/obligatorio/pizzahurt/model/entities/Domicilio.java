@@ -27,15 +27,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.Size;
-import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import uy.edu.ort.obligatorio.pizzahurt.constraints.CreditCard;
 
 @Entity
 @Getter
@@ -43,7 +39,7 @@ import uy.edu.ort.obligatorio.pizzahurt.constraints.CreditCard;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Mediosdepago {
+public class Domicilio {
 
     @Id
     @GeneratedValue
@@ -51,26 +47,29 @@ public class Mediosdepago {
 
     @NotNull
     @NotEmpty
-    private String emisor_tarjeta;
+    private String barrio;
 
     @NotNull
-    @Past
-    private Date fecha_de_vencimiento;
+    @NotEmpty
+    private String codigo_postal;
 
     @NotNull
-    @Size(min = 13, max = 18)
-    @CreditCard
-    private String numero_de_tarjeta;
+    @NotEmpty
+    private String calle;
 
     @NotNull
-    @Size(min = 3, max = 3)
-    private int cvv;
+    @NotEmpty
+    private int ndepuerta;
+
+    private int apto;
+
+    private String observaciones;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Usuario usuario;
 
     @Override
     public String toString() {
-        return "Mediosdepago{" + "id=" + id + ", emisor_tarjeta=" + emisor_tarjeta + ", fecha_de_vencimiento=" + fecha_de_vencimiento + ", numero_de_tarjeta=" + numero_de_tarjeta + ", cvv=" + cvv + '}';
+        return "Domicilios{" + "id=" + id + ", barrio=" + barrio + ", codigo_postal=" + codigo_postal + ", calle=" + calle + ", ndepuerta=" + ndepuerta + ", apto=" + apto + ", observaciones=" + observaciones + '}';
     }
 }

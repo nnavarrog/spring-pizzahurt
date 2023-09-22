@@ -69,11 +69,11 @@ public class Pedido
 
     @ManyToOne
     @JoinColumn(name = "medioPagoId")
-    private Mediosdepago medioPago;
+    private Mediodepago medioPago;
 
     @ManyToOne
     @JoinColumn(name = "domicilioId")
-    private Domicilios domicilio;
+    private Domicilio domicilio;
 
     @Builder.Default
     private BigDecimal totalPagarMonto = BigDecimal.ZERO;
