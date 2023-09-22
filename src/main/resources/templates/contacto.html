@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!-- <!-- /**
+ * NO LICENCE
+ *
+ * Proyecto obligatorio final.
+ * Curso: Desarrollo de aplicaciones con Spring / Spring Boot
+ * Universidad ORT
+ * Agosto 2023 - Octubre 2023
+ *
+ * Docente: Juan Larrayoz
+ *
+ * Authors:
+ *      Fourment, Juan
+ *      Navarro Gutérrez, Nicolás
+ *      Ortuzar, Martín
+ */ -->
+<html>
+    <head th:replace="~{base-layout :: head}"></head>
+    <body>
+        <header th:insert="~{base-layout :: header-home}"></header>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <br><br><br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 align-content-center text-center">
+                    <h1>
+                        Bienvenidos a
+                    </h1>
+                    <br>
+                    <img class="img-fluid" th:src="@{/img/Pizza_Hurt.png}" alt="logo"/>
+                </div>
+                <div class="col-lg-4"></div>
+                <div class="col-lg-4 align-content-center text-center">
+                    <div class="card">
+                        <h3>Contactanos</h3>
+                        <div class="card-body">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">@</span>
+                                <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" value="info@pizzahurt.com" disabled readonly>
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1"><i class="bi bi-whatsapp"></i></span>
+                                <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" value="+598 XX XXX XXX" disabled readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+        </div>
+
+        <footer th:replace="~{base-layout :: foot}"></footer>
+    </body>
+</html>
