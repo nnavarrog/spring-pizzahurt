@@ -35,23 +35,23 @@ public abstract class PizzaComponent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    protected Long id;
 
     @NotNull
     @NotEmpty
     @Size(min = 1, max = 90)
     @Column(length = 90)
-    private String nombre;
+    protected String nombre;
 
     @NotNull
     @NotEmpty
     @Size(min = 1, max = 300)
     @Column(length = 300)
-    private String descripcion;
+    protected String descripcion;
 
     @NotNull
     @Min(value=0)
-    private BigDecimal precio;
+    protected BigDecimal precio;
 
 
 

@@ -27,11 +27,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.Currency;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -42,7 +40,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import uy.edu.ort.obligatorio.pizzahurt.model.Amount;
 
 /**
  *
@@ -100,8 +97,6 @@ public class Pedido
     @JoinColumn(name = "pedidoId")
     private List<Item> items = new LinkedList<>();
 
-    @Transient
-    private Amount price;
 
     /**
      * Actualiza los valores del monto del pedido en función de los items.
@@ -113,22 +108,7 @@ public class Pedido
         {
             totalPagarMonto = totalPagarMonto.add(it.getPrice());
         });
-        this.price = Amount.builder()
-                .currency(Currency.getInstance(totalPagarMoneda))
-                .value(totalPagarMonto)
-                .build();
-    }
-
-    /**
-     * Devuelve un Amount a partir del monto y la moneda
-     *
-     * @return Amount
-     */
-    public Amount getPrice()
-    {
-        updateAmounts();
-        return this.price;
-    }
+    }   
     
     public BigDecimal getTotalPagarMonto()
     {
