@@ -91,11 +91,11 @@ public class Usuario {
     
     @Builder.Default
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.PERSIST)
-    private List<Domicilios> domicilios = new LinkedList<>();
+    private List<Domicilio> domicilios = new LinkedList<>();
   
     @Builder.Default
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.PERSIST)
-    private List<Mediosdepago> mediosdepago = new LinkedList<>();
+    private List<Mediodepago> mediosdepago = new LinkedList<>();
 
     @Override
     public String toString() {
