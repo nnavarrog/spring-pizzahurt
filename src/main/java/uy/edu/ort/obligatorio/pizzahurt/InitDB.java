@@ -134,9 +134,41 @@ public class InitDB {
                     .build();
 
             topinRepository.save(toppingAceitunas);
+            
+            Topins otroToping = Topins.builder()
+                    .nombre("Anchoas")
+                    .descripcion("Anchoas frescas de la pesca del día.")
+                    .precio(new BigDecimal("2.59"))
+                    .build();
+            topinRepository.save(otroToping);
+            
+            otroToping = Topins.builder()
+                    .nombre("Ananá")
+                    .descripcion("Piña en almibar en rodajas.")
+                    .precio(new BigDecimal("2.59"))
+                    .build();
+            topinRepository.save(otroToping);
 
+            otroToping = Topins.builder()
+                    .nombre("Huevo")
+                    .descripcion("Huevo duro en finas láminas.")
+                    .precio(new BigDecimal("2.59"))
+                    .build();
+            topinRepository.save(otroToping);
+            
+            otroToping = Topins.builder()
+                    .nombre("Tocino")
+                    .descripcion("Panceta tostada y fritada en manteca de cerdo.")
+                    .precio(new BigDecimal("2.59"))
+                    .build();
+            topinRepository.save(otroToping);
 
-
+            otroToping = Topins.builder()
+                    .nombre("Huevo Frito")
+                    .descripcion("Cubierta de huevos de gallina de campo fritos en aceite de oliva.")
+                    .precio(new BigDecimal("2.59"))
+                    .build();
+            topinRepository.save(otroToping);
         };
 
     }

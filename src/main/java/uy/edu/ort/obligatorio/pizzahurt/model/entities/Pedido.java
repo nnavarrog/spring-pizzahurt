@@ -38,8 +38,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 /**
  *
@@ -85,11 +83,9 @@ public class Pedido
     private String totalPagarMoneda = "UYU";
 
     @Temporal(TemporalType.TIMESTAMP)
-    @CreationTimestamp
     private Date created;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @UpdateTimestamp
     private Date lastUpdate;
 
     @Builder.Default

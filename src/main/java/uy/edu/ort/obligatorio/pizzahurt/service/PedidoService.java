@@ -8,8 +8,11 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import uy.edu.ort.obligatorio.pizzahurt.exceptions.EntidadNoExiste;
+import uy.edu.ort.obligatorio.pizzahurt.model.dto.NewItemDto;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.EstadoPedido;
+import uy.edu.ort.obligatorio.pizzahurt.model.entities.Item;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.Pedido;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.Usuario;
 import uy.edu.ort.obligatorio.pizzahurt.repository.PedidoRepository;
@@ -23,6 +26,8 @@ import uy.edu.ort.obligatorio.pizzahurt.repository.PedidoRepository;
 public class PedidoService
 {
     private PedidoRepository pedidoRepo;
+    private UsuarioService userService;
+    private ItemService itemService;
     
     public Pedido nuevo(@NotNull @Valid Usuario usuario)
     {
@@ -35,7 +40,24 @@ public class PedidoService
     
     public Pedido nuevo(@NotNull Long userId) throws EntidadNoExiste
     {
-        Usuario user = null/*TODO: Se esperan los servicios del usuario*/;
+        Usuario user = userService
+                .getUsuarioById(userId)
+                .orElseThrow(()-> new EntidadNoExiste("El Usuario de esta sesión NO existe."));
         return nuevo(user);
+    }
+    
+    public Pedido guardar(@NotNull @Valid Pedido pedido)
+    {
+        return pedidoRepo.save(pedido);
+    }
+    
+    @Transactional
+    public Pedido addItemToPedido(@NotNull Pedido pedido, NewItemDto itemDto) throws EntidadNoExiste
+    {
+        Item item = itemService.newItem(itemDto);
+        pedido.getItems().add(item);
+        pedido = pedidoRepo.save(pedido);
+        pedidoRepo.flush();
+        return pedido;
     }
 }
