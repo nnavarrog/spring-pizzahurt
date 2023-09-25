@@ -21,7 +21,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.Domicilio;
-import uy.edu.ort.obligatorio.pizzahurt.model.entities.Usuario;
 import uy.edu.ort.obligatorio.pizzahurt.repository.DomicilioRepository;
 
 @Service
@@ -34,20 +33,20 @@ public class DomicilioService
         this.domicilioRepo = domicilioRepo;
     }
 
-    public List<Usuario> getAllDomicilios() {
+    public List<Domicilio> getAllDomicilios() {
         return domicilioRepo.findAll();
     }
 
-    public Optional<Usuario> getDomicilioById(Long id) {
+    public Optional<Domicilio> getDomicilioById(Long id) {
         return domicilioRepo.findById(id);
     }
 
-    public Usuario createDomicilio(@Valid Domicilio domicilio) {
+    public Domicilio createDomicilio(@Valid Domicilio domicilio) {
         return domicilioRepo.save(domicilio);
     }
 
-    public Usuario updateDomicilio(Long id,@Valid Domicilio domicilio) {
-        usuario.setId(id);
+    public Domicilio updateDomicilio(Long id,@Valid Domicilio domicilio) {
+        domicilio.setId(id);
         return domicilioRepo.save(domicilio);
     }
 
