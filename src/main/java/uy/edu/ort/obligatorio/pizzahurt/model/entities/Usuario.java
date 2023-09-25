@@ -14,10 +14,6 @@
  *      Ortuzar, Martín
  */
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package uy.edu.ort.obligatorio.pizzahurt.model.entities;
 
 import jakarta.persistence.CascadeType;
@@ -29,7 +25,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
-import java.sql.Timestamp;
+import jakarta.validation.constraints.Size;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -37,8 +34,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Getter
@@ -53,37 +48,34 @@ public class Usuario {
     private Long id;
 
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "El email no puede ser vacío.")
     @Email
 //	@Column(length = 20)
     private String email;
 
     @NotNull
-    @NotEmpty
-    private String Nombre;
+    @NotEmpty(message = "El nombre no puede ser vacío.")
+    private String nombre;
 
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "El password no puede ser vacío.")
 //	@Column(length = 20)
+    @Size(min = 10)
     private String password;
 
     @NotNull
-    @NotEmpty
-    private String Telefono;
+    @NotEmpty(message = "El teléfono no puede ser vacío.")
+    private String telefono;
 
     private String passSalt;
 
     @NotNull
-    @NotEmpty
     @Past
-    @CreationTimestamp
-    private Timestamp createDate;
+    private Date createDate;
 
     @NotNull
-    @NotEmpty
 //    @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}_\\d{2}:\\d{2}:\\d{2}") YYYY-MM-DD_hh:mm:ss
-    @UpdateTimestamp
-    private Timestamp lstUpdate;
+    private Date lstUpdate;
 
     @NotNull
     private boolean activo;
@@ -104,6 +96,6 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", email=" + email + ", Nombre=" + Nombre + ", password=" + password + ", Telefono=" + Telefono + ", createDate=" + createDate + ", lstUpdate=" + lstUpdate + ", activo=" + (activo ? "Si" : "No") + '}';
+        return "Usuario{" + "id=" + id + ", email=" + email + ", Nombre=" + nombre + ", password=" + password + ", Telefono=" + telefono + ", createDate=" + createDate + ", lstUpdate=" + lstUpdate + ", activo=" + (activo ? "Si" : "No") + '}';
     }
 }

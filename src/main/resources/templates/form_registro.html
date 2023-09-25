@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<!-- <!-- /**
+ * NO LICENCE
+ *
+ * Proyecto obligatorio final.
+ * Curso: Desarrollo de aplicaciones con Spring / Spring Boot
+ * Universidad ORT
+ * Agosto 2023 - Octubre 2023
+ *
+ * Docente: Juan Larrayoz
+ *
+ * Authors:
+ *      Fourment, Juan
+ *      Navarro Gutérrez, Nicolás
+ *      Ortuzar, Martín
+ */ -->
+<html>
+    <head th:replace="~{base-layout :: head}"></head>
+    <body>
+        <header th:insert="~{base-layout :: header-home}"></header>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <br><br><br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 align-content-center text-center">
+                    <h1>
+                        Bienvenidos a
+                    </h1>
+                    <br>
+                    <img class="img-fluid" th:src="@{/img/Pizza_Hurt.png}" alt="logo"/>
+                </div>
+                <div class="col-lg-4"></div>
+                <div class="col-lg-4 align-content-center text-center">
+                    <div class="card">
+                        <h3>Ingres&aacute; y arm&aacute; tu Zapi</h3>
+                        <div class="card-body">
+                            <form class="text-lg-start" method="POST" th:action="@{/form_registro}" th:object="${usuario}">
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">E-Mail</label>
+                                    <input type="email" class="form-control" id="email" th:field="*{email}">
+                                    <p class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">E-Mail incorrecto</p>
+                                </div>
+
+
+                                <div class="mb-3">
+                                    <label for="nombre" class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="nombre" th:field="*{nombre}">
+                                    <p class="error" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Nombre incorrecto</p>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="telefono" class="form-label">Teléfono</label>
+                                    <input type="text" class="form-control" id="telefono" th:field="*{telefono}">
+                                    <p class="error" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}">Teléfono incorrecto</p>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Tu clave</label>
+                                    <input type="password" class="form-control" id="password" th:field="*{password}">
+                                    <p class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password incorrecto</p>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary"><i class="bi bi-arrow-bar-right"></i>&nbsp;Registrarse</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+        </div>
+
+        <footer th:replace="~{base-layout :: foot}"></footer>
+    </body>
+</html>
+
+
+<style>
+    .error {
+        color: red;
+    }
+</style>

@@ -16,6 +16,7 @@
 package uy.edu.ort.obligatorio.pizzahurt.service;
 
 import jakarta.validation.Valid;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,6 @@ import org.springframework.stereotype.Service;
 import uy.edu.ort.obligatorio.pizzahurt.exceptions.EntidadNoExiste;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.Domicilio;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.Mediodepago;
-import uy.edu.ort.obligatorio.pizzahurt.model.entities.Pedido;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.Usuario;
 import uy.edu.ort.obligatorio.pizzahurt.repository.UsuarioRepository;
 
@@ -45,16 +45,20 @@ public class UsuarioService {
         return usuarioRepo.findById(id);
     }
     
-    public Usuario createUsuario(@Valid Usuario usuario) {
+    public Usuario crearUsuario(Usuario usuario) {
+        usuario.setActivo(true);
+        usuario.setCreateDate(new Date());
+        usuario.setLstUpdate(new Date());
+       
         return usuarioRepo.save(usuario);
     }
     
-    public Usuario updateUsuario(Long id, @Valid Usuario usuario) {
+    public Usuario actualizarUsuario(Long id, Usuario usuario) {
         usuario.setId(id);
         return usuarioRepo.save(usuario);
     }
     
-    public void deleteUsuario(Long id) {
+    public void borrarUsuario(Long id) {
         usuarioRepo.deleteById(id);
     }
     
