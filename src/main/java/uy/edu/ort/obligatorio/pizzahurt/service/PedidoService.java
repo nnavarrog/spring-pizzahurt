@@ -52,7 +52,7 @@ public class PedidoService
     }
     
     @Transactional
-    public Pedido addItemToPedido(@NotNull Pedido pedido, NewItemDto itemDto) throws EntidadNoExiste
+    public Pedido addItemToPedido(@NotNull Pedido pedido, @NotNull NewItemDto itemDto) throws EntidadNoExiste
     {
         Item item = itemService.newItem(itemDto);
         pedido.getItems().add(item);

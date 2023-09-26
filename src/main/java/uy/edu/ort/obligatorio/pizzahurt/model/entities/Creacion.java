@@ -1,10 +1,13 @@
 package uy.edu.ort.obligatorio.pizzahurt.model.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import uy.edu.ort.obligatorio.pizzahurt.utils.AmountUtil;
 
 @Entity
 @Getter
@@ -17,6 +20,11 @@ public class Creacion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @NotBlank
+    @Size(min = 1, max = 60)
+    @Column(length = 60)
+    private String nombre;
 
     @ManyToOne
     @JoinColumn(name = "tipo_masa_id")
@@ -62,10 +70,12 @@ public class Creacion {
             for( Topins topin : topins)
                 total = total.add(topin.getPrecio());
         }
-
-
         return total;
-
+    }
+    
+    public String getFormatedLabel()
+    {
+        return AmountUtil.getFormatedPrice(getPrice(), nombre);
     }
 
 }

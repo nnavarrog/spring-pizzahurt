@@ -88,9 +88,11 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.PERSIST)
     private List<Mediodepago> mediosdepago = new LinkedList<>();
     
+    @Builder.Default
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.PERSIST)
     private List<Creacion> creaciones = new LinkedList<>();
    
+    @Builder.Default
     @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
     private List<Pedido> pedidos = new LinkedList<>();
 
