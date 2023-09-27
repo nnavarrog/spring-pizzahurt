@@ -20,7 +20,6 @@
         <header th:insert="~{base-layout :: header-home}"></header>
         <div class="container mt-5">
             <form th:action="@{/creacion/form}" th:object="${creacion}" method="post">
-                <!-- Fila con tres tarjetas -->
                 <div class="row">
                     <div class="col-md-4">
                         <div class="card">
@@ -30,7 +29,7 @@
                             <div class="card-body card-body-bg-image" th:style="'background-image: url(' + @{/img/imagen_pizza_masa.jpeg} + ');'">
                                 <div class="gray-background">
                                     <div th:each="tipoMasa : ${tipos_de_masas}" class="form-check">
-                                        <input class="form-check-input" type="radio" th:value="${tipoMasa.nombre}" th:id="${'masa-' + tipoMasa.id}" name="masa">
+                                        <input class="form-check-input" type="radio" th:value="${tipoMasa.id}" name="masa" th:field="*{tipoMasa}">
                                         <label th:for="${'masa-' + tipoMasa.id}" class="form-check-label black-text" th:text="${tipoMasa.nombre}"></label>
                                         <p class="card-header-small black-text" th:text="${tipoMasa.descripcion}"></p>
                                     </div>
@@ -46,7 +45,7 @@
                             <div class="card-body card-body-bg-image" th:style="'background-image: url(' + @{/img/imagen_pizza_salsa.jpeg} + ');'">
                                 <div class="gray-background">
                                     <div th:each="tipoSalsa : ${tipos_de_salsas}" class="form-check">
-                                        <input class="form-check-input" type="radio" th:value="${tipoSalsa.nombre}" th:id="${'salsa-' + tipoSalsa.id}" name="salsa">
+                                        <input class="form-check-input" type="radio" th:value="${tipoSalsa.id}" th:field="*{tipoSalsa}" name="salsa">
                                         <label th:for="${'salsa-' + tipoSalsa.id}" class="form-check-label black-text" th:text="${tipoSalsa.nombre}"></label>
                                         <p class="card-header-small black-text" th:text="${tipoSalsa.descripcion}"></p>
                                     </div>
@@ -62,7 +61,7 @@
                             <div class="card-body card-body-bg-image" th:style="'background-image: url(' + @{/img/imagen_pizza_mozzarella.jpg} + ');'">
                                 <div class="gray-background">
                                     <div th:each="tipoQueso : ${tipos_de_quesos}" class="form-check">
-                                        <input class="form-check-input" type="radio" th:value="${tipoQueso.nombre}" th:id="${'queso-' + tipoQueso.id}" name="queso">
+                                        <input class="form-check-input" type="radio" th:value="${tipoQueso.id}" th:field="*{tipoQueso}" name="queso">
                                         <label th:for="${'queso-' + tipoQueso.id}" class="form-check-label black-text" th:text="${tipoQueso.nombre}"></label>
                                         <p class="card-header-small black-text" th:text="${tipoQueso.descripcion}"></p>
                                     </div>
@@ -72,7 +71,6 @@
                     </div>
                 </div>
 
-                <!-- Fila con dos tarjetas centradas -->
                 <div class="row justify-content-center mt-4">
                     <div class="col-md-4">
                         <div class="card">
@@ -82,7 +80,7 @@
                             <div class="card-body card-body-bg-image" th:style="'background-image: url(' + @{/img/imagen_pizza_pepperoni.jpeg} + ');'">
                                 <div class="gray-background">
                                     <div th:each="topins : ${toppings}" class="form-check">
-                                        <input class="form-check-input" type="checkbox" th:value="${topins.nombre}" th:id="${'topins-' + topins.id}" name="topins">
+                                        <input class="form-check-input" type="checkbox" th:value="${topins.id}" th:field="*{topins}" name="topins">
                                         <label th:for="${'topins-' + topins.id}" class="form-check-label black-text" th:text="${topins.nombre}"></label>
                                         <p class="card-header-small black-text" th:text="${topins.descripcion}"></p>
                                     </div>
@@ -92,11 +90,17 @@
                     </div>
                 </div>
 
-                <!-- Fila con el botón "Crear Pizza" y un ícono de pizza -->
-                <div class="row mt-4">
-                    <div class="col-md-12 text-center">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-pizza-slice"></i> Crear Pizza
+                <div class="row mt-4 mx-auto">
+                    <div class="col-md-6 d-flex align-items-center">
+                        <div class="form-group mb-0">
+                            <label for="nombre" class="black-text">Ingrese el nombre de la creación:</label>
+                            <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre de la creación" required th:field="*{nombre}">
+                        </div>
+                    </div>
+                    <div class="col-md-6 d-flex align-items-center justify-content-start">
+                        <button type="submit" class="btn btn-primary rounded-circle" style="width: 100px; height: 100px;">
+                            <i class="fas fa-pizza-slice"></i>
+                            Crear Pizza
                         </button>
                     </div>
                 </div>
@@ -111,7 +115,6 @@
     .error {
         color: red;
     }
-    /* Estilos para las tarjetas */
     .card {
         height: 100%;
     }
@@ -127,15 +130,13 @@
         font-size: 0.8rem;
     }
 
-    /* Color de texto negro */
     .black-text {
         color: black;
     }
 
-    /* Fondo gris tenue con transparencia para los grupos de checkboxes y radio buttons */
     .gray-background {
-        background-color: rgba(242, 242, 242, 0.7); /* Fondo gris con transparencia */
-        padding: 10px; /* Ajusta el espaciado según tus necesidades */
-        border-radius: 5px; /* Añade bordes redondeados si lo deseas */
+        background-color: rgba(242, 242, 242, 0.7);
+        padding: 10px;
+        border-radius: 5px;
     }
 </style>

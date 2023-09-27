@@ -34,10 +34,13 @@ public class CreacionController {
 
     private CreacionService creacionService;
 
+
+
     @GetMapping("/creacion")
     public String index(Model model) {
 
         CreacionService.Listas listas = creacionService.obtenerIngredientesCreacion();
+        model.addAttribute("creacion", new Creacion());
         model.addAttribute("toppings",listas.topinsList());
         model.addAttribute("tipos_de_masas",listas.tipoMasaList());
         model.addAttribute("tipos_de_quesos",listas.tipoQuesoList());

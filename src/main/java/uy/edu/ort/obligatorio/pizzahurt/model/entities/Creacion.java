@@ -1,6 +1,9 @@
 package uy.edu.ort.obligatorio.pizzahurt.model.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -17,6 +20,12 @@ public class Creacion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotNull
+    @NotEmpty
+    @Size(min = 1, max = 25)
+    @Column(length = 25)
+    private String nombre;
 
     @ManyToOne
     @JoinColumn(name = "tipo_masa_id")
