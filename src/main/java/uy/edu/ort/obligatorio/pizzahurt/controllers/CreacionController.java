@@ -30,13 +30,14 @@ import java.util.List;
 @Controller
 @SessionAttributes("usuario")
 @AllArgsConstructor
+@RequestMapping("creaciones")
 public class CreacionController {
 
     private CreacionService creacionService;
 
 
 
-    @GetMapping("/creacion")
+    @GetMapping("/nueva")
     public String index(Model model) {
 
         CreacionService.Listas listas = creacionService.obtenerIngredientesCreacion();
@@ -49,9 +50,10 @@ public class CreacionController {
         return "creacion";
     }
 
-    @PostMapping("creacion/form")
+    @PostMapping("/crear")
     public String nuevaCreacion(@ModelAttribute Creacion creacion){
 
+        creacionService.altaCreacion(creacion);
         return "redirect:/";
     }
 

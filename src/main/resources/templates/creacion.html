@@ -19,7 +19,7 @@
     <body>
         <header th:insert="~{base-layout :: header-home}"></header>
         <div class="container mt-5">
-            <form th:action="@{/creacion/form}" th:object="${creacion}" method="post">
+            <form th:action="@{/creaciones/crear}" th:object="${creacion}" method="post">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="card">
