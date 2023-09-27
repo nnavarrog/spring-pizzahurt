@@ -20,10 +20,10 @@ public class Creacion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @NotBlank
-    @Size(min = 1, max = 60)
-    @Column(length = 60)
+    @Size(min = 1, max = 25)
+    @Column(length = 25)
     private String nombre;
 
     @ManyToOne
