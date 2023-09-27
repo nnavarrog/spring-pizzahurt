@@ -75,7 +75,7 @@ public class Creacion {
     
     public String getFormatedLabel()
     {
-        return AmountUtil.getFormatedPrice(getPrice(), nombre);
+        return AmountUtil.getFormatedPrice(this.getPrice());
     }
 
 }
