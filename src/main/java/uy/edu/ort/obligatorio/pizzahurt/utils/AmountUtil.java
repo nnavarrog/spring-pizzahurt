@@ -37,7 +37,7 @@ public final class AmountUtil
 
     public static String getFormatedPrice(BigDecimal amount)
     {
-        return getFormatedPrice(amount, CURRENCY_DOLLAR_SYMBOL);
+        return getFormatedPrice(amount, (Object)CURRENCY_DOLLAR_SYMBOL);
     }
 
     public static String getFormatedPrice(BigDecimal amount, Object currSymbol, String label, String separator)

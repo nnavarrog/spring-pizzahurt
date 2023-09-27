@@ -7,14 +7,26 @@ import uy.edu.ort.obligatorio.pizzahurt.model.entities.*;
 import uy.edu.ort.obligatorio.pizzahurt.repository.*;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import org.hibernate.mapping.Collection;
 
 @Configuration
-public class InitDB {
+public class InitDB
+{
 
     @Bean
-    CommandLineRunner initDatabase( TamanioRepository tamanioRepository, TipoMasaRopository tipoMasaRopository, TipoQuesoRepository tipoQuesoRepository, TipoSalsaRepository tipoSalsaRepository, TopinRepository topinRepository) {
+    CommandLineRunner initDatabase(TamanioRepository tamanioRepository,
+             TipoMasaRopository tipoMasaRopository,
+             TipoQuesoRepository tipoQuesoRepository,
+             TipoSalsaRepository tipoSalsaRepository,
+             TopinRepository topinRepository,
+             CreacionRepository creacionRepo)
+    {
 
-        return args -> {
+        return args ->
+        {
             Tamanio tamanioPequeno = Tamanio.builder()
                     .nombre("Pequeño")
                     .descripcion("Tamaño pequeño")
@@ -86,7 +98,7 @@ public class InitDB {
                     .build();
 
             tipoQuesoRepository.save(quesoParmesano);
-            
+
             TipoQueso otroQueso = TipoQueso.builder()
                     .nombre("Roquefort")
                     .descripcion("Queso Roquefort envejecido en trozos pequeños.")
@@ -94,7 +106,7 @@ public class InitDB {
                     .build();
 
             tipoQuesoRepository.save(otroQueso);
-            
+
             otroQueso = TipoQueso.builder()
                     .nombre("Cremosos")
                     .descripcion("Queso Philadelphia y Requesón.")
@@ -150,14 +162,14 @@ public class InitDB {
                     .build();
 
             topinRepository.save(toppingAceitunas);
-            
+
             Topins otroToping = Topins.builder()
                     .nombre("Anchoas")
                     .descripcion("Anchoas frescas de la pesca del día.")
                     .precio(new BigDecimal("32.59"))
                     .build();
             topinRepository.save(otroToping);
-            
+
             otroToping = Topins.builder()
                     .nombre("Ananá")
                     .descripcion("Piña en almibar en rodajas.")
@@ -171,7 +183,7 @@ public class InitDB {
                     .precio(new BigDecimal("12.99"))
                     .build();
             topinRepository.save(otroToping);
-            
+
             otroToping = Topins.builder()
                     .nombre("Tocino")
                     .descripcion("Panceta tostada y fritada en manteca de cerdo.")
@@ -185,6 +197,16 @@ public class InitDB {
                     .precio(new BigDecimal("22.59"))
                     .build();
             topinRepository.save(otroToping);
+
+            //CREACIONES
+            Creacion unaCreacion = Creacion.builder()
+                    .nombre("La huevo")
+                    .topins(Arrays.asList(otroToping))
+                    .tipoMasa(tipoMasaGruesa)
+                    .tipoQueso(otroQueso)
+                    .tipoSalsa(salsaBBQ)
+                    .build();
+            creacionRepo.save(unaCreacion);
         };
 
     }

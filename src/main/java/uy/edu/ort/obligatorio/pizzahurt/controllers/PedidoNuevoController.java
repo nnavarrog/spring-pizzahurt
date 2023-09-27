@@ -16,6 +16,7 @@
 package uy.edu.ort.obligatorio.pizzahurt.controllers;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.AllArgsConstructor;
@@ -31,6 +32,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uy.edu.ort.obligatorio.pizzahurt.exceptions.EntidadNoExiste;
 import uy.edu.ort.obligatorio.pizzahurt.model.dto.NewItemDto;
+import uy.edu.ort.obligatorio.pizzahurt.model.entities.Creacion;
+import uy.edu.ort.obligatorio.pizzahurt.model.entities.Item;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.Pedido;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.Usuario;
 import uy.edu.ort.obligatorio.pizzahurt.repository.CreacionRepository;
@@ -51,29 +54,28 @@ public class PedidoNuevoController
     private UsuarioRepository userRepo;
 
     @GetMapping("/nuevo")
-    public String nuevoPedido(Model model
-            , @ModelAttribute("pedidonuevo") Pedido pedidoNuevo
-            , @ModelAttribute("errors") String erros
-            , Authentication auth)
+    public String nuevoPedido(Model model,
+             @ModelAttribute("pedidonuevo") Pedido pedidoNuevo,
+             @ModelAttribute("errors") String erros,
+             Authentication auth)
     {
         pedidoNuevo.updateAmounts();
-        Usuario user = (Usuario) auth.getPrincipal();
+        //Usuario user = (Usuario) auth.getPrincipal();
         model.addAttribute("pedidonuevo", pedidoNuevo);
         model.addAttribute("tamanios", tamanioRepo.findAll());
-        model.addAttribute("creaciones", user.getCreaciones());
-        model.addAttribute("itemdto", NewItemDto.builder()
-                .cantidad(1)
-                .nombre("Item-" + pedidoNuevo.getItems().size())
+        model.addAttribute("creaciones", creacionRepo.findAll()/*user.getCreaciones()*/);
+        model.addAttribute("item", Item.builder()
+                .nombre("Item " + pedidoNuevo.getItems().size() + 1)
                 .build());
         return "pedido-nuevo";
     }
 
     @PostMapping("/additem")
-    public String addItem(Model model
-            , @RequestBody NewItemDto itemDto
-            , @ModelAttribute("pedidonuevo") Pedido pedidoNuevo
-            , Authentication auth
-            , RedirectAttributes redirectAttrtibuttes)
+    public String addItem(Model model,
+             @RequestBody NewItemDto itemDto,
+             @ModelAttribute("pedidonuevo") Pedido pedidoNuevo,
+             Authentication auth,
+             RedirectAttributes redirectAttrtibuttes)
     {
         try
         {
@@ -93,7 +95,7 @@ public class PedidoNuevoController
         Pedido pedidoNuevo = Pedido.builder()
                 .created(new Date())
                 .lastUpdate(new Date())
-                .user((Usuario) auth.getPrincipal())
+                .user(/*(Usuario) auth.getPrincipal()*/null)
                 .build();
         return pedidoNuevo;
     }

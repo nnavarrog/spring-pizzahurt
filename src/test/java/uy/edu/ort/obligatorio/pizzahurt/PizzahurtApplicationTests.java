@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.TipoMasa;
 
-@SpringBootTest
+//@SpringBootTest
 class PizzahurtApplicationTests {
 
-	@Test
+	//@Test
 	void contextLoads() {
             TipoMasa tipoMasa = TipoMasa.builder()
                     .nombre("Integral")

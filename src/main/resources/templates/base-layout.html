@@ -44,6 +44,41 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarColor01">
                         <ul class="navbar-nav me-auto">
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-brightness-low-fill"></i>&nbsp;Creaciones
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" th:href="@{/creaciones/nueva}"><i class="bi bi-bookmark-plus-fill"></i>&nbsp;Nueva creaci&oacute;n</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/creaciones}">&nbsp;Mis creaciones</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-cart4"></i>&nbsp;Pedidos
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" th:href="@{/pedidos/nuevo}"><i class="bi bi-cart-plus-fill"></i>&nbsp;Nuevo pedido</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/pedidos}">Mis pedidos</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-person-circle"></i>&nbsp;Mi perfil
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-house-door-fill"></i>&nbsp;Domicilios</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-credit-card-fill"></i>&nbsp;Medios de pago</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-key-fill"></i>&nbsp;Cambiar clave</a></li>
+
+                                </ul>
+                            </li>
+
+
                             <li class="nav-item">
                                 <a class="nav-link" th:href="@{/contacto}">Contacto</a>
                             </li>
@@ -52,14 +87,16 @@
                             </li>
                         </ul>
                         <form class="d-flex">
-                            <!--/*<input class="form-control me-sm-2" type="search" placeholder="Search">*/-->
-                            <a class="btn btn-lg btn-secondary my-2 my-sm-0" th:href="@{/form_registro}"><i class="bi bi-person-plus-fill"></i>&nbsp;Registrarse</a>
+                            <a class="btn btn-secondary my-2 my-sm-0" th:href="@{/form_registro}"><i class="bi bi-person-plus-fill"></i>&nbsp;Registrarse</a>
+                        </form>&nbsp;
+                        <form class="d-flex">
+                            <a class="btn btn-secondary my-2 my-sm-0" th:href="@{/logout}"><i class="bi bi-box-arrow-left"></i>&nbsp;Cerrar sesi&oacute;n</a>
                         </form>
                     </div>
                 </div>
             </nav>
         </header>
-        
+
         <footer class="text-light" th:fragment="foot">
             <div class="container-fluid mt-2">   
                 <div class="row-cols-1 text-center">
@@ -69,6 +106,6 @@
                 </div>
             </div>
         </footer>
-        
+
     </body>
 </html>
