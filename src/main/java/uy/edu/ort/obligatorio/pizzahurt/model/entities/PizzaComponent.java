@@ -57,5 +57,10 @@ public abstract class PizzaComponent
     {
         return AmountUtil.getFormatedPrice(precio, nombre);
     }
+    
+    public String getFormatedPrice()
+    {
+        return AmountUtil.getFormatedPrice(precio);
+    }
 
 }
