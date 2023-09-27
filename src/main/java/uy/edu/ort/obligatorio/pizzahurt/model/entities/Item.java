@@ -1,14 +1,14 @@
 /**
  * NO LICENCE
- * 
+ *
  * Proyecto obligatorio final.
  * Curso: Desarrollo de aplicaciones con Spring / Spring Boot
- * Universidad ORT 
+ * Universidad ORT
  * Agosto 2023 - Octubre 2023
- * 
+ *
  * Docente: Juan Larrayoz
- * 
- * Authors: 
+ *
+ * Authors:
  *      Fourment, Juan
  *      Navarro Gutérrez, Nicolás
  *      Ortuzar, Martín
@@ -32,7 +32,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import uy.edu.ort.obligatorio.pizzahurt.utils.AmountUtil;
 
 @Entity
 @Getter
@@ -42,34 +42,35 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Item
 {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @NotNull
     @NotEmpty
     @Size(min = 1, max = 90)
     @Column(length = 90)
     private String nombre;
-    
+
     @ManyToOne
     @JoinColumn(name = "creacionId")
     private Creacion creacion;
-    
+
     @Min(value = 1)
     private int cantidad;
-    
+
     @ManyToOne
     @JoinColumn(name = "tamanioId")
     private Tamanio tamanio;
-    
+
     @ManyToOne
     @JoinColumn(name = "pedidoId")
     private Pedido pedido;
-    
+
     /**
      * Devuelve el precio total del item
-     * 
+     *
      * @return
      */
     public BigDecimal getPrice()
@@ -77,5 +78,10 @@ public class Item
         return tamanio.getPrecio()
                 .add(creacion.getPrice())
                 .multiply(new BigDecimal(cantidad));
+    }
+
+    public String getFormatedPrice()
+    {
+        return AmountUtil.getFormatedPrice(getPrice());
     }
 }

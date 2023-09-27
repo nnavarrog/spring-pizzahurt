@@ -13,9 +13,7 @@
  *      Navarro Gutérrez, Nicolás
  *      Ortuzar, Martín
  */
-
 package uy.edu.ort.obligatorio.pizzahurt.model.entities;
-
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
@@ -25,13 +23,15 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.math.BigDecimal;
+import uy.edu.ort.obligatorio.pizzahurt.utils.AmountUtil;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @MappedSuperclass
-public abstract class PizzaComponent {
+public abstract class PizzaComponent
+{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,10 +50,12 @@ public abstract class PizzaComponent {
     protected String descripcion;
 
     @NotNull
-    @Min(value=0)
+    @Min(value = 0)
     protected BigDecimal precio;
 
-
-
+    public String getFormatedLabel()
+    {
+        return AmountUtil.getFormatedPrice(precio, nombre);
+    }
 
 }

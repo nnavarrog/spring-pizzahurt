@@ -38,6 +38,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import uy.edu.ort.obligatorio.pizzahurt.utils.AmountUtil;
 
 /**
  *
@@ -110,5 +111,10 @@ public class Pedido
     {
         updateAmounts();
         return this.totalPagarMonto;
+    }
+    
+    public String getFormatedPrice()
+    {
+        return AmountUtil.getFormatedPrice(getTotalPagarMonto());
     }
 }

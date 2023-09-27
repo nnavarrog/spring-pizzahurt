@@ -18,7 +18,7 @@ public class InitDB {
             Tamanio tamanioPequeno = Tamanio.builder()
                     .nombre("Pequeño")
                     .descripcion("Tamaño pequeño")
-                    .precio(new BigDecimal("10"))
+                    .precio(new BigDecimal("60"))
                     .build();
 
             tamanioRepository.save(tamanioPequeno);
@@ -26,7 +26,7 @@ public class InitDB {
             Tamanio tamanioMediano = Tamanio.builder()
                     .nombre("Mediano")
                     .descripcion("Tamaño mediano")
-                    .precio(new BigDecimal("20"))
+                    .precio(new BigDecimal("90"))
                     .build();
 
             tamanioRepository.save(tamanioMediano);
@@ -34,7 +34,7 @@ public class InitDB {
             Tamanio tamanioGrande = Tamanio.builder()
                     .nombre("Grande")
                     .descripcion("Tamaño grande")
-                    .precio(new BigDecimal("30"))
+                    .precio(new BigDecimal("120"))
                     .build();
 
             tamanioRepository.save(tamanioGrande);
@@ -42,7 +42,7 @@ public class InitDB {
             TipoMasa tipoMasaGruesa = TipoMasa.builder()
                     .nombre("Gruesa")
                     .descripcion("Una masa gruesa y esponjosa.")
-                    .precio(new BigDecimal("5.99"))
+                    .precio(new BigDecimal("15.99"))
                     .build();
 
             tipoMasaRopository.save(tipoMasaGruesa);
@@ -50,7 +50,7 @@ public class InitDB {
             TipoMasa tipoMasaIntegral = TipoMasa.builder()
                     .nombre("Integral")
                     .descripcion("Una masa integral saludable.")
-                    .precio(new BigDecimal("6.99"))
+                    .precio(new BigDecimal("16.99"))
                     .build();
 
             tipoMasaRopository.save(tipoMasaIntegral);
@@ -58,7 +58,7 @@ public class InitDB {
             TipoMasa tipoMasaSinGluten = TipoMasa.builder()
                     .nombre("Sin Gluten")
                     .descripcion("Una masa sin gluten para personas con intolerancia.")
-                    .precio(new BigDecimal("7.99"))
+                    .precio(new BigDecimal("17.99"))
                     .build();
 
             tipoMasaRopository.save(tipoMasaSinGluten);
@@ -66,7 +66,7 @@ public class InitDB {
             TipoQueso quesoMozzarella = TipoQueso.builder()
                     .nombre("Mozzarella")
                     .descripcion("Queso Mozzarella fresco y suave.")
-                    .precio(new BigDecimal("2.99"))
+                    .precio(new BigDecimal("42.59"))
                     .build();
 
             tipoQuesoRepository.save(quesoMozzarella);
@@ -74,7 +74,7 @@ public class InitDB {
             TipoQueso quesoCheddar = TipoQueso.builder()
                     .nombre("Cheddar")
                     .descripcion("Queso Cheddar madurado con un sabor fuerte.")
-                    .precio(new BigDecimal("3.99"))
+                    .precio(new BigDecimal("43.99"))
                     .build();
 
             tipoQuesoRepository.save(quesoCheddar);
@@ -82,15 +82,31 @@ public class InitDB {
             TipoQueso quesoParmesano = TipoQueso.builder()
                     .nombre("Parmesano")
                     .descripcion("Queso Parmesano envejecido y rallado.")
-                    .precio(new BigDecimal("4.99"))
+                    .precio(new BigDecimal("54.89"))
                     .build();
 
             tipoQuesoRepository.save(quesoParmesano);
+            
+            TipoQueso otroQueso = TipoQueso.builder()
+                    .nombre("Roquefort")
+                    .descripcion("Queso Roquefort envejecido en trozos pequeños.")
+                    .precio(new BigDecimal("72.49"))
+                    .build();
+
+            tipoQuesoRepository.save(otroQueso);
+            
+            otroQueso = TipoQueso.builder()
+                    .nombre("Cremosos")
+                    .descripcion("Queso Philadelphia y Requesón.")
+                    .precio(new BigDecimal("63.99"))
+                    .build();
+
+            tipoQuesoRepository.save(otroQueso);
 
             TipoSalsa salsaBBQ = TipoSalsa.builder()
                     .nombre("BBQ")
                     .descripcion("Salsa BBQ ahumada con un toque de dulzura y especias.")
-                    .precio(new BigDecimal("3.49"))
+                    .precio(new BigDecimal("13.49"))
                     .build();
 
             tipoSalsaRepository.save(salsaBBQ);
@@ -98,7 +114,7 @@ public class InitDB {
             TipoSalsa salsaNapolitana = TipoSalsa.builder()
                     .nombre("Napolitana")
                     .descripcion("Salsa napolitana auténtica con tomates San Marzano y albahaca fresca.")
-                    .precio(new BigDecimal("2.99"))
+                    .precio(new BigDecimal("12.99"))
                     .build();
 
             tipoSalsaRepository.save(salsaNapolitana);
@@ -106,7 +122,7 @@ public class InitDB {
             TipoSalsa salsaPomodoro = TipoSalsa.builder()
                     .nombre("Pomodoro")
                     .descripcion("Salsa pomodoro de tomates italianos con un toque de ajo y aceite de oliva.")
-                    .precio(new BigDecimal("3.49"))
+                    .precio(new BigDecimal("12.49"))
                     .build();
 
             tipoSalsaRepository.save(salsaPomodoro);
@@ -114,7 +130,7 @@ public class InitDB {
             Topins toppingPepperoni = Topins.builder()
                     .nombre("Pepperoni")
                     .descripcion("Rodajas de pepperoni picante y sabroso.")
-                    .precio(new BigDecimal("1.99"))
+                    .precio(new BigDecimal("31.99"))
                     .build();
 
             topinRepository.save(toppingPepperoni);
@@ -122,7 +138,7 @@ public class InitDB {
             Topins toppingChampiñones = Topins.builder()
                     .nombre("Champiñones")
                     .descripcion("Champiñones frescos y rebanados.")
-                    .precio(new BigDecimal("1.49"))
+                    .precio(new BigDecimal("41.49"))
                     .build();
 
             topinRepository.save(toppingChampiñones);
@@ -130,7 +146,7 @@ public class InitDB {
             Topins toppingAceitunas = Topins.builder()
                     .nombre("Aceitunas")
                     .descripcion("Aceitunas negras y verdes en rodajas.")
-                    .precio(new BigDecimal("1.29"))
+                    .precio(new BigDecimal("18.29"))
                     .build();
 
             topinRepository.save(toppingAceitunas);
@@ -138,35 +154,35 @@ public class InitDB {
             Topins otroToping = Topins.builder()
                     .nombre("Anchoas")
                     .descripcion("Anchoas frescas de la pesca del día.")
-                    .precio(new BigDecimal("2.59"))
+                    .precio(new BigDecimal("32.59"))
                     .build();
             topinRepository.save(otroToping);
             
             otroToping = Topins.builder()
                     .nombre("Ananá")
                     .descripcion("Piña en almibar en rodajas.")
-                    .precio(new BigDecimal("2.59"))
+                    .precio(new BigDecimal("22.59"))
                     .build();
             topinRepository.save(otroToping);
 
             otroToping = Topins.builder()
                     .nombre("Huevo")
                     .descripcion("Huevo duro en finas láminas.")
-                    .precio(new BigDecimal("2.59"))
+                    .precio(new BigDecimal("12.99"))
                     .build();
             topinRepository.save(otroToping);
             
             otroToping = Topins.builder()
                     .nombre("Tocino")
                     .descripcion("Panceta tostada y fritada en manteca de cerdo.")
-                    .precio(new BigDecimal("2.59"))
+                    .precio(new BigDecimal("21.29"))
                     .build();
             topinRepository.save(otroToping);
 
             otroToping = Topins.builder()
                     .nombre("Huevo Frito")
                     .descripcion("Cubierta de huevos de gallina de campo fritos en aceite de oliva.")
-                    .precio(new BigDecimal("2.59"))
+                    .precio(new BigDecimal("22.59"))
                     .build();
             topinRepository.save(otroToping);
         };

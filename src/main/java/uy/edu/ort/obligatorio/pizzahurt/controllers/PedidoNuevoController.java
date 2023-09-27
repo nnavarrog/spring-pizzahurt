@@ -13,7 +13,7 @@
  *      Navarro Gutérrez, Nicolás
  *      Ortuzar, Martín
  */
-package uy.edu.ort.obligatorio.pizzahurt.controller;
+package uy.edu.ort.obligatorio.pizzahurt.controllers;
 
 import java.util.Date;
 import java.util.logging.Level;
@@ -40,7 +40,7 @@ import uy.edu.ort.obligatorio.pizzahurt.service.PedidoService;
 
 @Controller
 @RequestMapping("/pedidos")
-@SessionAttributes("pedido-nuevo")
+@SessionAttributes("pedidonuevo")
 @AllArgsConstructor
 public class PedidoNuevoController
 {
@@ -52,26 +52,26 @@ public class PedidoNuevoController
 
     @GetMapping("/nuevo")
     public String nuevoPedido(Model model
-            , @ModelAttribute("pedido-nuevo") Pedido pedidoNuevo
+            , @ModelAttribute("pedidonuevo") Pedido pedidoNuevo
             , @ModelAttribute("errors") String erros
             , Authentication auth)
     {
         pedidoNuevo.updateAmounts();
         Usuario user = (Usuario) auth.getPrincipal();
-        model.addAttribute("pedido-nuevo", pedidoNuevo);
+        model.addAttribute("pedidonuevo", pedidoNuevo);
         model.addAttribute("tamanios", tamanioRepo.findAll());
         model.addAttribute("creaciones", user.getCreaciones());
-        model.addAttribute("itemDto", NewItemDto.builder()
+        model.addAttribute("itemdto", NewItemDto.builder()
                 .cantidad(1)
                 .nombre("Item-" + pedidoNuevo.getItems().size())
                 .build());
         return "pedido-nuevo";
     }
 
-    @PostMapping("/addItem")
+    @PostMapping("/additem")
     public String addItem(Model model
             , @RequestBody NewItemDto itemDto
-            , @ModelAttribute("pedido-nuevo") Pedido pedidoNuevo
+            , @ModelAttribute("pedidonuevo") Pedido pedidoNuevo
             , Authentication auth
             , RedirectAttributes redirectAttrtibuttes)
     {
@@ -87,7 +87,7 @@ public class PedidoNuevoController
         return "redirect:/pedidos/nuevo";
     }
 
-    @ModelAttribute("pedido-nuevo")
+    @ModelAttribute("pedidonuevo")
     public Pedido pedidoNuevo(Authentication auth)
     {
         Pedido pedidoNuevo = Pedido.builder()
