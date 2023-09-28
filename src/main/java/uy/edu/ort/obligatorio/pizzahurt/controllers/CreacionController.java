@@ -30,17 +30,20 @@ import java.util.List;
 @Controller
 @SessionAttributes("usuario")
 @AllArgsConstructor
+@RequestMapping("creaciones")
 public class CreacionController {
 
     private CreacionService creacionService;
 
 
 
-    @GetMapping("/creacion")
+    @GetMapping("/nueva")
     public String index(Model model) {
 
+        if(!model.containsAttribute("creacion"))
+            model.addAttribute("creacion", new Creacion());
+
         CreacionService.Listas listas = creacionService.obtenerIngredientesCreacion();
-        model.addAttribute("creacion", new Creacion());
         model.addAttribute("toppings",listas.topinsList());
         model.addAttribute("tipos_de_masas",listas.tipoMasaList());
         model.addAttribute("tipos_de_quesos",listas.tipoQuesoList());
@@ -49,10 +52,25 @@ public class CreacionController {
         return "creacion";
     }
 
-    @PostMapping("creacion/form")
+    @GetMapping("/listar")
+    public String listar(Model model) {
+
+        model.addAttribute("creaciones",creacionService.obtenerCreaciones());
+        model.addAttribute("creacion",new Creacion());
+        return "table-creaciones";
+    }
+
+    @PostMapping("/crear")
     public String nuevaCreacion(@ModelAttribute Creacion creacion){
 
-        return "redirect:/";
+        creacionService.altaCreacion(creacion);
+        return "redirect:/creaciones/listar";
+    }
+
+    @PostMapping("/modificar/{id}")
+    public String modificarCreacion(@PathVariable("id") Creacion creacion, Model model) {
+        index(model.addAttribute(creacion));
+         return "creacion";
     }
 
 }

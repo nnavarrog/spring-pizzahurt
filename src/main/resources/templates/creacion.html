@@ -19,7 +19,8 @@
     <body>
         <header th:insert="~{base-layout :: header-home}"></header>
         <div class="container mt-5">
-            <form th:action="@{/creacion/form}" th:object="${creacion}" method="post">
+            <form th:action="@{/creaciones/crear}" th:object="${creacion}" method="post">
+                <input class="form-check-input hiding" type="radio" th:value="${creacion.id}" name="id" th:field="*{id}">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="card">
@@ -31,6 +32,7 @@
                                     <div th:each="tipoMasa : ${tipos_de_masas}" class="form-check">
                                         <input class="form-check-input" type="radio" th:value="${tipoMasa.id}" name="masa" th:field="*{tipoMasa}">
                                         <label th:for="${'masa-' + tipoMasa.id}" class="form-check-label black-text" th:text="${tipoMasa.nombre}"></label>
+                                        <strong><label class="form-check-label" th:text="${ '$ ' + tipoMasa.getFormatedPrice()}"></label></strong>
                                         <p class="card-header-small black-text" th:text="${tipoMasa.descripcion}"></p>
                                     </div>
                                 </div>
@@ -47,6 +49,7 @@
                                     <div th:each="tipoSalsa : ${tipos_de_salsas}" class="form-check">
                                         <input class="form-check-input" type="radio" th:value="${tipoSalsa.id}" th:field="*{tipoSalsa}" name="salsa">
                                         <label th:for="${'salsa-' + tipoSalsa.id}" class="form-check-label black-text" th:text="${tipoSalsa.nombre}"></label>
+                                        <strong><label class="form-check-label" th:text="${ '$ ' + tipoSalsa.getFormatedPrice()}"></label></strong>
                                         <p class="card-header-small black-text" th:text="${tipoSalsa.descripcion}"></p>
                                     </div>
                                 </div>
@@ -63,6 +66,7 @@
                                     <div th:each="tipoQueso : ${tipos_de_quesos}" class="form-check">
                                         <input class="form-check-input" type="radio" th:value="${tipoQueso.id}" th:field="*{tipoQueso}" name="queso">
                                         <label th:for="${'queso-' + tipoQueso.id}" class="form-check-label black-text" th:text="${tipoQueso.nombre}"></label>
+                                        <strong><label class="form-check-label" th:text="${ '$ ' + tipoQueso.getFormatedPrice()}"></label></strong>
                                         <p class="card-header-small black-text" th:text="${tipoQueso.descripcion}"></p>
                                     </div>
                                 </div>
@@ -82,6 +86,7 @@
                                     <div th:each="topins : ${toppings}" class="form-check">
                                         <input class="form-check-input" type="checkbox" th:value="${topins.id}" th:field="*{topins}" name="topins">
                                         <label th:for="${'topins-' + topins.id}" class="form-check-label black-text" th:text="${topins.nombre}"></label>
+                                        <strong><label class="form-check-label" th:text="${ '$ ' + topins.getFormatedPrice()}"></label></strong>
                                         <p class="card-header-small black-text" th:text="${topins.descripcion}"></p>
                                     </div>
                                 </div>

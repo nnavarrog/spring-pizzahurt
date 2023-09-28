@@ -52,19 +52,23 @@ public class CreacionService {
         return new Listas(tipoMasaRopository.findAll(),tipoQuesoRepository.findAll(),tipoSalsaRepository.findAll(),topinRepository.findAll());
     }
 
+    /**
+     * Da de alta una creación
+     * @param creacion
+     */
     //TODO Validaciones
     @Transactional
-    public void altaCreacion(@NotNull TipoMasa tipoMasa, @NotNull TipoQueso tipoQueso, @NotNull TipoSalsa tipoSalsa, @NotNull List<Topins> topins, @NotNull Usuario usuario){
-        Creacion creacion = Creacion.builder()
-                        .topins(topins)
-                                .tipoMasa(tipoMasa)
-                                        .tipoQueso(tipoQueso)
-                                                .tipoSalsa(tipoSalsa)
-                                                        .usuario(usuario)
-                                                                .build();
+    public void altaCreacion(Creacion creacion){
         creacionRepository.save(creacion);
-        creacionRepository.flush();
+    }
 
+
+    /**
+     * Obtiene una lista de creaciones
+     * @return
+     */
+    public List<Creacion> obtenerCreaciones(){
+      return creacionRepository.findAll();
     }
 
 
