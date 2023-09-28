@@ -20,6 +20,22 @@
         <header th:insert="~{base-layout :: header-home}"></header>
         <div class="container mt-5">
             <form th:action="@{/creaciones/crear}" th:object="${creacion}" method="post">
+                <div class="row">
+                    <div class="col w-25">
+                        <div class="form-group mb-0">
+                            <label for="nombre" class="black-text">Ingrese el nombre de la creación:</label>
+                            <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre de la creación" required th:field="*{nombre}">
+                        </div>
+                    </div>
+                    <div class="col w-25">
+                    </div>
+                    <div class="col w-50">
+                        <button type="submit" class="btn btn-primary rounded-circle" style="width: 100px; height: 100px;">
+                            <i class="fas fa-pizza-slice"></i>
+                            Crear Pizza
+                        </button>
+                    </div>
+                </div>
                 <input class="form-check-input hiding" type="hidden" th:value="${creacion.id}" name="id" th:field="*{id}">
                 <div class="row">
                     <div class="col-md-4">
@@ -96,21 +112,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <div class="row mt-4 mx-auto">
-                    <div class="col-md-6 d-flex align-items-center">
-                        <div class="form-group mb-0">
-                            <label for="nombre" class="black-text">Ingrese el nombre de la creación:</label>
-                            <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre de la creación" required th:field="*{nombre}">
-                        </div>
-                    </div>
-                    <div class="col-md-6 d-flex align-items-center justify-content-start">
-                        <button type="submit" class="btn btn-primary rounded-circle" style="width: 100px; height: 100px;">
-                            <i class="fas fa-pizza-slice"></i>
-                            Crear Pizza
-                        </button>
                     </div>
                 </div>
             </form>
