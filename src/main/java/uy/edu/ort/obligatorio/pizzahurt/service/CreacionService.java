@@ -63,5 +63,14 @@ public class CreacionService {
     }
 
 
+    /**
+     * Obtiene una lista de creaciones
+     * @return
+     */
+    public List<Creacion> obtenerCreaciones(){
+      return creacionRepository.findAll();
+    }
+
+
 
 }
