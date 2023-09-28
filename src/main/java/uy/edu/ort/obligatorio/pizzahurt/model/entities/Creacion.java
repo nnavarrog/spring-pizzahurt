@@ -39,7 +39,7 @@ public class Creacion {
     private TipoQueso tipoQueso;
 
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "creacion_topins" , joinColumns = @JoinColumn(name = "creacion_id") , inverseJoinColumns = @JoinColumn(name = "topin_id"))
     private List<Topins> topins;
 
@@ -76,6 +76,11 @@ public class Creacion {
     public String getFormatedLabel()
     {
         return AmountUtil.getFormatedPrice(this.getPrice());
+    }
+    
+    public String getFormatedLabel2()
+    {
+        return AmountUtil.getFormatedPrice(this.getPrice(), this.nombre);
     }
 
 }
