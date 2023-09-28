@@ -16,16 +16,15 @@
 
 package uy.edu.ort.obligatorio.pizzahurt.controllers;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import uy.edu.ort.obligatorio.pizzahurt.model.dto.NewItemDto;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.*;
 import uy.edu.ort.obligatorio.pizzahurt.service.CreacionService;
 
-import java.util.List;
 
 @Controller
 @SessionAttributes("usuario")
@@ -61,7 +60,12 @@ public class CreacionController {
     }
 
     @PostMapping("/crear")
-    public String nuevaCreacion(@ModelAttribute Creacion creacion){
+    public String nuevaCreacion(@Valid @ModelAttribute Creacion creacion, BindingResult result, Model model){
+
+        if(result.hasErrors()){
+            index(model);
+            return "creacion";
+        }
 
         creacionService.altaCreacion(creacion);
         return "redirect:/creaciones/listar";
