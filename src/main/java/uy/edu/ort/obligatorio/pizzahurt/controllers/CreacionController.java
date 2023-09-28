@@ -73,4 +73,10 @@ public class CreacionController {
          return "creacion";
     }
 
+    @PostMapping("/eliminar/{id}")
+    public String eliminarCreacion(@PathVariable("id") Creacion creacion) {
+        creacionService.eliminarCreacion(creacion);
+        return "table-creaciones";
+    }
+
 }

@@ -18,6 +18,7 @@
 <head th:replace="~{base-layout :: head}"></head>
 <body>
 <header th:insert="~{base-layout :: header-home}"></header>
+<div class="container">
 <h2>Creaciones</h2>
 <table class="table">
     <thead>
@@ -46,13 +47,17 @@
             </form>
         </td>
         <td>
-            <a href="#" class="btn btn-danger btn-sm">
-                <i class="bi bi-trash"></i> Eliminar
-            </a>
+            <form th:action="@{/creaciones/eliminar/{id}(id=${creacion.id})}" method="post" class="edit-form">
+                <input type="hidden" name="_method" value="POST" />
+                <button type="submit" class="btn btn-danger btn-sm">
+                    <i class="bi bi-trash"></i> Borrar
+                </button>
+            </form>
         </td>
     </tr>
     </tbody>
 </table>
+</div>
 </body>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 </html>
