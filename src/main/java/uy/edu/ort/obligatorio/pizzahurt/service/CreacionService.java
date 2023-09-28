@@ -71,6 +71,14 @@ public class CreacionService {
       return creacionRepository.findAll();
     }
 
+    /**
+     * Elimina la creación
+     * @param creacion
+     */
+    public void eliminarCreacion(Creacion creacion){
+        creacionRepository.delete(creacion);
+    }
+
 
 
 }
