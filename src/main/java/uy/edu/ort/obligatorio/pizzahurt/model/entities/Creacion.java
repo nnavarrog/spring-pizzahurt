@@ -2,6 +2,8 @@ package uy.edu.ort.obligatorio.pizzahurt.model.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
@@ -27,19 +29,23 @@ public class Creacion {
     private String nombre;
 
     @ManyToOne
+    @NotNull(message = "Debe ingresar una masa")
     @JoinColumn(name = "tipo_masa_id")
     private TipoMasa tipoMasa;
 
     @ManyToOne
+    @NotNull(message = "Debe ingresar una salsa")
     @JoinColumn(name = "tipo_salsa_id")
     private TipoSalsa tipoSalsa;
 
     @ManyToOne
+    @NotNull(message = "Debe ingresar un queso")
     @JoinColumn(name = "tipo_queso_id")
     private TipoQueso tipoQueso;
 
 
     @ManyToMany
+    @NotEmpty(message = "Debe ingresar al menos un topping")
     @JoinTable(name = "creacion_topins" , joinColumns = @JoinColumn(name = "creacion_id") , inverseJoinColumns = @JoinColumn(name = "topin_id"))
     private List<Topins> topins;
 
