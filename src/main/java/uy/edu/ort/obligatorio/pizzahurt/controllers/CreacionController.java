@@ -76,7 +76,7 @@ public class CreacionController {
     @PostMapping("/eliminar/{id}")
     public String eliminarCreacion(@PathVariable("id") Creacion creacion) {
         creacionService.eliminarCreacion(creacion);
-        return "table-creaciones";
+        return "redirect:/creaciones/listar";
     }
 
 }

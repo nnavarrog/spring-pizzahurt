@@ -20,7 +20,7 @@
         <header th:insert="~{base-layout :: header-home}"></header>
         <div class="container mt-5">
             <form th:action="@{/creaciones/crear}" th:object="${creacion}" method="post">
-                <input class="form-check-input hiding" type="radio" th:value="${creacion.id}" name="id" th:field="*{id}">
+                <input class="form-check-input hiding" type="hidden" th:value="${creacion.id}" name="id" th:field="*{id}">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="card">
