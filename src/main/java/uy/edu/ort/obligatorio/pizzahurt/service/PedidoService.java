@@ -25,10 +25,11 @@ import uy.edu.ort.obligatorio.pizzahurt.repository.PedidoRepository;
 @AllArgsConstructor
 public class PedidoService
 {
+
     private PedidoRepository pedidoRepo;
     private UsuarioService userService;
     private ItemService itemService;
-    
+
     public Pedido nuevo(@NotNull @Valid Usuario usuario)
     {
         Pedido nuevo = Pedido.builder()
@@ -37,27 +38,26 @@ public class PedidoService
                 .build();
         return pedidoRepo.save(nuevo);
     }
-    
+
     public Pedido nuevo(@NotNull Long userId) throws EntidadNoExiste
     {
         Usuario user = userService
                 .getUsuarioById(userId)
-                .orElseThrow(()-> new EntidadNoExiste("El Usuario de esta sesión NO existe."));
+                .orElseThrow(() -> new EntidadNoExiste("El Usuario de esta sesión NO existe."));
         return nuevo(user);
     }
-    
+
     public Pedido guardar(@NotNull @Valid Pedido pedido)
     {
         return pedidoRepo.save(pedido);
     }
-    
-    @Transactional
-    public Pedido addItemToPedido(@NotNull Pedido pedido, @NotNull NewItemDto itemDto) throws EntidadNoExiste
+
+    public Pedido addItemToPedido(@NotNull Pedido pedido, @NotNull Item item) throws EntidadNoExiste
     {
-        Item item = itemService.newItem(itemDto);
         pedido.getItems().add(item);
         pedido = pedidoRepo.save(pedido);
-        pedidoRepo.flush();
+        item.setPedido(pedido);
+        item = itemService.addItem(item);
         return pedido;
     }
 }

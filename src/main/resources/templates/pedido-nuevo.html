@@ -23,31 +23,31 @@
             <div class="row">
                 <div class="col-lg-12">
                     <br>
-                    <h1>Armar pedido nuevo</h1>
+                    <h2>1) Armar pedido nuevo</h2>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-6 align-content-center text-center">
-                    <h3>Agreg&aacute; tus creaciones al pedido!</h3>
+                    <h4>Agreg&aacute; tus creaciones al pedido!</h4>
                     <hr>
                     <div th:unless="${#lists.isEmpty(creaciones)}">
-                        <form th:action="@{/pedidos/additem}" th:object="${pedidonuevo}" method="POST" id="form-add-item">
+                        <form th:action="@{/pedidos/additem}" th:object="${item}" method="POST" id="form-add-item">
                             <div class="row">
                                 <div class="col">
                                     <label for="creacion" class="form-label">Creaci&oacute;n</label>
-                                    <select class="form-select" aria-label="Default select example" id="creacion" th:field="${item.creacion}">
-                                        <option th:each="creacion:${creaciones}" th:value="${creacion.id}" th:text="${creacion.getFormatedLabel()}"></option>
+                                    <select class="form-select" aria-label="Default select example" id="creacion" th:field="*{creacion}">
+                                        <option th:each="creacion:${creaciones}" th:value="${creacion.id}" th:text="${creacion.getFormatedLabel2()}"></option>
                                     </select>
                                 </div>
                                 <div class="col">
                                     <label for="tamanio" class="form-label">Tamaño</label>
-                                    <select class="form-select" aria-label="Default select example" id="tamanio" th:field="${item.tamanio}">
+                                    <select class="form-select" aria-label="Default select example" id="tamanio" th:field="*{tamanio}">
                                         <option th:each="tamanio : ${tamanios}" th:value="${tamanio.id}" th:text="${tamanio.getFormatedLabel()}"></option>
                                     </select>
                                 </div>
                                 <div class="col">
                                     <label for="cantidad" class="form-label">Tamaño</label>
-                                    <input type="number" class="form-control" placeholder="Cantidad" aria-label="Cantidad" id="cantidad" min="1" max="30" step="1" value="1" th:field="${item.cantidad}">
+                                    <input type="number" class="form-control" placeholder="Cantidad" aria-label="Cantidad" id="cantidad" min="1" max="30" step="1" value="1" th:field="*{cantidad}">
                                 </div>
                             </div>
                             <div class="row-cols-3" style="margin-top: 20px;">
@@ -68,10 +68,10 @@
                 </div>
 
                 <div class="col-lg-6 align-content-center text-center">
-                    <h3>Tu pedido tiene:</h3>
+                    <h4>Tu pedido tiene:</h4>
                     <hr>
 
-                    <table class="table table-sm table-hover table-striped table-danger">
+                    <table class="table table-sm table-hover table-striped table-info">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
@@ -83,7 +83,11 @@
                         </thead>
                         <tbody class="table-group-divider">
                             <tr th:each="item : ${pedidonuevo.items}">
-                                <th th:text="${item.nombre}"></th>
+                                <th>
+                                    <form th:action="@{/pedidos/item/{id}(id=${item.id})}" method="DELETE">
+                                        <a class="btn btn-sm btn-danger my-2 my-sm-0" type="submit"><i class="bi bi-trash3-fill"></i>Quitar</a>
+                                    </form>
+                                </th>
                                 <td th:text="${item.creacion.nombre}"></td>
                                 <td th:text="${item.tamanio.nombre}"></td>
                                 <td th:text="${item.cantidad}"></td>
@@ -91,8 +95,8 @@
                             </tr>
                         </tbody>
                         <tfoot>
-                            <tr>
-                                <td colspan="4" class="">TOTAL</td>
+                            <tr style="font-weight: bolder;">
+                                <td colspan="4">TOTAL</td>
                                 <td th:text="${pedidonuevo.getFormatedPrice()}"></td>
                             </tr>
                         </tfoot>

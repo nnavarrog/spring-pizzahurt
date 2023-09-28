@@ -8,9 +8,7 @@ import uy.edu.ort.obligatorio.pizzahurt.repository.*;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import org.hibernate.mapping.Collection;
+import java.util.Date;
 
 @Configuration
 public class InitDB
@@ -18,11 +16,12 @@ public class InitDB
 
     @Bean
     CommandLineRunner initDatabase(TamanioRepository tamanioRepository,
-             TipoMasaRopository tipoMasaRopository,
-             TipoQuesoRepository tipoQuesoRepository,
-             TipoSalsaRepository tipoSalsaRepository,
-             TopinRepository topinRepository,
-             CreacionRepository creacionRepo)
+            TipoMasaRopository tipoMasaRopository,
+            TipoQuesoRepository tipoQuesoRepository,
+            TipoSalsaRepository tipoSalsaRepository,
+            TopinRepository topinRepository,
+            CreacionRepository creacionRepo,
+            UsuarioRepository usuarioRepo)
     {
 
         return args ->
@@ -207,8 +206,18 @@ public class InitDB
                     .tipoSalsa(salsaBBQ)
                     .build();
             creacionRepo.save(unaCreacion);
+
+            //USUARIOS
+            Usuario unUsuario = Usuario.builder()
+                    .activo(true)
+                    .email("usuario@mail.com")
+                    .lstUpdate(new Date())
+                    .createDate(new Date())
+                    .nombre("usuario")
+                    .password("password2023")
+                    .telefono("099123456")
+                    .build();
+            usuarioRepo.save(unUsuario);
         };
-
     }
-
 }
