@@ -19,7 +19,7 @@
     <body>
         <header th:insert="~{base-layout :: header-home}"></header>
         <div class="container mt-5">
-            <form th:action="@{/creaciones/crear}" th:object="${creacion}" method="post">
+            <form th:action="@{/creaciones/nueva}" th:object="${creacion}" method="post">
                 <div class="row">
                     <div class="col w-25">
                         <div class="form-group">
@@ -117,7 +117,6 @@
             </form>
         </div>
     </body>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 </html>
 
 

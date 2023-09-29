@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!-- /**
+ * NO LICENCE
+ *
+ * Proyecto obligatorio final.
+ * Curso: Desarrollo de aplicaciones con Spring / Spring Boot
+ * Universidad ORT
+ * Agosto 2023 - Octubre 2023
+ *
+ * Docente: Juan Larrayoz
+ *
+ * Authors:
+ *      Fourment, Juan
+ *      Navarro Gutérrez, Nicolás
+ *      Ortuzar, Martín
+ */ -->
+<html>
+    <head th:replace="~{base-layout :: head}"></head>
+    <body>
+        <header th:insert="~{base-layout :: header-home}"></header>
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title text-center">Ingrese los datos de su tarjeta de crédito</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="creditCardForm" th:object="${medio}">
+                                <div class="mb-3">
+                                    <label for="cardNumber">Número de Tarjeta</label>
+                                    <input type="text" class="form-control" id="cardNumber" name="cardNumber" required>
+                                </div>
+                                <!-- Agregar una div para mostrar la imagen del emisor -->
+                                <div class="mb-3" id="issuerIcon">
+                                    <img th:src="@{/images/__issuerName__.png}" alt="Emisor de Tarjeta" class="img-fluid">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="expiration">Fecha de Vencimiento (MM/YY)</label>
+                                    <input type="text" class="form-control" id="expiration" name="expiration" placeholder="MM/YY" required th:field="*{fecVtoForm}">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="cvv">CVV</label>
+                                    <input type="text" class="form-control" id="cvv" name="cvv" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Enviar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Agregar el archivo JavaScript para la función de conversión a mayúsculas -->
+        <script>
+            function loadIssuerImage(issuerName) {
+                const issuerIcon = document.getElementById('issuerIcon');
+                // Generar la URL de la imagen dinámicamente usando Thymeleaf
+                const imageUrl = `/img/${issuerName.toLowerCase()}.png`;
+                issuerIcon.innerHTML = `<img src="${imageUrl}" alt="${issuerName}" class="img-fluid">`;
+            }
+
+            document.getElementById('cardNumber').addEventListener('input', function() {
+                // Obtener el número de tarjeta ingresado por el usuario
+                const cardNumber = this.value;
+
+                // Definir los rangos de números de tarjeta para cada emisor
+                const issuers = [
+                    { name: 'Visa', pattern: /^4/ },
+                    { name: 'Mastercard', pattern: /^5[1-5]/ },
+                    { name: 'American Express', pattern: /^3[47]/ },
+                    // Agregar más emisores y patrones aquí
+                ];
+
+                // Buscar el emisor correspondiente
+                let matchedIssuer = null;
+                for (const issuer of issuers) {
+                    if (cardNumber.match(issuer.pattern)) {
+                        matchedIssuer = issuer;
+                        break;
+                    }
+                }
+
+                // Mostrar la imagen del emisor si se encuentra
+                if (matchedIssuer) {
+                    loadIssuerImage(matchedIssuer.name);
+                } else {
+                    // Si no se encuentra, mostrar una imagen en blanco o algún mensaje
+                    const issuerIcon = document.getElementById('issuerIcon');
+                    issuerIcon.innerHTML = '';
+                }
+            });
+        </script>
+    </body>
+</html>

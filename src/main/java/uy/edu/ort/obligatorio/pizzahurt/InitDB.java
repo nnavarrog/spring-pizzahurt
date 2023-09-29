@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.*;
 import uy.edu.ort.obligatorio.pizzahurt.repository.*;
+import uy.edu.ort.obligatorio.pizzahurt.utils.DateUtils;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -21,11 +22,14 @@ public class InitDB
             TipoSalsaRepository tipoSalsaRepository,
             TopinRepository topinRepository,
             CreacionRepository creacionRepo,
-            UsuarioRepository usuarioRepo)
+            MediodepagoRepository mediodepagoRepository,
+            UsuarioRepository usuarioRepo
+            )
     {
 
         return args ->
         {
+
             Tamanio tamanioPequeno = Tamanio.builder()
                     .nombre("Pequeño")
                     .descripcion("Tamaño pequeño")
@@ -218,6 +222,22 @@ public class InitDB
                     .telefono("099123456")
                     .build();
             usuarioRepo.save(unUsuario);
+
+
+            Date fechaFutura = DateUtils.getNewDateFromStr("01/05/2025");
+            //Medio de pago
+            MedioDePago mediodepagoVisa = MedioDePago.builder()
+                    .emisor_tarjeta("visa")
+                    .fecha_de_vencimiento(fechaFutura)
+                    .numero_de_tarjeta("4005550000000001")
+                    .cvv("123")
+                    .usuario(unUsuario)
+                    .build();
+            mediodepagoRepository.save(mediodepagoVisa);
+
+
+
+
         };
     }
 }

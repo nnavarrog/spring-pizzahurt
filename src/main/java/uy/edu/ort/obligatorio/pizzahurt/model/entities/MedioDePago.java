@@ -20,15 +20,9 @@
  */
 package uy.edu.ort.obligatorio.pizzahurt.model.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.Size;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+
 import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -43,34 +37,36 @@ import uy.edu.ort.obligatorio.pizzahurt.constraints.CreditCard;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Mediodepago {
+public class MedioDePago {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @NotEmpty
+    @NotBlank
+    @Column(length = 15)
     private String emisor_tarjeta;
 
     @NotNull
-    @Past
+    @Future
     private Date fecha_de_vencimiento;
 
     @NotNull
     @Size(min = 13, max = 18)
-    @CreditCard
+    //@CreditCard
     private String numero_de_tarjeta;
 
     @NotNull
     @Size(min = 3, max = 3)
-    private int cvv;
+    @Column(length = 3)
+    private String cvv;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JoinColumn(name= "usuario_id")
     private Usuario usuario;
 
-    @Override
-    public String toString() {
-        return "Mediosdepago{" + "id=" + id + ", emisor_tarjeta=" + emisor_tarjeta + ", fecha_de_vencimiento=" + fecha_de_vencimiento + ", numero_de_tarjeta=" + numero_de_tarjeta + ", cvv=" + cvv + '}';
-    }
+    @Transient
+    @Pattern(regexp = "^(0[1-9]|1[0-2])\\/\\d{2}$")
+    private String fecVtoForm;
+
 }

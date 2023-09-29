@@ -23,9 +23,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uy.edu.ort.obligatorio.pizzahurt.exceptions.EntidadNoExiste;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.Domicilio;
-import uy.edu.ort.obligatorio.pizzahurt.model.entities.Mediodepago;
+import uy.edu.ort.obligatorio.pizzahurt.model.entities.MedioDePago;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.Usuario;
 import uy.edu.ort.obligatorio.pizzahurt.repository.UsuarioRepository;
+
 
 @Service
 public class UsuarioService {
@@ -68,7 +69,7 @@ public class UsuarioService {
         usuarioRepo.save(usuario);
     }
     
-    public void agregarMediodepago(Long id,@Valid Mediodepago mediodepago) throws EntidadNoExiste {
+    public void agregarMediodepago(Long id,@Valid MedioDePago mediodepago) throws EntidadNoExiste {
         Usuario usuario = this.getUsuarioById(id).orElseThrow(() -> new EntidadNoExiste("No existe el usuario"));
         usuario.getMediosdepago().add(mediodepago);
         usuarioRepo.save(usuario);

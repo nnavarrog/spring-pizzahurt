@@ -56,7 +56,7 @@ public class CreacionController {
         return "table-creaciones";
     }
 
-    @PostMapping("/crear")
+    @PostMapping("/nueva")
     public String nuevaCreacion(@Valid @ModelAttribute Creacion creacion, BindingResult result, Model model){
 
         if(result.hasErrors()){
