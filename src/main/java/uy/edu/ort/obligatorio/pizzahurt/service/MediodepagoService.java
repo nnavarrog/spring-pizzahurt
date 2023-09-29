@@ -18,40 +18,33 @@ package uy.edu.ort.obligatorio.pizzahurt.service;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import uy.edu.ort.obligatorio.pizzahurt.model.entities.Mediodepago;
+import org.springframework.transaction.annotation.Transactional;
+import uy.edu.ort.obligatorio.pizzahurt.model.entities.MedioDePago;
 import uy.edu.ort.obligatorio.pizzahurt.repository.MediodepagoRepository;
 
 @Service
+@AllArgsConstructor
 public class MediodepagoService
 {
     private final MediodepagoRepository mediodepagorepo;
-    
-    @Autowired
-    public MediodepagoService(MediodepagoRepository mediodepagorepo) {
-        this.mediodepagorepo = mediodepagorepo;
-    }
 
-    public List<Mediodepago> getAllMediodepagos() {
+
+    public List<MedioDePago> getAllMediodepagos() {
         return mediodepagorepo.findAll();
     }
 
-    public Optional<Mediodepago> getMediodepagoById(Long id) {
-        return mediodepagorepo.findById(id);
+    @Transactional
+    public void createMediodepago(@Valid MedioDePago mediodepago) {
+        mediodepagorepo.save(mediodepago);
     }
 
-    public Mediodepago createMediodepago(@Valid Mediodepago mediodepago) {
-        return mediodepagorepo.save(mediodepago);
-    }
-
-    public Mediodepago updateMediodepago(Long id,@Valid Mediodepago mediodepago) {
-        mediodepago.setId(id);
-        return mediodepagorepo.save(mediodepago);
-    }
-
-    public void deleteMediodepago(Long id) {
-        mediodepagorepo.deleteById(id);
+    @Transactional
+    public void deleteMediodepago(MedioDePago mediodepago) {
+        mediodepagorepo.delete(mediodepago);
     }
 }
 

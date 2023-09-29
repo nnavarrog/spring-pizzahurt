@@ -21,11 +21,14 @@ public class InitDB
             TipoSalsaRepository tipoSalsaRepository,
             TopinRepository topinRepository,
             CreacionRepository creacionRepo,
-            UsuarioRepository usuarioRepo)
+            MediodepagoRepository mediodepagoRepository,
+            UsuarioRepository usuarioRepo
+            )
     {
 
         return args ->
         {
+
             Tamanio tamanioPequeno = Tamanio.builder()
                     .nombre("Pequeño")
                     .descripcion("Tamaño pequeño")
@@ -218,6 +221,23 @@ public class InitDB
                     .telefono("099123456")
                     .build();
             usuarioRepo.save(unUsuario);
+
+
+            Date fechaFutura = new Date();
+            fechaFutura.setYear(2025);
+            //Medio de pago
+            MedioDePago mediodepagoVisa = MedioDePago.builder()
+                    .emisor_tarjeta("visa")
+                    .fecha_de_vencimiento(fechaFutura)
+                    .numero_de_tarjeta("4005550000000001")
+                    .cvv(123)
+                    .usuario(unUsuario)
+                    .build();
+            mediodepagoRepository.save(mediodepagoVisa);
+
+
+
+
         };
     }
 }

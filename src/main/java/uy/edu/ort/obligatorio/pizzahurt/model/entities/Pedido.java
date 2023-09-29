@@ -69,7 +69,7 @@ public class Pedido
 
     @ManyToOne
     @JoinColumn(name = "medioPagoId")
-    private Mediodepago medioPago;
+    private MedioDePago medioPago;
 
     @ManyToOne
     @JoinColumn(name = "domicilioId")

@@ -33,7 +33,7 @@
                                 </div>
                                 <!-- Agregar una div para mostrar la imagen del emisor -->
                                 <div class="mb-3" id="issuerIcon">
-                                    <img src="" alt="Emisor de Tarjeta" class="img-fluid" id="issuerImage">
+                                    <img th:src="@{/images/__issuerName__.png}" alt="Emisor de Tarjeta" class="img-fluid">
                                 </div>
                                 <div class="mb-3">
                                     <label for="expiration">Fecha de Vencimiento (MM/YY)</label>
@@ -53,10 +53,10 @@
         <!-- Agregar el archivo JavaScript para la función de conversión a mayúsculas -->
         <script>
             function loadIssuerImage(issuerName) {
-                const issuerImage = document.getElementById('issuerImage');
-                // Generar la URL de la imagen dinámicamente usando la carpeta "img"
-                const imageUrl = `img/${issuerName.toLowerCase()}.png`;
-                issuerImage.src = imageUrl;
+                const issuerIcon = document.getElementById('issuerIcon');
+                // Generar la URL de la imagen dinámicamente usando Thymeleaf
+                const imageUrl = `/img/${issuerName.toLowerCase()}.png`;
+                issuerIcon.innerHTML = `<img src="${imageUrl}" alt="${issuerName}" class="img-fluid">`;
             }
 
             document.getElementById('cardNumber').addEventListener('input', function() {
@@ -71,7 +71,7 @@
                     // Agregar más emisores y patrones aquí
                 ];
 
-                // Buscar el emisor correspondiente y cargar la imagen desde la carpeta "img"
+                // Buscar el emisor correspondiente
                 let matchedIssuer = null;
                 for (const issuer of issuers) {
                     if (cardNumber.match(issuer.pattern)) {
@@ -85,7 +85,8 @@
                     loadIssuerImage(matchedIssuer.name);
                 } else {
                     // Si no se encuentra, mostrar una imagen en blanco o algún mensaje
-                    loadIssuerImage('blank'); // Reemplaza 'blank' con el nombre de tu imagen en blanco
+                    const issuerIcon = document.getElementById('issuerIcon');
+                    issuerIcon.innerHTML = '';
                 }
             });
         </script>

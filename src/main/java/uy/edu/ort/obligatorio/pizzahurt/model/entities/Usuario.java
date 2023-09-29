@@ -86,7 +86,7 @@ public class Usuario {
   
     @Builder.Default
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.PERSIST)
-    private List<Mediodepago> mediosdepago = new LinkedList<>();
+    private List<MedioDePago> mediosdepago = new LinkedList<>();
     
     @Builder.Default
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.PERSIST)

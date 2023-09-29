@@ -16,9 +16,9 @@
 package uy.edu.ort.obligatorio.pizzahurt.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import uy.edu.ort.obligatorio.pizzahurt.model.entities.Mediodepago;
+import uy.edu.ort.obligatorio.pizzahurt.model.entities.MedioDePago;
 
-public interface MediodepagoRepository extends JpaRepository<Mediodepago, Long>
+public interface MediodepagoRepository extends JpaRepository<MedioDePago, Long>
 {
     
 }
