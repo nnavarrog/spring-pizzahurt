@@ -43,7 +43,7 @@
                                     <label for="cvv">CVV</label>
                                     <input type="text" class="form-control" id="cvv" name="cvv" required>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Enviar</button>
+                                <button type="submit" class="btn btn-primary">Agregar medio de pago</button>
                             </form>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                 // Mostrar la imagen del emisor
                 const issuerIcon = document.getElementById('issuerIcon');
                 if (matchedIssuer) {
-                    issuerIcon.innerHTML = `<img src="${matchedIssuer.name.toLowerCase()}.png" alt="${matchedIssuer.name}" class="img-fluid">`;
+                    issuerIcon.innerHTML = `<img src="img/${matchedIssuer.name.toLowerCase()}.png" alt="${matchedIssuer.name}" class="img-fluid">`;
                 } else {
                     issuerIcon.innerHTML = '';
                 }

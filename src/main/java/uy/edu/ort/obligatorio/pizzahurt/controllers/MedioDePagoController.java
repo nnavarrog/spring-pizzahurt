@@ -18,7 +18,7 @@ public class MedioDePagoController {
     private MediodepagoService mediodepagoService;
 
 
-    @GetMapping("/nueva")
+    @GetMapping("/nuevo")
     public String index(Model model) {
 
         if(!model.containsAttribute("medio-de-pago"))
