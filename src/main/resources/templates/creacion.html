@@ -22,7 +22,7 @@
             <form th:action="@{/creaciones/crear}" th:object="${creacion}" method="post">
                 <div class="row">
                     <div class="col w-25">
-                        <div class="form-group mb-0">
+                        <div class="form-group">
                             <label for="nombre" class="black-text">Ingrese el nombre de la creación:</label>
                             <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre de la creación" required th:field="*{nombre}">
                         </div>
@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <input class="form-check-input hiding" type="hidden" th:value="${creacion.id}" name="id" th:field="*{id}">
-                <div class="row">
+                <div class="row" style="margin-top: 10px;">
                     <div class="col-md-4">
                         <div class="card">
                             <div class="card-header bg-dark text-white">
