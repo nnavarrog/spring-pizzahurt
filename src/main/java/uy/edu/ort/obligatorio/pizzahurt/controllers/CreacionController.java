@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.*;
 import uy.edu.ort.obligatorio.pizzahurt.service.CreacionService;
 
@@ -42,11 +43,7 @@ public class CreacionController {
         if(!model.containsAttribute("creacion"))
             model.addAttribute("creacion", new Creacion());
 
-        CreacionService.Listas listas = creacionService.obtenerIngredientesCreacion();
-        model.addAttribute("toppings",listas.topinsList());
-        model.addAttribute("tipos_de_masas",listas.tipoMasaList());
-        model.addAttribute("tipos_de_quesos",listas.tipoQuesoList());
-        model.addAttribute("tipos_de_salsas",listas.tipoSalsaList());
+        inicializarListas(model);
 
         return "creacion";
     }
@@ -63,7 +60,8 @@ public class CreacionController {
     public String nuevaCreacion(@Valid @ModelAttribute Creacion creacion, BindingResult result, Model model){
 
         if(result.hasErrors()){
-            index(model);
+            model.addAttribute("creacion", creacion);
+            inicializarListas(model);
             return "creacion";
         }
 
@@ -72,15 +70,25 @@ public class CreacionController {
     }
 
     @PostMapping("/modificar/{id}")
-    public String modificarCreacion(@PathVariable("id") Creacion creacion, Model model) {
-        index(model.addAttribute(creacion));
-         return "creacion";
+    public String modificarCreacion(@PathVariable("id") Creacion creacion, RedirectAttributes redirectAttributes) {
+        //index(model.addAttribute(creacion));
+        redirectAttributes.addFlashAttribute("creacion", creacion);
+        return "redirect:/creaciones/nueva";
     }
 
     @PostMapping("/eliminar/{id}")
     public String eliminarCreacion(@PathVariable("id") Creacion creacion) {
         creacionService.eliminarCreacion(creacion);
         return "redirect:/creaciones/listar";
+    }
+
+    private void inicializarListas(Model model){
+        CreacionService.Listas listas = creacionService.obtenerIngredientesCreacion();
+        model.addAttribute("toppings",listas.topinsList());
+        model.addAttribute("tipos_de_masas",listas.tipoMasaList());
+        model.addAttribute("tipos_de_quesos",listas.tipoQuesoList());
+        model.addAttribute("tipos_de_salsas",listas.tipoSalsaList());
+
     }
 
 }
