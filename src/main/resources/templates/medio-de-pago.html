@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<!-- /**
+ * NO LICENCE
+ *
+ * Proyecto obligatorio final.
+ * Curso: Desarrollo de aplicaciones con Spring / Spring Boot
+ * Universidad ORT
+ * Agosto 2023 - Octubre 2023
+ *
+ * Docente: Juan Larrayoz
+ *
+ * Authors:
+ *      Fourment, Juan
+ *      Navarro Gutérrez, Nicolás
+ *      Ortuzar, Martín
+ */ -->
+<html>
+    <head th:replace="~{base-layout :: head}"></head>
+    <body>
+        <header th:insert="~{base-layout :: header-home}"></header>
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title text-center">Ingrese los datos de su tarjeta de crédito</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="creditCardForm">
+                                <div class="mb-3">
+                                    <label for="cardNumber">Número de Tarjeta</label>
+                                    <input type="text" class="form-control" id="cardNumber" name="cardNumber" required>
+                                </div>
+                                <!-- Agregar un div para mostrar la imagen del emisor -->
+                                <div class="mb-3" id="issuerIcon">
+                                    <img src="" alt="Emisor de Tarjeta" class="img-fluid">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="expiration">Fecha de Vencimiento (MM/YY)</label>
+                                    <input type="text" class="form-control" id="expiration" name="expiration" placeholder="MM/YY" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="cvv">CVV</label>
+                                    <input type="text" class="form-control" id="cvv" name="cvv" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Enviar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Agregar el archivo JavaScript para la función de conversión a mayúsculas -->
+        <script>
+            function convertToUpperCase(element) {
+                element.value = element.value.toUpperCase();
+            }
+
+            document.getElementById('cardNumber').addEventListener('input', function() {
+                // Obtener el número de tarjeta ingresado por el usuario
+                const cardNumber = this.value;
+
+                // Definir los rangos de números de tarjeta para cada emisor
+                const issuers = [
+                    { name: 'Visa', pattern: /^4/ },
+                    { name: 'Mastercard', pattern: /^5[1-5]/ },
+                    { name: 'American Express', pattern: /^3[47]/ },
+                    // Agregar más emisores y patrones aquí
+                ];
+
+                // Buscar el emisor correspondiente
+                let matchedIssuer = null;
+                for (const issuer of issuers) {
+                    if (cardNumber.match(issuer.pattern)) {
+                        matchedIssuer = issuer;
+                        break;
+                    }
+                }
+
+                // Mostrar la imagen del emisor
+                const issuerIcon = document.getElementById('issuerIcon');
+                if (matchedIssuer) {
+                    issuerIcon.innerHTML = `<img src="${matchedIssuer.name.toLowerCase()}.png" alt="${matchedIssuer.name}" class="img-fluid">`;
+                } else {
+                    issuerIcon.innerHTML = '';
+                }
+            });
+
+            document.getElementById('creditCardForm').addEventListener('submit', function(e) {
+                // Validar la fecha de vencimiento (MM/YY)
+                const expirationInput = document.getElementById('expiration');
+                const expirationValue = expirationInput.value;
+                const currentDate = new Date();
+                const currentYear = currentDate.getFullYear() % 100;
+                const currentMonth = currentDate.getMonth() + 1;
+
+                if (!expirationValue.match(/^(0[1-9]|1[0-2])\/\d{2}$/)) {
+                    alert('Formato de fecha de vencimiento incorrecto (MM/YY).');
+                    e.preventDefault();
+                } else {
+                    const [month, year] = expirationValue.split('/');
+                    const cardYear = parseInt(year, 10);
+                    const cardMonth = parseInt(month, 10);
+                    if (cardYear < currentYear || (cardYear === currentYear && cardMonth < currentMonth)) {
+                        alert('La tarjeta ha vencido.');
+                        e.preventDefault();
+                    }
+                }
+
+                // Validar el CVV (debe tener 3 o 4 dígitos)
+                const cvvInput = document.getElementById('cvv');
+                const cvvValue = cvvInput.value;
+                if (!cvvValue.match(/^\d{3,4}$/)) {
+                    alert('El CVV debe tener 3 o 4 dígitos.');
+                    e.preventDefault();
+                }
+            });
+        </script>
+    </body>
+</html>
