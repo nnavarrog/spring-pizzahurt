@@ -26,7 +26,7 @@
                             <h5 class="card-title text-center">Ingrese los datos de su tarjeta de crédito</h5>
                         </div>
                         <div class="card-body">
-                            <form id="creditCardForm">
+                            <form id="creditCardForm" th:object="${medio}">
                                 <div class="mb-3">
                                     <label for="cardNumber">Número de Tarjeta</label>
                                     <input type="text" class="form-control" id="cardNumber" name="cardNumber" required>
@@ -37,7 +37,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="expiration">Fecha de Vencimiento (MM/YY)</label>
-                                    <input type="text" class="form-control" id="expiration" name="expiration" placeholder="MM/YY" required>
+                                    <input type="text" class="form-control" id="expiration" name="expiration" placeholder="MM/YY" required th:field="*{fecVtoForm}">
                                 </div>
                                 <div class="mb-3">
                                     <label for="cvv">CVV</label>

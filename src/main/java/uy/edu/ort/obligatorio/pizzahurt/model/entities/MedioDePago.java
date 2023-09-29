@@ -48,20 +48,25 @@ public class MedioDePago {
     private String emisor_tarjeta;
 
     @NotNull
-    @Past
+    @Future
     private Date fecha_de_vencimiento;
 
     @NotNull
     @Size(min = 13, max = 18)
-    @CreditCard
+    //@CreditCard
     private String numero_de_tarjeta;
 
     @NotNull
     @Size(min = 3, max = 3)
-    private int cvv;
+    @Column(length = 3)
+    private String cvv;
 
     @ManyToOne
     @JoinColumn(name= "usuario_id")
     private Usuario usuario;
+
+    @Transient
+    @Pattern(regexp = "^(0[1-9]|1[0-2])\\/\\d{2}$")
+    private String fecVtoForm;
 
 }

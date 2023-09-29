@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.*;
 import uy.edu.ort.obligatorio.pizzahurt.repository.*;
+import uy.edu.ort.obligatorio.pizzahurt.utils.DateUtils;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -223,14 +224,13 @@ public class InitDB
             usuarioRepo.save(unUsuario);
 
 
-            Date fechaFutura = new Date();
-            fechaFutura.setYear(2025);
+            Date fechaFutura = DateUtils.getNewDateFromStr("01/05/2025");
             //Medio de pago
             MedioDePago mediodepagoVisa = MedioDePago.builder()
                     .emisor_tarjeta("visa")
                     .fecha_de_vencimiento(fechaFutura)
                     .numero_de_tarjeta("4005550000000001")
-                    .cvv(123)
+                    .cvv("123")
                     .usuario(unUsuario)
                     .build();
             mediodepagoRepository.save(mediodepagoVisa);
