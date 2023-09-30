@@ -23,8 +23,8 @@ public class MedioDePagoController {
     @GetMapping("/nuevo")
     public String index(Model model) {
 
-        if(!model.containsAttribute("medio-de-pago"))
-            model.addAttribute("medio-de-pago", new MedioDePago());
+        if(!model.containsAttribute("medio"))
+            model.addAttribute("medio", new MedioDePago());
 
         return "medio-de-pago";
     }
@@ -33,30 +33,30 @@ public class MedioDePagoController {
     public String listar(Model model) {
 
         model.addAttribute("mediosDePago",mediodepagoService.getAllMediodepagos());
-        model.addAttribute("medio-de-pago",new MedioDePago());
+        model.addAttribute("medio",new MedioDePago());
         return "table-medios-de-pago";
     }
 
-    @PostMapping("/nueva")
-    public String nuevaCreacion(@Valid @ModelAttribute MedioDePago mediodepago, BindingResult result, Model model){
+    @PostMapping("/nuevo")
+    public String nuevaMedioPago(@Valid @ModelAttribute MedioDePago mediodepago, BindingResult result, Model model){
 
         if(result.hasErrors()){
-            model.addAttribute("medio-de-pago", mediodepago);
+            model.addAttribute("medio", mediodepago);
             return "medio-de-pago";
         }
 
         mediodepagoService.createMediodepago(mediodepago);
-        return "redirect:/creaciones/listar";
+        return "redirect:/medios-de-pago/listar";
     }
 
     @PostMapping("/modificar/{id}")
-    public String modificarCreacion(@PathVariable("id") MedioDePago mediodepago, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("medio-de-pago", mediodepago);
-        return "redirect:/medio-de-pago/nueva";
+    public String modificarMedioPago(@PathVariable("id") MedioDePago mediodepago, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("medio", mediodepago);
+        return "redirect:/medio-de-pago/nuevo";
     }
 
     @PostMapping("/eliminar/{id}")
-    public String eliminarCreacion(@PathVariable("id") MedioDePago mediodepago) {
+    public String eliminarMedioPago(@PathVariable("id") MedioDePago mediodepago) {
         mediodepagoService.deleteMediodepago(mediodepago);
         return "redirect:/medio-de-pago/listar";
     }
