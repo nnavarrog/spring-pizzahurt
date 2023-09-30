@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!-- /**
+ * NO LICENCE
+ *
+ * Proyecto obligatorio final.
+ * Curso: Desarrollo de aplicaciones con Spring / Spring Boot
+ * Universidad ORT
+ * Agosto 2023 - Octubre 2023
+ *
+ * Docente: Juan Larrayoz
+ *
+ * Authors:
+ *      Fourment, Juan
+ *      Navarro Gutérrez, Nicolás
+ *      Ortuzar, Martín
+ */ -->
+<html>
+    <head th:replace="~{base-layout :: head}"></head>
+    <body>
+        <header th:insert="~{base-layout :: header-home}"></header>
+        <div class="container mt-5">
+            <form th:action="@{/domicilios/nueva}" th:object="${domicilio}" method="post">
+                <div class="row">
+                    <div class="col w-25">
+                        <div class="form-group">
+                            <label for="calle" class="black-text">Calle:</label>
+                            <input type="text" id="calle" name="calle" class="form-control" placeholder="Calle" required th:field="*{calle}">
+                            <p class="error" th:if="${#fields.hasErrors('calle')}" th:errors="*{calle}">Calle incorrecto</p>
+                            
+                            <label for="ndepuerta" class="black-text">Numero de puerta:</label>
+                            <input type="text" id="ndepuerta" name="ndepuerta" class="form-control" placeholder="Numero de puerta" required th:field="*{ndepuerta}">
+                            <p class="error" th:if="${#fields.hasErrors('ndepuerta')}" th:errors="*{ndepuerta}">Numero de puerta incorrecto</p>
+                            
+                            <label for="apto" class="black-text">Numero de apto:</label>
+                            <input type="text" id="apto" name="apto" class="form-control" placeholder="Numero de apartamento" th:field="*{apto}">
+                            <p class="error" th:if="${#fields.hasErrors('apto')}" th:errors="*{apto}">Numero de apartamento incorrecto</p>
+                            
+                            <label for="barrio" class="black-text">Barrio:</label>
+                            <input type="text" id="barrio" name="barrio" class="form-control" placeholder="Barrio" required th:field="*{barrio}">
+                            <p class="error" th:if="${#fields.hasErrors('barrio')}" th:errors="*{barrio}">Barrio incorrecto</p>
+                            
+                            <label for="codigo_postal" class="black-text">Codigo Postal:</label>
+                            <input type="text" id="codigo_postal" name="codigo_postal" class="form-control" placeholder="Codigo postal" required th:field="*{codigo_postal}">
+                            <p class="error" th:if="${#fields.hasErrors('codigo_postal')}" th:errors="*{codigo_postal}">Codigo Postal incorrecto</p>
+                            
+                            <label for="observaciones" class="black-text">Observaciones:</label>
+                            <input type="text" id="observaciones" name="observaciones" class="form-control" placeholder="Observaciones" required th:field="*{observaciones}">
+                            <p class="error" th:if="${#fields.hasErrors('observaciones')}" th:errors="*{observaciones}">Observaciones incorrecto</p>
+                            
+                        </div>
+                    </div>
+                    <div class="col w-25">
+                    </div>
+                    <div class="col w-50">
+                        <button type="submit" class="btn btn-primary rounded-circle" style="width: 100px; height: 100px;">
+                            <i class="fa-solid fa-house"></i>
+                            Agregar domicilio
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
+
+
+<style>
+    .error {
+        color: red;
+    }
+    .card {
+        height: 100%;
+    }
+
+    .card-body-bg-image {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 100%;
+    }
+
+    .card-header-small {
+        font-size: 0.8rem;
+    }
+
+    .black-text {
+        color: black;
+    }
+
+    .gray-background {
+        background-color: rgba(242, 242, 242, 0.7);
+        padding: 10px;
+        border-radius: 5px;
+    }
+</style>

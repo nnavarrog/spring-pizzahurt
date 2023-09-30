@@ -27,53 +27,50 @@ import uy.edu.ort.obligatorio.pizzahurt.model.entities.MedioDePago;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.Usuario;
 import uy.edu.ort.obligatorio.pizzahurt.repository.UsuarioRepository;
 
-
 @Service
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepo;
-    
+
     @Autowired
     public UsuarioService(UsuarioRepository usuarioRepo) {
         this.usuarioRepo = usuarioRepo;
     }
-    
+
     public List<Usuario> getAllUsuarios() {
         return usuarioRepo.findAll();
     }
-    
+
     public Optional<Usuario> getUsuarioById(Long id) {
         return usuarioRepo.findById(id);
     }
-    
+
     public Usuario crearUsuario(Usuario usuario) {
         usuario.setActivo(true);
         usuario.setCreateDate(new Date());
         usuario.setLstUpdate(new Date());
-       
+
         return usuarioRepo.save(usuario);
     }
-    
+
     public Usuario actualizarUsuario(Long id, Usuario usuario) {
         usuario.setId(id);
         return usuarioRepo.save(usuario);
     }
-    
+
     public void borrarUsuario(Long id) {
         usuarioRepo.deleteById(id);
     }
-    
-    public void agregarDomicilio(Long id,@Valid Domicilio domicilio) throws EntidadNoExiste {
+
+    public List<Domicilio> usuarioDomicilios(Long id) throws EntidadNoExiste {
         Usuario usuario = this.getUsuarioById(id).orElseThrow(() -> new EntidadNoExiste("No existe el usuario"));
-        usuario.getDomicilios().add(domicilio);
-        usuarioRepo.save(usuario);
+        return usuario.getDomicilios();
     }
-    
-    public void agregarMediodepago(Long id,@Valid MedioDePago mediodepago) throws EntidadNoExiste {
+
+    public void agregarMediodepago(Long id, @Valid MedioDePago mediodepago) throws EntidadNoExiste {
         Usuario usuario = this.getUsuarioById(id).orElseThrow(() -> new EntidadNoExiste("No existe el usuario"));
         usuario.getMediosdepago().add(mediodepago);
         usuarioRepo.save(usuario);
     }
-    
 
 }

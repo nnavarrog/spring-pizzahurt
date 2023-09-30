@@ -1,0 +1,35 @@
+{
+    "elements": {},
+    "attributes": {
+        "th:text": {
+            "context": "label"
+        },
+        "th:if": {
+            "context": "p"
+        },
+        "th:action": {
+            "context": "form"
+        },
+        "th:insert": {
+            "context": "header"
+        },
+        "th:src": {
+            "context": "img"
+        },
+        "th:replace": {
+            "context": "head"
+        },
+        "th:field": {
+            "context": "input"
+        },
+        "th:href": {
+            "context": "a"
+        },
+        "th:each": {
+            "context": "tr"
+        },
+        "th:fragment": {
+            "context": "header"
+        }
+    }
+}

@@ -23,7 +23,8 @@ public class InitDB
             TopinRepository topinRepository,
             CreacionRepository creacionRepo,
             MediodepagoRepository mediodepagoRepository,
-            UsuarioRepository usuarioRepo
+            UsuarioRepository usuarioRepo,
+            DomicilioRepository domicilioRepo
             )
     {
 
@@ -234,10 +235,18 @@ public class InitDB
                     .usuario(unUsuario)
                     .build();
             mediodepagoRepository.save(mediodepagoVisa);
-
-
-
-
-        };
+            
+            //Domicilio
+            Domicilio domicilio = Domicilio.builder()
+                    .calle("Soriano")
+                    .ndepuerta(1287)
+                    .apto(1)
+                    .barrio("Centro")
+                    .codigo_postal("13000")
+                    .observaciones("DITEC")
+                    .usuario(unUsuario)
+                    .build();
+            domicilioRepo.save(domicilio);
+            };
     }
 }
