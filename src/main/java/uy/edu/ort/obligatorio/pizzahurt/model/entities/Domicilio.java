@@ -53,6 +53,8 @@ public class Domicilio {
 
     @NotNull(message = "{campo.notNull}")
     @NotEmpty(message = "{campo.notEmpty}")
+    @Min(value = 0, message = "{numero.positivo}")
+    @Pattern(regexp = "\\d+", message = "{numero.numerico}")
     private String codigo_postal;
 
     @NotNull(message = "{campo.notNull}")
@@ -61,11 +63,12 @@ public class Domicilio {
 
     @NotNull(message = "{campo.notNull}")
     @Min(value = 0, message = "{numero.positivo}")
-    private int ndepuerta;
+    @Pattern(regexp = "\\d+", message = "{numero.numerico}")
+    private String ndepuerta;
 
-    @NotNull(message = "{campo.notNull}")
     @Min(value = 0, message = "{numero.positivo}")
-    private int apto;
+    @Pattern(regexp = "\\d+", message = "{numero.numerico}")
+    private String apto;
 
     private String observaciones;
 

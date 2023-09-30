@@ -239,8 +239,8 @@ public class InitDB
             //Domicilio
             Domicilio domicilio = Domicilio.builder()
                     .calle("Soriano")
-                    .ndepuerta(1287)
-                    .apto(1)
+                    .ndepuerta("1287")
+                    .apto("1")
                     .barrio("Centro")
                     .codigo_postal("13000")
                     .observaciones("DITEC")
