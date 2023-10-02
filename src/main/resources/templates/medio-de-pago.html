@@ -30,6 +30,7 @@
                                 <div class="mb-3">
                                     <label for="cardNumber">Número de Tarjeta</label>
                                     <input type="text" class="form-control" id="cardNumber" name="cardNumber" required th:field="*{numero_de_tarjeta}">
+                                    <span th:if="${#fields.hasErrors('numero_de_tarjeta')}" th:errors="*{numero_de_tarjeta}" class="error"></span>
                                 </div>
                                 <div class="mb-3">
                                     <img id="issuerIcon" th:src="@{/img/__issuerName__.png}" alt="Emisor de Tarjeta" class="img-fluid">
@@ -38,10 +39,12 @@
                                 <div class="mb-3">
                                     <label for="expiration">Fecha de Vencimiento (MM/YY)</label>
                                     <input type="text" class="form-control" id="expiration" name="expiration" placeholder="MM/YY" required th:field="*{fecVtoForm}">
+                                    <p  th:errors="*{fecVtoForm}"  class="error">hhhhhhhhhh</p>
                                 </div>
                                 <div class="mb-3">
                                     <label for="cvv">CVV</label>
                                     <input type="text" class="form-control" id="cvv" name="cvv" required th:field="*{cvv}">
+                                    <span th:if="${#fields.hasErrors('cvv')}" th:errors="*{cvv}" class="error">fgfgfg</span>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Agregar tarjeta</button>
                             </form>

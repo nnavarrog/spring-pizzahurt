@@ -1,14 +1,14 @@
 package uy.edu.ort.obligatorio.pizzahurt.controllers;
 
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import uy.edu.ort.obligatorio.pizzahurt.model.entities.Creacion;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.MedioDePago;
+import uy.edu.ort.obligatorio.pizzahurt.constraints.MedioPago;
 import uy.edu.ort.obligatorio.pizzahurt.service.MediodepagoService;
 
 @Controller
@@ -38,7 +38,7 @@ public class MedioDePagoController {
     }
 
     @PostMapping("/nuevo")
-    public String nuevaMedioPago(@Valid @ModelAttribute MedioDePago mediodepago, BindingResult result, Model model){
+    public String nuevaMedioPago(@Validated(MedioPago.class) @ModelAttribute MedioDePago mediodepago, BindingResult result, Model model){
 
         if(result.hasErrors()){
             model.addAttribute("medio", mediodepago);

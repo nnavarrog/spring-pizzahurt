@@ -29,7 +29,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import uy.edu.ort.obligatorio.pizzahurt.constraints.CreditCard;
+import uy.edu.ort.obligatorio.pizzahurt.constraints.FechaExpiracion;
+import uy.edu.ort.obligatorio.pizzahurt.constraints.MedioPago;
 
 @Entity
 @Getter
@@ -43,20 +44,19 @@ public class MedioDePago {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotBlank(groups = MedioPago.class, message = "Debe ingresar al menos un emisor")
     @Column(length = 15)
     private String emisor_tarjeta;
 
-    @NotNull
-    @Future
+    @NotNull (message = "Debe ingresar una fecha de vencimiento")
+    @Future ( message = "La fecha de vencimiento debe ser una futura")
     private Date fecha_de_vencimiento;
 
-    @NotNull
+    @NotBlank(groups = MedioPago.class, message = "Debe ingresar un número de tarjeta")
     @Size(min = 13, max = 18)
-    //@CreditCard
     private String numero_de_tarjeta;
 
-    @NotNull
+    @NotBlank(groups = MedioPago.class, message = "Debe ingresar el código cvv")
     @Size(min = 3, max = 3)
     @Column(length = 3)
     private String cvv;
@@ -66,7 +66,8 @@ public class MedioDePago {
     private Usuario usuario;
 
     @Transient
-    @Pattern(regexp = "^(0[1-9]|1[0-2])\\/\\d{2}$")
+    @FechaExpiracion(groups = MedioPago.class, message = "La fecha de vencimiento debe ser futura")
+    @Pattern(regexp = "^(0[1-9]|1[0-2])\\/\\d{2}$",groups = MedioPago.class, message = "Debe ingresar un fecha válida")
     private String fecVtoForm;
 
 }

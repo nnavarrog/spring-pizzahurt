@@ -46,13 +46,13 @@
                 <tbody>
                 <tr th:each="medio : ${mediosDePago}">
                     <td>
-                        <label th:text="${medio.getNumero_de_tarjeta()}"></label>
+                        <label th:text="${medio.numero_de_tarjeta}"></label>
                     </td>
                     <td>
-                        <label th:text="'$ ' + ${medio.getEmisor_tarjeta()}"></label>
+                        <label th:text="'$ ' + ${medio.emisor_tarjeta}"></label>
                     </td>
                     <td>
-                        <label th:text="'$ ' + ${medio.getFecha_de_vencimiento()}"></label>
+                        <label th:text="'$ ' + ${medio.fecha_de_vencimiento}"></label>
                     </td>
                     <td>
                         <form th:action="@{/medios-de-pago/modificar/{id}(id=${medio.id})}" method="post" class="edit-form">
