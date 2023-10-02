@@ -30,7 +30,7 @@ import uy.edu.ort.obligatorio.pizzahurt.service.CreacionService;
 @Controller
 @SessionAttributes("usuario")
 @AllArgsConstructor
-@RequestMapping("creaciones")
+@RequestMapping("/creaciones")
 public class CreacionController {
 
     private CreacionService creacionService;
@@ -48,7 +48,7 @@ public class CreacionController {
         return "creacion";
     }
 
-    @GetMapping("/listar")
+    @GetMapping
     public String listar(Model model) {
 
         model.addAttribute("creaciones",creacionService.obtenerCreaciones());
@@ -66,7 +66,7 @@ public class CreacionController {
         }
 
         creacionService.altaCreacion(creacion);
-        return "redirect:/creaciones/listar";
+        return "redirect:/creaciones";
     }
 
     @PostMapping("/modificar/{id}")
@@ -79,7 +79,7 @@ public class CreacionController {
     @PostMapping("/eliminar/{id}")
     public String eliminarCreacion(@PathVariable("id") Creacion creacion) {
         creacionService.eliminarCreacion(creacion);
-        return "redirect:/creaciones/listar";
+        return "redirect:/creaciones";
     }
 
     private void inicializarListas(Model model){

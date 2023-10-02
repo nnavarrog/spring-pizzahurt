@@ -7,14 +7,13 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import uy.edu.ort.obligatorio.pizzahurt.model.entities.Creacion;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.MedioDePago;
 import uy.edu.ort.obligatorio.pizzahurt.service.MediodepagoService;
 
 @Controller
 @SessionAttributes("usuario")
 @AllArgsConstructor
-@RequestMapping("medios-de-pago")
+@RequestMapping("/medios-de-pago")
 public class MedioDePagoController {
 
     private MediodepagoService mediodepagoService;
