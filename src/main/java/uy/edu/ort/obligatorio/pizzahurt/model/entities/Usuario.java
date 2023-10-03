@@ -25,9 +25,7 @@ import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
-import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -107,7 +105,7 @@ public class Usuario implements UserDetails{
     
     @Builder.Default
     @Transient
-    private List<? extends GrantedAuthority> authorities = new LinkedList<>();
+    private List<GrantedAuthority> authorities = new LinkedList<>();
 
     @Override
     public String getUsername()

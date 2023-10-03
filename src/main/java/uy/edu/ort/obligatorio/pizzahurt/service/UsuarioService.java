@@ -20,9 +20,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import uy.edu.ort.obligatorio.pizzahurt.exceptions.EntidadNoExiste;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.Domicilio;
@@ -34,9 +37,12 @@ import uy.edu.ort.obligatorio.pizzahurt.repository.UsuarioRepository;
 public class UsuarioService implements UserDetailsService{
 
     private final UsuarioRepository usuarioRepo;
+    
+    private PasswordEncoder encoder;
 
     @Autowired
-    public UsuarioService(UsuarioRepository usuarioRepo) {
+    public UsuarioService(UsuarioRepository usuarioRepo, PasswordEncoder encoder) {
+        this.encoder = encoder;
         this.usuarioRepo = usuarioRepo;
     }
 
@@ -52,7 +58,7 @@ public class UsuarioService implements UserDetailsService{
         usuario.setActivo(true);
         usuario.setCreateDate(new Date());
         usuario.setLstUpdate(new Date());
-
+        usuario.setPassword(encoder.encode(usuario.getPassword()));
         return usuarioRepo.save(usuario);
     }
 
@@ -80,6 +86,7 @@ public class UsuarioService implements UserDetailsService{
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
         Usuario user = usuarioRepo.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("El usuario " + username +  " no existe"));
+        user.getAuthorities().add(new SimpleGrantedAuthority("USER"));
         return user;
     }
 

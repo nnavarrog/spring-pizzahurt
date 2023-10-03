@@ -10,6 +10,7 @@ import uy.edu.ort.obligatorio.pizzahurt.utils.DateUtils;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class InitDB
@@ -24,7 +25,8 @@ public class InitDB
             CreacionRepository creacionRepo,
             MediodepagoRepository mediodepagoRepository,
             UsuarioRepository usuarioRepo,
-            DomicilioRepository domicilioRepo
+            DomicilioRepository domicilioRepo,
+            PasswordEncoder encoder
             )
     {
 
@@ -219,7 +221,7 @@ public class InitDB
                     .lstUpdate(new Date())
                     .createDate(new Date())
                     .nombre("usuario")
-                    .password("password2023")
+                    .password(encoder.encode("password2023"))
                     .telefono("099123456")
                     .build();
             usuarioRepo.save(unUsuario);

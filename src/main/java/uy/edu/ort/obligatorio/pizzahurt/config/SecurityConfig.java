@@ -36,6 +36,9 @@ public class SecurityConfig
 
     @Autowired
     private UsuarioService userService;
+    
+    @Autowired
+    private PasswordEncoder encoder;
 
     private final String[] sessionedUris =
     {
@@ -43,17 +46,11 @@ public class SecurityConfig
     };
 
     @Bean
-    public PasswordEncoder passwordEncoder()
-    {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
     public AuthenticationProvider authenticationProvider()
     {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userService);
-        provider.setPasswordEncoder(passwordEncoder());
+        provider.setPasswordEncoder(encoder);
         return provider;
     }
 
@@ -63,7 +60,7 @@ public class SecurityConfig
         return http
                 .authorizeHttpRequests(auth ->
                 {
-                    auth.requestMatchers(antMatcher("/h2-console/")).permitAll()
+                    auth.requestMatchers(antMatcher("/h2-console/**")).permitAll()
                             .requestMatchers(mvc.pattern("/creaciones")).hasAnyAuthority("USER")
                             .requestMatchers(mvc.pattern("/creaciones/**")).hasAnyAuthority("USER")
                             .requestMatchers(mvc.pattern("/domicilios")).hasAnyAuthority("USER")
@@ -90,7 +87,8 @@ public class SecurityConfig
                 })
                 .formLogin(login ->
                 {
-                    login.loginPage("/")
+                    login//.loginPage("/")
+                            .permitAll()
                             .defaultSuccessUrl("/creaciones")
                             .usernameParameter("username")
                             .passwordParameter("password");
