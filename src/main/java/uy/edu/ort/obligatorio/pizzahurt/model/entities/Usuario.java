@@ -71,15 +71,15 @@ public class Usuario implements UserDetails{
     @NotEmpty(message = "El teléfono no puede ser vacío.")
     private String telefono;
 
-    private String passSalt;
-
     @NotNull
-    @Past
-    private Date createDate;
+    //@Past
+    @Builder.Default
+    private Date createDate = new Date();
 
     @NotNull
 //    @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}_\\d{2}:\\d{2}:\\d{2}") YYYY-MM-DD_hh:mm:ss
-    private Date lstUpdate;
+    @Builder.Default
+    private Date lstUpdate = new Date();
 
     @NotNull
     private boolean activo;
