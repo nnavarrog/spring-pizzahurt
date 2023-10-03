@@ -64,29 +64,49 @@ public class SecurityConfig
                 .authorizeHttpRequests(auth ->
                 {
                     auth.requestMatchers(antMatcher("/h2-console/")).permitAll()
-                            .requestMatchers(mvc.pattern("/creaciones")).hasAnyRole("USER")
-                            .requestMatchers(mvc.pattern("/creaciones/**")).hasRole("USER")
-                            .requestMatchers(mvc.pattern("/domicilios")).hasAnyRole("USER")
-                            .requestMatchers(mvc.pattern("/domicilios/**")).hasAnyRole("USER")
-                            .requestMatchers(mvc.pattern("/medios-de-pago")).hasAnyRole("USER")
-                            .requestMatchers(mvc.pattern("/medios-de-pago/**")).hasAnyRole("USER")
-                            .requestMatchers(mvc.pattern("/pedidos")).hasAnyRole("USER")
-                            .requestMatchers(mvc.pattern("/pedidos/**")).hasAnyRole("USER")
+                            .requestMatchers(mvc.pattern("/creaciones")).hasAnyAuthority("USER")
+                            .requestMatchers(mvc.pattern("/creaciones/**")).hasAnyAuthority("USER")
+                            .requestMatchers(mvc.pattern("/domicilios")).hasAnyAuthority("USER")
+                            .requestMatchers(mvc.pattern("/domicilios/**")).hasAnyAuthority("USER")
+                            .requestMatchers(mvc.pattern("/medios-de-pago")).hasAnyAuthority("USER")
+                            .requestMatchers(mvc.pattern("/medios-de-pago/**")).hasAnyAuthority("USER")
+                            .requestMatchers(mvc.pattern("/pedidos")).hasAnyAuthority("USER")
+                            .requestMatchers(mvc.pattern("/pedidos/**")).hasAnyAuthority("USER")
                             .requestMatchers(mvc.pattern(HttpMethod.POST, "/login")).permitAll()
                             .requestMatchers(mvc.pattern("/")).permitAll()
                             .requestMatchers(mvc.pattern("/**")).permitAll()
+                            .requestMatchers(antMatcher("/creaciones")).hasAnyAuthority("USER")
+                            .requestMatchers(antMatcher("/creaciones/**")).hasAnyAuthority("USER")
+                            .requestMatchers(antMatcher("/domicilios")).hasAnyAuthority("USER")
+                            .requestMatchers(antMatcher("/domicilios/**")).hasAnyAuthority("USER")
+                            .requestMatchers(antMatcher("/medios-de-pago")).hasAnyAuthority("USER")
+                            .requestMatchers(antMatcher("/medios-de-pago/**")).hasAnyAuthority("USER")
+                            .requestMatchers(antMatcher("/pedidos")).hasAnyAuthority("USER")
+                            .requestMatchers(antMatcher("/pedidos/**")).hasAnyAuthority("USER")
+                            .requestMatchers(antMatcher(HttpMethod.POST, "/login")).permitAll()
+                            .requestMatchers(antMatcher("/")).permitAll()
+                            .requestMatchers(antMatcher("/**")).permitAll()
                             .anyRequest().authenticated();
                 })
                 .formLogin(login ->
                 {
                     login.loginPage("/")
-                            .defaultSuccessUrl("/creaciones");
+                            .defaultSuccessUrl("/creaciones")
+                            .usernameParameter("username")
+                            .passwordParameter("password");
                 })
                 .logout(logout ->
                 {
                     logout.logoutUrl("/logout")
                             .logoutSuccessUrl("/")
                             .permitAll();
+                })
+                .csrf(csrf ->
+                {
+                    csrf.disable();
+                })
+                .cors(cors -> {
+                    cors.disable();
                 })
                 .build();
     }
