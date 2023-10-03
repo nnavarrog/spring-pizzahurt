@@ -18,6 +18,7 @@ package uy.edu.ort.obligatorio.pizzahurt.controllers;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -57,7 +58,7 @@ public class CreacionController {
     }
 
     @PostMapping("/nueva")
-    public String nuevaCreacion(@Valid @ModelAttribute Creacion creacion, BindingResult result, Model model){
+    public String nuevaCreacion(@Valid @ModelAttribute Creacion creacion, BindingResult result, Model model, @AuthenticationPrincipal Usuario usuario){
 
         if(result.hasErrors()){
             model.addAttribute("creacion", creacion);

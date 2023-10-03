@@ -79,6 +79,9 @@ public class CreacionService {
         creacionRepository.delete(creacion);
     }
 
-
+    public List<Creacion> getCreacionesByUsuario(Usuario usuario)
+    {
+        return creacionRepository.findByUsuario(usuario);
+    }
 
 }
