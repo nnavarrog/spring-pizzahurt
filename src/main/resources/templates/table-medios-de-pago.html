@@ -49,14 +49,14 @@
                         <label th:text="${medio.numero_de_tarjeta}"></label>
                     </td>
                     <td>
-                        <label th:text="'$ ' + ${medio.emisor_tarjeta}"></label>
+                        <label th:text="${medio.emisor_tarjeta}"></label>
                     </td>
                     <td>
-                        <label th:text="'$ ' + ${medio.fecha_de_vencimiento}"></label>
+                        <label th:text="${medio.fecVtoForm}"></label>
                     </td>
                     <td>
                         <form th:action="@{/medios-de-pago/modificar/{id}(id=${medio.id})}" method="post" class="edit-form">
-                            <input type="hidden" name="_method" value="POST" /> <!-- Método POST -->
+                            <input type="hidden" name="_method" value="POST" />
                             <button type="submit" class="btn btn-primary btn-sm">
                                 <i class="bi bi-pencil"></i> Editar
                             </button>

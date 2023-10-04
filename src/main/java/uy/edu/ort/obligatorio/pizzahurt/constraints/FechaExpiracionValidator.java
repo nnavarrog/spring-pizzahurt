@@ -19,17 +19,18 @@ public class FechaExpiracionValidator implements ConstraintValidator<FechaExpira
 
         try {
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yy");
-            LocalDate fechaExpiracion = LocalDate.parse("01/" + fecha, formatter);
+            String[] partes = fecha.split("/");
+            int mes = Integer.parseInt(partes[0]);
+            int anio = Integer.parseInt(partes[1]);
 
+            int anioCompleto = 2000 + anio;
+
+            LocalDate fechaExpiracion = LocalDate.of(anioCompleto, mes, 1);
 
             LocalDate fechaActual = LocalDate.now();
 
-            System.out.println("Fecha de expiration " + fecha);
 
-            System.out.println("Fecha actual " + fechaActual);
-
-            return !fechaExpiracion.isAfter(fechaActual);
+            return fechaExpiracion.isAfter(fechaActual);
         } catch (Exception e) {
             return false;
         }

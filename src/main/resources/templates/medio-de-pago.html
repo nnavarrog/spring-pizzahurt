@@ -26,25 +26,32 @@
                             <h5 class="card-title text-center">Ingrese los datos de su tarjeta de crédito</h5>
                         </div>
                         <div class="card-body">
-                            <form th:action="@{/medios-de-pago/nuevo}" th:object="${medio}" method="post">
+                            <form th:action="@{/medios-de-pago/nuevo}" th:object="${medioDePago}" method="post">
+                                <input class="form-check-input hiding"  type="hidden" th:value="${medioDePago.id}" name="id" th:field="*{id}">
                                 <div class="mb-3">
                                     <label for="cardNumber">Número de Tarjeta</label>
                                     <input type="text" class="form-control" id="cardNumber" name="cardNumber" required th:field="*{numero_de_tarjeta}">
-                                    <span th:if="${#fields.hasErrors('numero_de_tarjeta')}" th:errors="*{numero_de_tarjeta}" class="error"></span>
+                                    <div th:if="${#fields.hasErrors('numero_de_tarjeta')}">
+                                        <span th:errors="*{numero_de_tarjeta}" class="error">Debe ingresar un número de tarjeta correcto</span>
+                                    </div>
                                 </div>
                                 <div class="mb-3">
                                     <img id="issuerIcon" th:src="@{/img/__issuerName__.png}" alt="Emisor de Tarjeta" class="img-fluid">
-                                    <input  class="form-control" type="hidden" id="emisorTarjeta" style="" name="emisor" required th:field="*{emisor_tarjeta}">
+                                    <input  class="form-control" type="hidden" id="emisorTarjeta" style="" name="emisor" required th:field="${medioDePago.emisor_tarjeta}">
                                 </div>
                                 <div class="mb-3">
                                     <label for="expiration">Fecha de Vencimiento (MM/YY)</label>
-                                    <input type="text" class="form-control" id="expiration" name="expiration" placeholder="MM/YY" required th:field="*{fecVtoForm}">
-                                    <p  th:errors="*{fecVtoForm}"  class="error">hhhhhhhhhh</p>
+                                    <input type="text" class="form-control" id="expiration" name="expiration" placeholder="MM/YY" required th:field="${medioDePago.fecVtoForm}">
+                                    <div th:if="${#fields.hasErrors('fecVtoForm')}">
+                                        <span  th:errors="*{fecVtoForm}" class="error">Debe ingresar una fecha de expiración correcta</span>
+                                    </div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="cvv">CVV</label>
-                                    <input type="text" class="form-control" id="cvv" name="cvv" required th:field="*{cvv}">
-                                    <span th:if="${#fields.hasErrors('cvv')}" th:errors="*{cvv}" class="error">fgfgfg</span>
+                                    <input type="text" class="form-control" id="cvv" name="cvv" required th:field="${medioDePago.cvv}">
+                                    <div th:if="${#fields.hasErrors('cvv')}">
+                                        <span th:errors="*{cvv}" class="error">Debe ingresar un cvv correcto</span>
+                                    </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Agregar tarjeta</button>
                             </form>
@@ -56,8 +63,6 @@
 
         <script>
             function loadIssuerImageAndField(issuerName) {
-                console.log("Entro al mached user");
-                console.log(issuerName);
                 issuerName = issuerName.toLowerCase();
                 const issuerImage = document.getElementById('issuerIcon');
                 // Generar la URL de la imagen dinámicamente usando Thymeleaf
@@ -68,9 +73,10 @@
                 emisorTarjetaInput.value = issuerName;
             }
 
-            document.getElementById('cardNumber').addEventListener('input', function() {
-                // Obtener el número de tarjeta ingresado por el usuario
-                const cardNumber = this.value;
+            function obtenerEmisor(){
+                let inputElement = document.getElementById("cardNumber");
+
+                let cardNumber = inputElement.value;
 
                 // Definir los rangos de números de tarjeta para cada emisor
                 const issuers = [
@@ -78,10 +84,8 @@
                     { name: 'Mastercard', pattern: /^5[1-5]/ },
                     { name: 'American Express', pattern: /^3[47]/ },
                     { name: 'Diners Club', pattern: /^3(?:0[0-5]|[68][0-9])[0-9]{4,}$/ },
-                    // Agregar más emisores y patrones aquí
                 ];
 
-                // Buscar el emisor correspondiente y cargar la imagen desde la ruta en tu servidor
                 let matchedIssuer = null;
                 for (const issuer of issuers) {
                     if (cardNumber.match(issuer.pattern)) {
@@ -90,7 +94,6 @@
                     }
                 }
 
-                console.log(matchedIssuer);
                 if (matchedIssuer) {
                     loadIssuerImageAndField(matchedIssuer.name);
                 } else {
@@ -98,7 +101,13 @@
                     const imageUrl = `/img/issuerName.png`;
                     issuerIcon.innerHTML = `<img src="${imageUrl}" alt="" class="img-fluid">`;
                 }
-            });
+            }
+
+            document.getElementById('cardNumber').addEventListener('input',obtenerEmisor);
+
+            window.addEventListener('load', obtenerEmisor);
+
         </script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     </body>
 </html>
