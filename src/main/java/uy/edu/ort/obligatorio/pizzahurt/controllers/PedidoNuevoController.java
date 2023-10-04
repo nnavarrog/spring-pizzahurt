@@ -21,7 +21,6 @@ import java.util.logging.Logger;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,10 +34,10 @@ import uy.edu.ort.obligatorio.pizzahurt.model.entities.EstadoPedido;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.Item;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.Pedido;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.Usuario;
-import uy.edu.ort.obligatorio.pizzahurt.repository.CreacionRepository;
 import uy.edu.ort.obligatorio.pizzahurt.repository.TamanioRepository;
 import uy.edu.ort.obligatorio.pizzahurt.repository.UsuarioRepository;
 import uy.edu.ort.obligatorio.pizzahurt.service.CreacionService;
+import uy.edu.ort.obligatorio.pizzahurt.service.DomicilioService;
 import uy.edu.ort.obligatorio.pizzahurt.service.PedidoService;
 
 @Controller
@@ -52,6 +51,7 @@ public class PedidoNuevoController
     private CreacionService creacionService;
     private TamanioRepository tamanioRepo;
     private UsuarioRepository userRepo;
+    private DomicilioService domicilioService;
 
     @GetMapping("/nuevo")
     public String nuevoPedido(Model model,
@@ -83,6 +83,29 @@ public class PedidoNuevoController
         }
         return "redirect:/pedidos/nuevo";
     }
+    
+    @GetMapping("/domicilio")
+    public String domiciliosPedido(Model model,
+             @ModelAttribute("pedidonuevo") Pedido pedidoNuevo,
+             @AuthenticationPrincipal Usuario usuario)
+    {
+        pedidoNuevo.updateAmounts();
+        model.addAttribute("pedidonuevo", pedidoNuevo);
+        model.addAttribute("domicilios", domicilioService.getDomiciliosByUsuario(usuario));
+        return "pedido-nuevo-domicilio";
+    }
+    
+    @PostMapping("/domicilio")
+    public String addDomicilioPedido(Model model,
+             @ModelAttribute("pedidonuevo") Pedido pedidoNuevo,
+             @AuthenticationPrincipal Usuario usuario)
+    {
+        pedidoNuevo.updateAmounts();
+        model.addAttribute("pedidonuevo", pedidoNuevo);
+        model.addAttribute("domicilios", domicilioService.getDomiciliosByUsuario(usuario));
+        return "pedido-nuevo";
+    }
+
 
     @ModelAttribute("pedidonuevo")
     public Pedido pedidoNuevo(Authentication auth)
