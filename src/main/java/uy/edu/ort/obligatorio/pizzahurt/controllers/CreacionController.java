@@ -49,9 +49,9 @@ public class CreacionController {
     }
 
     @GetMapping
-    public String listar(Model model) {
+    public String listar(Model model,@AuthenticationPrincipal Usuario usuario) {
 
-        model.addAttribute("creaciones",creacionService.obtenerCreaciones());
+        model.addAttribute("creaciones",creacionService.getCreacionesByUsuario(usuario));
         model.addAttribute("creacion",new Creacion());
         return "table-creaciones";
     }
@@ -65,6 +65,7 @@ public class CreacionController {
             return "creacion";
         }
 
+        creacion.setUsuario(usuario);
         creacionService.altaCreacion(creacion);
         return "redirect:/creaciones";
     }

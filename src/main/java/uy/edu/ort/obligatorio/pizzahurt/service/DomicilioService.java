@@ -18,8 +18,11 @@ package uy.edu.ort.obligatorio.pizzahurt.service;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import uy.edu.ort.obligatorio.pizzahurt.exceptions.EntidadNoExiste;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.Domicilio;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.Usuario;
@@ -27,16 +30,11 @@ import uy.edu.ort.obligatorio.pizzahurt.repository.DomicilioRepository;
 import uy.edu.ort.obligatorio.pizzahurt.repository.UsuarioRepository;
 
 @Service
+@AllArgsConstructor
 public class DomicilioService
 {
-    private final DomicilioRepository domicilioRepo;
-    private final UsuarioRepository usuarioRepo;
-    
-    @Autowired
-    public DomicilioService(DomicilioRepository domicilioRepo, UsuarioRepository usuarioRepo) {
-        this.domicilioRepo = domicilioRepo;
-        this.usuarioRepo = usuarioRepo;
-    }
+    private  DomicilioRepository domicilioRepo;
+
 
     public Optional<Domicilio> getDomicilioById(Long id) {
         return domicilioRepo.findById(id);
@@ -54,12 +52,14 @@ public class DomicilioService
     public void deleteDomicilio(Long id) {
         domicilioRepo.deleteById(id);
     }
-    
-    public void agregarDomicilio(Long id,Domicilio domicilio) throws EntidadNoExiste {
-        Usuario usuario = usuarioRepo.findById(id).orElseThrow(() -> new EntidadNoExiste("No existe el usuario"));
-//        usuario.getDomicilios().add(domicilio);
-        domicilio.setUsuario(usuario);
+
+    @Transactional
+    public void agregarDomicilio(Domicilio domicilio)  {
         domicilioRepo.save(domicilio);
+    }
+
+    public List<Domicilio> getDomiciliosByUsuario(Usuario usuario){
+        return domicilioRepo.findByUsuario(usuario);
     }
 }
 

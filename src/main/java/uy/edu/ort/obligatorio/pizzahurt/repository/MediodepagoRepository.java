@@ -17,8 +17,11 @@ package uy.edu.ort.obligatorio.pizzahurt.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.MedioDePago;
+import uy.edu.ort.obligatorio.pizzahurt.model.entities.Usuario;
+
+import java.util.List;
 
 public interface MediodepagoRepository extends JpaRepository<MedioDePago, Long>
 {
-    
+    List<MedioDePago> findByUsuario(Usuario usuario);
 }
