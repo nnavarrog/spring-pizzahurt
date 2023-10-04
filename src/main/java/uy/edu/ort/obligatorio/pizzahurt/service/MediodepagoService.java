@@ -29,6 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.MedioDePago;
+import uy.edu.ort.obligatorio.pizzahurt.model.entities.Usuario;
 import uy.edu.ort.obligatorio.pizzahurt.repository.MediodepagoRepository;
 import uy.edu.ort.obligatorio.pizzahurt.utils.DateUtils;
 
@@ -39,8 +40,8 @@ public class MediodepagoService
     private final MediodepagoRepository mediodepagorepo;
 
 
-    public List<MedioDePago> getAllMediodepagos() {
-        return mediodepagorepo.findAll();
+    public List<MedioDePago> getAllMediodepagos(Usuario usuario) {
+        return mediodepagorepo.findByUsuario(usuario);
     }
 
     @Transactional
