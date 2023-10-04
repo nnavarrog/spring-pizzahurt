@@ -23,7 +23,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.*;
 import uy.edu.ort.obligatorio.pizzahurt.service.CreacionService;
 
@@ -50,9 +49,9 @@ public class CreacionController {
     }
 
     @GetMapping
-    public String listar(Model model) {
+    public String listar(Model model,@AuthenticationPrincipal Usuario usuario) {
 
-        model.addAttribute("creaciones",creacionService.obtenerCreaciones());
+        model.addAttribute("creaciones",creacionService.getCreacionesByUsuario(usuario));
         model.addAttribute("creacion",new Creacion());
         return "table-creaciones";
     }
@@ -66,15 +65,16 @@ public class CreacionController {
             return "creacion";
         }
 
+        creacion.setUsuario(usuario);
         creacionService.altaCreacion(creacion);
         return "redirect:/creaciones";
     }
 
     @PostMapping("/modificar/{id}")
-    public String modificarCreacion(@PathVariable("id") Creacion creacion, RedirectAttributes redirectAttributes) {
-        //index(model.addAttribute(creacion));
-        redirectAttributes.addFlashAttribute("creacion", creacion);
-        return "redirect:/creaciones/nueva";
+    public String modificarCreacion(@PathVariable("id") Creacion creacion, Model model) {
+        inicializarListas(model);
+        model.addAttribute("creacion",creacion);
+        return "creacion";
     }
 
     @PostMapping("/eliminar/{id}")

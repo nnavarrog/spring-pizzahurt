@@ -17,8 +17,11 @@ package uy.edu.ort.obligatorio.pizzahurt.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.Domicilio;
+import uy.edu.ort.obligatorio.pizzahurt.model.entities.Usuario;
+
+import java.util.List;
 
 public interface DomicilioRepository extends JpaRepository<Domicilio, Long>
 {
-    
+    List<Domicilio> findByUsuario(Usuario usuario);
 }

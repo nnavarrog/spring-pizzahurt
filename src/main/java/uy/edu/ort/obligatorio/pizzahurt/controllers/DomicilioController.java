@@ -18,6 +18,7 @@ package uy.edu.ort.obligatorio.pizzahurt.controllers;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,9 +37,6 @@ import uy.edu.ort.obligatorio.pizzahurt.service.UsuarioService;
 public class DomicilioController {
 
     private DomicilioService domicilioService;
-    private UsuarioService usuarioService;
-
-
 
     @GetMapping("/nueva")
     public String index(Model model) {
@@ -49,27 +47,27 @@ public class DomicilioController {
     }
 
     @GetMapping("/listar")
-    public String listar(Model model) throws EntidadNoExiste {
+    public String listar(Model model,@AuthenticationPrincipal Usuario usuario){
 
-        model.addAttribute("domicilios",usuarioService.usuarioDomicilios(1L));
+        model.addAttribute("domicilios",domicilioService.getDomiciliosByUsuario(usuario));
         model.addAttribute("domicilio",new Domicilio());
         return "table-domicilios";
     }
 
     @PostMapping("/nueva")
-    public String nuevoDomicilio(@Valid @ModelAttribute Domicilio domicilio, BindingResult result) throws EntidadNoExiste{
+    public String nuevoDomicilio(@Valid @ModelAttribute Domicilio domicilio, BindingResult result,@AuthenticationPrincipal Usuario usuario){
 
         if(result.hasErrors()){
             return "domicilio";
         }
-        
-        domicilioService.agregarDomicilio(1L,domicilio);
+
+        domicilio.setUsuario(usuario);
+        domicilioService.agregarDomicilio(domicilio);
         return "redirect:/domicilios/listar";
     }
 
     @PostMapping("/modificar/{id}")
     public String modificarDomicilio(@PathVariable("id") Domicilio domicilio, RedirectAttributes redirectAttributes) {
-        //index(model.addAttribute(creacion));
         redirectAttributes.addFlashAttribute("domicilio", domicilio);
         return "redirect:/domicilios/nueva";
     }

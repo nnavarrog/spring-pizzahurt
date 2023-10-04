@@ -204,6 +204,18 @@ public class InitDB
                     .build();
             topinRepository.save(otroToping);
 
+            //USUARIOS
+            Usuario unUsuario = Usuario.builder()
+                    .activo(true)
+                    .email("usuario@mail.com")
+                    .lstUpdate(new Date())
+                    .createDate(new Date())
+                    .nombre("Mario Bros")
+                    .password(encoder.encode("password2023"))
+                    .telefono("099123456")
+                    .build();
+            usuarioRepo.save(unUsuario);
+
             //CREACIONES
             Creacion unaCreacion = Creacion.builder()
                     .nombre("La huevo")
@@ -211,20 +223,9 @@ public class InitDB
                     .tipoMasa(tipoMasaGruesa)
                     .tipoQueso(otroQueso)
                     .tipoSalsa(salsaBBQ)
+                    .usuario(unUsuario)
                     .build();
             creacionRepo.save(unaCreacion);
-
-            //USUARIOS
-            Usuario unUsuario = Usuario.builder()
-                    .activo(true)
-                    .email("usuario@mail.com")
-                    .lstUpdate(new Date())
-                    .createDate(new Date())
-                    .nombre("usuario")
-                    .password(encoder.encode("password2023"))
-                    .telefono("099123456")
-                    .build();
-            usuarioRepo.save(unUsuario);
 
 
             Date fechaFutura = DateUtils.getNewDateFromStr("01/05/2025");

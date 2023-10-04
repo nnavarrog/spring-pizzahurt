@@ -1,14 +1,19 @@
 package uy.edu.ort.obligatorio.pizzahurt.controllers;
 
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.MedioDePago;
+import uy.edu.ort.obligatorio.pizzahurt.constraints.MedioPago;
+import uy.edu.ort.obligatorio.pizzahurt.model.entities.Usuario;
 import uy.edu.ort.obligatorio.pizzahurt.service.MediodepagoService;
+
+import java.text.ParseException;
+
 
 @Controller
 @SessionAttributes("usuario")
@@ -22,42 +27,43 @@ public class MedioDePagoController {
     @GetMapping("/nuevo")
     public String index(Model model) {
 
-        if(!model.containsAttribute("medio-de-pago"))
-            model.addAttribute("medio-de-pago", new MedioDePago());
+        if(!model.containsAttribute("medioDePago"))
+            model.addAttribute("medioDePago", new MedioDePago());
 
         return "medio-de-pago";
     }
 
     @GetMapping("/listar")
-    public String listar(Model model) {
+    public String listar(Model model,@AuthenticationPrincipal Usuario usuario) {
 
-        model.addAttribute("mediosDePago",mediodepagoService.getAllMediodepagos());
-        model.addAttribute("medio-de-pago",new MedioDePago());
+        model.addAttribute("mediosDePago",mediodepagoService.getAllMediodepagos(usuario));
+        model.addAttribute("medioDePago",new MedioDePago());
         return "table-medios-de-pago";
     }
 
-    @PostMapping("/nueva")
-    public String nuevaCreacion(@Valid @ModelAttribute MedioDePago mediodepago, BindingResult result, Model model){
+    @PostMapping("/nuevo")
+    public String nuevaMedioPago(@Validated(MedioPago.class) @ModelAttribute MedioDePago medioDePago, BindingResult result, Model model,@AuthenticationPrincipal Usuario usuario) throws ParseException {
 
         if(result.hasErrors()){
-            model.addAttribute("medio-de-pago", mediodepago);
+            model.addAttribute("medioDePago", medioDePago);
             return "medio-de-pago";
         }
 
-        mediodepagoService.createMediodepago(mediodepago);
-        return "redirect:/creaciones/listar";
+        medioDePago.setUsuario(usuario);
+        mediodepagoService.createMediodepago(medioDePago);
+        return "redirect:/medios-de-pago/listar";
     }
 
     @PostMapping("/modificar/{id}")
-    public String modificarCreacion(@PathVariable("id") MedioDePago mediodepago, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("medio-de-pago", mediodepago);
-        return "redirect:/medio-de-pago/nueva";
+    public String modificarMedioPago(@PathVariable("id") MedioDePago medioDePago, Model model) {
+        model.addAttribute("medioDePago",medioDePago);
+        return "medio-de-pago";
     }
 
     @PostMapping("/eliminar/{id}")
-    public String eliminarCreacion(@PathVariable("id") MedioDePago mediodepago) {
-        mediodepagoService.deleteMediodepago(mediodepago);
-        return "redirect:/medio-de-pago/listar";
+    public String eliminarMedioPago(@PathVariable("id") MedioDePago medioDePago) {
+        mediodepagoService.deleteMediodepago(medioDePago);
+        return "redirect:/medios-de-pago/listar";
     }
 
 

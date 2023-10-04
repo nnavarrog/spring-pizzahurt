@@ -19,7 +19,7 @@
 <body>
 <header th:insert="~{base-layout :: header-home}"></header>
 <div class="container">
-<h2>Creaciones</h2>
+<h2>Medios de pago</h2>
     <div class="row">
         <div class="col">
         </div>
@@ -27,7 +27,7 @@
         </div>
         <div class="col">
             <div class="text-right mb-2">
-                <a th:href="@{nueva}" class="btn btn-success">Agregar medio de pago</a>
+                <a th:href="@{nuevo}" class="btn btn-success">Agregar medio de pago</a>
             </div>
         </div>
     </div>
@@ -36,27 +36,27 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th class="w-25">Numero de tarjeta</th>
-                    <th class="w-25">Emisor de tarjeta</th>
-                    <th class="w-25">Fecha de vencimiento</th>
-                    <th class="w-25"></th>
-                    <th class="w-25"></th>
+                    <th class="w-20">Numero de tarjeta</th>
+                    <th class="w-20">Emisor de tarjeta</th>
+                    <th class="w-20">Fecha de vencimiento</th>
+                    <th class="w-20"></th>
+                    <th class="w-20"></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="medio : ${mediosDePago}">
                     <td>
-                        <label th:text="${medio.getNumero_de_tarjeta()}"></label>
+                        <label th:text="${medio.numero_de_tarjeta}"></label>
                     </td>
                     <td>
-                        <label th:text="'$ ' + ${medio.getEmisor_tarjeta()}"></label>
+                        <label th:text="${medio.emisor_tarjeta}"></label>
                     </td>
                     <td>
-                        <label th:text="'$ ' + ${medio.getFecha_de_vencimiento()}"></label>
+                        <label th:text="${medio.fecVtoForm}"></label>
                     </td>
                     <td>
                         <form th:action="@{/medios-de-pago/modificar/{id}(id=${medio.id})}" method="post" class="edit-form">
-                            <input type="hidden" name="_method" value="POST" /> <!-- Método POST -->
+                            <input type="hidden" name="_method" value="POST" />
                             <button type="submit" class="btn btn-primary btn-sm">
                                 <i class="bi bi-pencil"></i> Editar
                             </button>
