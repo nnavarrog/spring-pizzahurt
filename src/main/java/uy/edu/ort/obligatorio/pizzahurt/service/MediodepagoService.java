@@ -17,6 +17,9 @@ package uy.edu.ort.obligatorio.pizzahurt.service;
 
 import jakarta.validation.Valid;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -41,16 +44,10 @@ public class MediodepagoService
     }
 
     @Transactional
-    public void createMediodepago(@Valid MedioDePago mediodepago) {
-        String strVto = mediodepago.getFecVtoForm();
-        String[] partes = strVto.split(strVto);
-        StringBuilder sb = new StringBuilder();
-        sb.append("01/")
-                .append(partes[0])
-                .append("/")
-                .append(partes[1]);
-        Date fecVto = DateUtils.getNewDateFromStr(sb.toString());
-        mediodepago.setFecha_de_vencimiento(fecVto);
+    public void createMediodepago(MedioDePago mediodepago) throws ParseException {
+
+        SimpleDateFormat formato = new SimpleDateFormat("MM/yy");
+        mediodepago.setFecha_de_vencimiento(formato.parse(mediodepago.getFecVtoForm()));
         mediodepagorepo.save(mediodepago);
     }
 
