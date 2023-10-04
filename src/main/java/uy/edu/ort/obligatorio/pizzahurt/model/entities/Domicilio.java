@@ -25,8 +25,10 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -45,23 +47,28 @@ public class Domicilio {
     @GeneratedValue
     private Long id;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "{campo.notNull}")
+    @NotEmpty(message = "{campo.notEmpty}")
     private String barrio;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "{campo.notNull}")
+    @NotEmpty(message = "{campo.notEmpty}")
+    @Min(value = 0, message = "{numero.positivo}")
+    @Pattern(regexp = "\\d+", message = "{numero.numerico}")
     private String codigo_postal;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "{campo.notNull}")
+    @NotEmpty(message = "{campo.notEmpty}")
     private String calle;
 
-    @NotNull
-    @NotEmpty
-    private int ndepuerta;
+    @NotNull(message = "{campo.notNull}")
+    @Min(value = 0, message = "{numero.positivo}")
+    @Pattern(regexp = "\\d+", message = "{numero.numerico}")
+    private String ndepuerta;
 
-    private int apto;
+    @Min(value = 0, message = "{numero.positivo}")
+    @Pattern(regexp = "\\d+", message = "{numero.numerico}")
+    private String apto;
 
     private String observaciones;
 

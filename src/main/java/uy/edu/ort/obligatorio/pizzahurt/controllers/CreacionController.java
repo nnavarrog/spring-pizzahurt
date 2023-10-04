@@ -18,6 +18,7 @@ package uy.edu.ort.obligatorio.pizzahurt.controllers;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,7 +30,7 @@ import uy.edu.ort.obligatorio.pizzahurt.service.CreacionService;
 @Controller
 @SessionAttributes("usuario")
 @AllArgsConstructor
-@RequestMapping("creaciones")
+@RequestMapping("/creaciones")
 public class CreacionController {
 
     private CreacionService creacionService;
@@ -47,7 +48,7 @@ public class CreacionController {
         return "creacion";
     }
 
-    @GetMapping("/listar")
+    @GetMapping
     public String listar(Model model) {
 
         model.addAttribute("creaciones",creacionService.obtenerCreaciones());
@@ -56,7 +57,7 @@ public class CreacionController {
     }
 
     @PostMapping("/nueva")
-    public String nuevaCreacion(@Valid @ModelAttribute Creacion creacion, BindingResult result, Model model){
+    public String nuevaCreacion(@Valid @ModelAttribute Creacion creacion, BindingResult result, Model model, @AuthenticationPrincipal Usuario usuario){
 
         if(result.hasErrors()){
             model.addAttribute("creacion", creacion);
@@ -65,7 +66,7 @@ public class CreacionController {
         }
 
         creacionService.altaCreacion(creacion);
-        return "redirect:/creaciones/listar";
+        return "redirect:/creaciones";
     }
 
     @PostMapping("/modificar/{id}")
@@ -78,7 +79,7 @@ public class CreacionController {
     @PostMapping("/eliminar/{id}")
     public String eliminarCreacion(@PathVariable("id") Creacion creacion) {
         creacionService.eliminarCreacion(creacion);
-        return "redirect:/creaciones/listar";
+        return "redirect:/creaciones";
     }
 
     private void inicializarListas(Model model){

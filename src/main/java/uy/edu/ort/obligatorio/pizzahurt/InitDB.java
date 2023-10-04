@@ -10,6 +10,7 @@ import uy.edu.ort.obligatorio.pizzahurt.utils.DateUtils;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class InitDB
@@ -23,7 +24,9 @@ public class InitDB
             TopinRepository topinRepository,
             CreacionRepository creacionRepo,
             MediodepagoRepository mediodepagoRepository,
-            UsuarioRepository usuarioRepo
+            UsuarioRepository usuarioRepo,
+            DomicilioRepository domicilioRepo,
+            PasswordEncoder encoder
             )
     {
 
@@ -218,7 +221,7 @@ public class InitDB
                     .lstUpdate(new Date())
                     .createDate(new Date())
                     .nombre("usuario")
-                    .password("password2023")
+                    .password(encoder.encode("password2023"))
                     .telefono("099123456")
                     .build();
             usuarioRepo.save(unUsuario);
@@ -234,10 +237,18 @@ public class InitDB
                     .usuario(unUsuario)
                     .build();
             mediodepagoRepository.save(mediodepagoVisa);
-
-
-
-
-        };
+            
+            //Domicilio
+            Domicilio domicilio = Domicilio.builder()
+                    .calle("Soriano")
+                    .ndepuerta("1287")
+                    .apto("1")
+                    .barrio("Centro")
+                    .codigo_postal("13000")
+                    .observaciones("DITEC")
+                    .usuario(unUsuario)
+                    .build();
+            domicilioRepo.save(domicilio);
+            };
     }
 }

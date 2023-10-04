@@ -20,6 +20,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import uy.edu.ort.obligatorio.pizzahurt.exceptions.EntidadNoExiste;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.Domicilio;
@@ -27,53 +33,61 @@ import uy.edu.ort.obligatorio.pizzahurt.model.entities.MedioDePago;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.Usuario;
 import uy.edu.ort.obligatorio.pizzahurt.repository.UsuarioRepository;
 
-
 @Service
-public class UsuarioService {
+public class UsuarioService implements UserDetailsService{
 
     private final UsuarioRepository usuarioRepo;
     
+    private PasswordEncoder encoder;
+
     @Autowired
-    public UsuarioService(UsuarioRepository usuarioRepo) {
+    public UsuarioService(UsuarioRepository usuarioRepo, PasswordEncoder encoder) {
+        this.encoder = encoder;
         this.usuarioRepo = usuarioRepo;
     }
-    
+
     public List<Usuario> getAllUsuarios() {
         return usuarioRepo.findAll();
     }
-    
+
     public Optional<Usuario> getUsuarioById(Long id) {
         return usuarioRepo.findById(id);
     }
-    
+
     public Usuario crearUsuario(Usuario usuario) {
         usuario.setActivo(true);
         usuario.setCreateDate(new Date());
         usuario.setLstUpdate(new Date());
-       
+        usuario.setPassword(encoder.encode(usuario.getPassword()));
         return usuarioRepo.save(usuario);
     }
-    
+
     public Usuario actualizarUsuario(Long id, Usuario usuario) {
         usuario.setId(id);
         return usuarioRepo.save(usuario);
     }
-    
+
     public void borrarUsuario(Long id) {
         usuarioRepo.deleteById(id);
     }
-    
-    public void agregarDomicilio(Long id,@Valid Domicilio domicilio) throws EntidadNoExiste {
+
+    public List<Domicilio> usuarioDomicilios(Long id) throws EntidadNoExiste {
         Usuario usuario = this.getUsuarioById(id).orElseThrow(() -> new EntidadNoExiste("No existe el usuario"));
-        usuario.getDomicilios().add(domicilio);
-        usuarioRepo.save(usuario);
+        return usuario.getDomicilios();
     }
-    
-    public void agregarMediodepago(Long id,@Valid MedioDePago mediodepago) throws EntidadNoExiste {
+
+    public void agregarMediodepago(Long id, @Valid MedioDePago mediodepago) throws EntidadNoExiste {
         Usuario usuario = this.getUsuarioById(id).orElseThrow(() -> new EntidadNoExiste("No existe el usuario"));
         usuario.getMediosdepago().add(mediodepago);
         usuarioRepo.save(usuario);
     }
-    
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
+    {
+        Usuario user = usuarioRepo.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("El usuario " + username +  " no existe"));
+        user.getAuthorities().add(new SimpleGrantedAuthority("USER"));
+        return user;
+    }
 
 }

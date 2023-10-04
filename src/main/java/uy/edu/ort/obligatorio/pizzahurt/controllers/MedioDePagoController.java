@@ -16,7 +16,7 @@ import java.text.ParseException;
 @Controller
 @SessionAttributes("usuario")
 @AllArgsConstructor
-@RequestMapping("medios-de-pago")
+@RequestMapping("/medios-de-pago")
 public class MedioDePagoController {
 
     private MediodepagoService mediodepagoService;

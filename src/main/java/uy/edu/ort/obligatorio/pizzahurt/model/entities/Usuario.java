@@ -21,10 +21,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 import java.util.Date;
 import java.util.LinkedList;
@@ -34,6 +34,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Getter
@@ -41,7 +43,7 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Usuario {
+public class Usuario implements UserDetails{
 
     @Id
     @GeneratedValue
@@ -67,15 +69,15 @@ public class Usuario {
     @NotEmpty(message = "El teléfono no puede ser vacío.")
     private String telefono;
 
-    private String passSalt;
-
     @NotNull
-    @Past
-    private Date createDate;
+    //@Past
+    @Builder.Default
+    private Date createDate = new Date();
 
     @NotNull
 //    @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}_\\d{2}:\\d{2}:\\d{2}") YYYY-MM-DD_hh:mm:ss
-    private Date lstUpdate;
+    @Builder.Default
+    private Date lstUpdate = new Date();
 
     @NotNull
     private boolean activo;
@@ -99,5 +101,39 @@ public class Usuario {
     @Override
     public String toString() {
         return "Usuario{" + "id=" + id + ", email=" + email + ", Nombre=" + nombre + ", password=" + password + ", Telefono=" + telefono + ", createDate=" + createDate + ", lstUpdate=" + lstUpdate + ", activo=" + (activo ? "Si" : "No") + '}';
+    }
+    
+    @Builder.Default
+    @Transient
+    private List<GrantedAuthority> authorities = new LinkedList<>();
+
+    @Override
+    public String getUsername()
+    {
+        return this.nombre;
+    }
+
+    @Override
+    public boolean isAccountNonExpired()
+    {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked()
+    {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled()
+    {
+        return this.activo;
     }
 }

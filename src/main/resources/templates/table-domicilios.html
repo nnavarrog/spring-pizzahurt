@@ -19,7 +19,7 @@
 <body>
 <header th:insert="~{base-layout :: header-home}"></header>
 <div class="container">
-<h2>Creaciones</h2>
+<h2>Domicilios</h2>
     <div class="row">
         <div class="col">
         </div>
@@ -27,31 +27,47 @@
         </div>
         <div class="col">
             <div class="text-right mb-2">
-                <a th:href="@{/creaciones/nueva}" class="btn btn-success">Agregar Pizza</a>
+                <a th:href="@{nueva}" class="btn btn-success">Agregar direccion</a>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col">
-            <table class="table">
+            <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th class="w-25">Nombre</th>
-                    <th class="w-25">Precio</th>
-                    <th class="w-25"></th>
-                    <th class="w-25"></th>
+                    <th class="w-25">Calle</th>
+                    <th>Ndepuerta</th>
+                    <th>Apto</th>
+                    <th>Barrio</th>
+                    <th>Codigo postal</th>
+                    <th class="w-25">Observaciones</th>
+                    <th></th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="creacion : ${creaciones}">
+                <tr th:each="domicilio : ${domicilios}">
                     <td>
-                        <label th:text="${creacion.nombre}"></label>
+                        <label th:text="${domicilio.calle}"></label>
                     </td>
                     <td>
-                        <label th:text="'$ ' + ${creacion.getFormatedLabel()}"></label>
+                        <label th:text="${domicilio.ndepuerta}"></label>
                     </td>
                     <td>
-                        <form th:action="@{/creaciones/modificar/{id}(id=${creacion.id})}" method="post" class="edit-form">
+                        <label th:text="${domicilio.apto}"></label>
+                    </td>
+                    <td>
+                        <label th:text="${domicilio.barrio}"></label>
+                    </td>
+                    <td>
+                        <label th:text="${domicilio.codigo_postal}"></label>
+                    </td>
+                    <td>
+                        <label th:text="${domicilio.observaciones}"></label>
+                    </td>
+                    <td>
+                        <form th:action="@{/domicilios/modificar/{id}(id=${domicilio.id})}" method="post" class="edit-form">
                             <input type="hidden" name="_method" value="POST" /> <!-- Método POST -->
                             <button type="submit" class="btn btn-primary btn-sm">
                                 <i class="bi bi-pencil"></i> Editar
@@ -59,7 +75,7 @@
                         </form>
                     </td>
                     <td>
-                        <form th:action="@{/creaciones/eliminar/{id}(id=${creacion.id})}" method="post" class="edit-form">
+                        <form th:action="@{/domicilios/eliminar/{id}(id=${domicilio.id})}" method="post" class="edit-form">
                             <input type="hidden" name="_method" value="POST" />
                             <button type="submit" class="btn btn-danger btn-sm">
                                 <i class="bi bi-trash"></i> Borrar
@@ -75,5 +91,3 @@
 </body>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 </html>
-
-</style>

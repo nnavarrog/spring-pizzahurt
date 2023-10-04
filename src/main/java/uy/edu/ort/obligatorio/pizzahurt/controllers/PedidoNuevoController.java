@@ -20,6 +20,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,9 +34,11 @@ import uy.edu.ort.obligatorio.pizzahurt.exceptions.EntidadNoExiste;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.EstadoPedido;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.Item;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.Pedido;
+import uy.edu.ort.obligatorio.pizzahurt.model.entities.Usuario;
 import uy.edu.ort.obligatorio.pizzahurt.repository.CreacionRepository;
 import uy.edu.ort.obligatorio.pizzahurt.repository.TamanioRepository;
 import uy.edu.ort.obligatorio.pizzahurt.repository.UsuarioRepository;
+import uy.edu.ort.obligatorio.pizzahurt.service.CreacionService;
 import uy.edu.ort.obligatorio.pizzahurt.service.PedidoService;
 
 @Controller
@@ -45,7 +49,7 @@ public class PedidoNuevoController
 {
 
     private PedidoService pedidoService;
-    private CreacionRepository creacionRepo;
+    private CreacionService creacionService;
     private TamanioRepository tamanioRepo;
     private UsuarioRepository userRepo;
 
@@ -53,13 +57,12 @@ public class PedidoNuevoController
     public String nuevoPedido(Model model,
              @ModelAttribute("pedidonuevo") Pedido pedidoNuevo,
              @ModelAttribute("errors") String erros,
-             Authentication auth)
+             @AuthenticationPrincipal Usuario usuario)
     {
         pedidoNuevo.updateAmounts();
-        //Usuario user = (Usuario) auth.getPrincipal();
         model.addAttribute("pedidonuevo", pedidoNuevo);
         model.addAttribute("tamanios", tamanioRepo.findAll());
-        model.addAttribute("creaciones", creacionRepo.findAll()/*user.getCreaciones()*/);
+        model.addAttribute("creaciones", creacionService.getCreacionesByUsuario(usuario));
         model.addAttribute("item", Item.builder().build());
         return "pedido-nuevo";
     }
@@ -68,7 +71,6 @@ public class PedidoNuevoController
     public String addItem(Model model,
              @ModelAttribute Item item,
              @ModelAttribute("pedidonuevo") Pedido pedidoNuevo,
-             Authentication auth,
              RedirectAttributes redirectAttrtibuttes)
     {
         try
@@ -89,7 +91,7 @@ public class PedidoNuevoController
                 .created(new Date())
                 .lastUpdate(new Date())
                 .estado(EstadoPedido.NUEVO)
-                .user(userRepo.findAll().get(0))
+                .user((Usuario) auth.getPrincipal())
                 .build();
         return pedidoNuevo;
     }
