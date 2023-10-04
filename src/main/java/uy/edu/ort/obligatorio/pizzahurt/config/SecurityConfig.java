@@ -86,8 +86,9 @@ public class SecurityConfig
                 })
                 .formLogin(login ->
                 {
-                    login//.loginPage("/")
+                    login.loginPage("/login")
                             .permitAll()
+                            .failureUrl("/login?error=true")
                             .defaultSuccessUrl("/creaciones")
                             .usernameParameter("username")
                             .passwordParameter("password");
