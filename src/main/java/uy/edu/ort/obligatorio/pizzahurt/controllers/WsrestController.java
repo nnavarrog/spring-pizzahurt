@@ -16,13 +16,20 @@
 package uy.edu.ort.obligatorio.pizzahurt.controllers;
 
 import com.sun.security.auth.UserPrincipal;
+gitimport jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import java.text.ParseException;
 import java.util.List;
+
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -42,20 +49,23 @@ import uy.edu.ort.obligatorio.pizzahurt.service.UsuarioService;
 
 @RestController
 @RequestMapping("/api")
+@AllArgsConstructor
 public class WsrestController {
 
     private UsuarioService usuarioservice;
     private MediodepagoService mediodepagoService;
-
-    public WsrestController(UsuarioService usuarioservice, MediodepagoService mediodepagoService) {
-        this.usuarioservice = usuarioservice;
-        this.mediodepagoService = mediodepagoService;
-    }
+    private AuthenticationProvider authProvider;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@AuthenticationPrincipal UserPrincipal userPrincipal) {
+    public ResponseEntity<String> authenticateUser(@RequestBody Usuario usuario, HttpSession session) {
 
-        return ResponseEntity.ok("Usuario autenticado: " + userPrincipal.getName());
+        try {
+            Authentication auth = authProvider.authenticate(new UsernamePasswordAuthenticationToken(usuario.getEmail(), usuario.getPassword()));
+            return ResponseEntity.ok().body("sesionid: " + session.getId());
+        }catch(Exception ex)
+        {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PostMapping("/registrarse")
