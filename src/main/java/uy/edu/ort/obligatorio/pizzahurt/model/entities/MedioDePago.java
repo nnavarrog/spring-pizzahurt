@@ -96,7 +96,7 @@ public class MedioDePago {
     {
         return (new StringBuilder())
                 .append(emisor_tarjeta)
-                .append("<br>")
+                .append(" | ")
                 .append(numero_de_tarjeta)
                 .append(" ")
                 .append(getFecVtoForm())

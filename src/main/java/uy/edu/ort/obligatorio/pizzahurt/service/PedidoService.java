@@ -7,6 +7,7 @@ package uy.edu.ort.obligatorio.pizzahurt.service;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import uy.edu.ort.obligatorio.pizzahurt.exceptions.EntidadNoExiste;
@@ -59,5 +60,15 @@ public class PedidoService
         item.setPedido(pedido);
         item = itemService.addItem(item);
         return pedido;
+    }
+    
+    public List<Pedido> getPedidosDelUsuario(Usuario ususario)
+    {
+        return pedidoRepo.findByUser(ususario);
+    }
+
+    public void borrar(Pedido pedido)
+    {
+        pedidoRepo.deleteById(pedido.getId());
     }
 }

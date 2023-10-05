@@ -21,7 +21,7 @@
 
         <div class="container-fluid">
             
-            <div class="row-cols-auto" th:if="${#strings.isEmpty(msgerror)}">
+            <div class="row-cols-auto" th:if="${#strings.isEmpty(msgerror)==false}">
                 <div class="alert alert-danger" role="alert">
                     [[${msgerror}]]
                 </div>    

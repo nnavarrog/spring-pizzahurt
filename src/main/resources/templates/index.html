@@ -25,6 +25,25 @@
                     <br><br><br>
                 </div>
             </div>
+            
+            <div class="row-cols-auto" th:if="${#strings.isEmpty(msgerror)==false}">
+                <div class="alert alert-danger" role="alert">
+                    [[${msgerror}]]
+                </div>    
+            </div>
+
+            <div class="row-cols-auto" th:if="${#strings.isEmpty(msgsuccess)==false}">
+                <div class="alert alert-info" role="alert">
+                    [[${msgsuccess}]]
+                </div>    
+            </div>
+            
+            <div class="row-cols-auto" th:if="${#strings.isEmpty(param.error)==false}">
+                <div class="alert alert-danger" role="alert">
+                    Error al ingresar las credenciales de usuario
+                </div>    
+            </div>
+
             <div class="row">
                 <div class="col-lg-4 align-content-center text-center">
                     <h1>
