@@ -15,10 +15,12 @@
  */
 package uy.edu.ort.obligatorio.pizzahurt.repository;
 
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.Pedido;
+import uy.edu.ort.obligatorio.pizzahurt.model.entities.Usuario;
 
 public interface PedidoRepository extends JpaRepository<Pedido, Long>
 {
-    
+    public List<Pedido> findByUser(Usuario usuario);
 }

@@ -16,6 +16,7 @@
 package uy.edu.ort.obligatorio.pizzahurt.controllers;
 
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.AllArgsConstructor;
@@ -25,6 +26,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -47,7 +49,7 @@ import uy.edu.ort.obligatorio.pizzahurt.utils.StringUtil;
 @RequestMapping("/pedidos")
 @SessionAttributes("pedidonuevo")
 @AllArgsConstructor
-public class PedidoNuevoController
+public class PedidoController
 {
 
     private PedidoService pedidoService;
@@ -56,6 +58,33 @@ public class PedidoNuevoController
     private DomicilioService domicilioService;
     private MediodepagoService medioPagoService;
 
+    @GetMapping
+    public String listarPedidos(Model model, 
+            @ModelAttribute("msgerror") String msgerror,
+            @ModelAttribute("msgsuccess") String msgsuccess,
+            @AuthenticationPrincipal Usuario usuario)
+    {
+        List<Pedido> pedidos = pedidoService.getPedidosDelUsuario(usuario);
+        model.addAttribute("pedidos", pedidos);
+        
+        return "pedidos";
+    }
+    
+    @PostMapping("/del/{id}")
+    public String deletePedido(@PathVariable(name = "id") Pedido pedido, RedirectAttributes redirectAttributes)
+    {
+        if(pedido==null)
+        {
+            redirectAttributes.addFlashAttribute("msgerror", "ERROR! No se ha podido borrar el pedido");
+        }
+        else
+        {
+            pedidoService.borrar(pedido);
+            redirectAttributes.addFlashAttribute("msgsuccess", "El pedido de ha borrado correctamente");
+        }
+        return "redirect:/pedidos";
+    }
+    
     @GetMapping("/nuevo")
     public String nuevoPedido(Model model,
             @ModelAttribute("pedidonuevo") Pedido pedidoNuevo,
@@ -82,7 +111,7 @@ public class PedidoNuevoController
         }
         catch (EntidadNoExiste ex)
         {
-            Logger.getLogger(PedidoNuevoController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PedidoController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "redirect:/pedidos/nuevo";
     }
@@ -129,8 +158,11 @@ public class PedidoNuevoController
     @GetMapping("/mediopago")
     public String medioPagoPedido(Model model,
             @ModelAttribute("pedidonuevo") Pedido pedidoNuevo,
-            @AuthenticationPrincipal Usuario usuario)
+            @AuthenticationPrincipal Usuario usuario,
+            @ModelAttribute("msgerror") String msgerror)
     {
+        msgerror = !StringUtil.HAS_CONTENT.test(msgerror) ? null : msgerror;
+        model.addAttribute("msgerror", msgerror);
         pedidoNuevo.updateAmounts();
         model.addAttribute("pedidonuevo", pedidoNuevo);
         model.addAttribute("mediospago", medioPagoService.getAllMediodepagos(usuario));
@@ -141,14 +173,24 @@ public class PedidoNuevoController
     public String addMedioPagoPedido(Model model,
             @ModelAttribute("pedidonuevo") Pedido pedidoNuevo,
             @AuthenticationPrincipal Usuario usuario,
+            RedirectAttributes redirectAttributes,
             SessionStatus sessionStatus)
     {
         pedidoNuevo.updateAmounts();
-        pedidoNuevo.setEstado(EstadoPedido.PENDIENTE_PAGO);
-        pedidoNuevo = pedidoService.guardar(pedidoNuevo);
+        String returnPage = "redirect:/pedidos";
+        if (pedidoNuevo.getMedioPago() == null || pedidoNuevo.getMedioPago().getId() == null)
+        {
+            returnPage = "redirect:/pedidos/mediopago";
+            redirectAttributes.addFlashAttribute("msgerror", "Debe seleccionar un medio de pago");
+        }
+        else
+        {
+            pedidoNuevo.setEstado(EstadoPedido.ENVIADO);
+            pedidoNuevo = pedidoService.guardar(pedidoNuevo);
+        }
         model.addAttribute("pedidonuevo", pedidoNuevo);
         sessionStatus.setComplete();
-        return "redirect:/pedidos";
+        return returnPage;
     }
 
     @ModelAttribute("pedidonuevo")

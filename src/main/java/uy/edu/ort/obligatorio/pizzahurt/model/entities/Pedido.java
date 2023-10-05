@@ -40,6 +40,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uy.edu.ort.obligatorio.pizzahurt.utils.AmountUtil;
+import uy.edu.ort.obligatorio.pizzahurt.utils.DateUtils;
 
 /**
  *
@@ -117,5 +118,10 @@ public class Pedido
     public String getFormatedPrice()
     {
         return AmountUtil.getFormatedPrice(getTotalPagarMonto());
+    }
+    
+    public String getFechaStr()
+    {
+        return DateUtils.getFormatedDate(created);
     }
 }

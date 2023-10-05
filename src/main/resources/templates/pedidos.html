@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!-- /**
+ * NO LICENCE
+ *
+ * Proyecto obligatorio final.
+ * Curso: Desarrollo de aplicaciones con Spring / Spring Boot
+ * Universidad ORT
+ * Agosto 2023 - Octubre 2023
+ *
+ * Docente: Juan Larrayoz
+ *
+ * Authors:
+ *      Fourment, Juan
+ *      Navarro Gutérrez, Nicolás
+ *      Ortuzar, Martín
+ */ -->
+<html>
+    <head th:replace="~{base-layout :: head}"></head>
+    <body>
+        <header th:insert="~{base-layout :: header-home}"></header>
+        <div class="container">
+            
+            <div class="row-cols-auto" th:if="${#strings.isEmpty(msgerror)==false}">
+                <div class="alert alert-danger" role="alert">
+                    [[${msgerror}]]
+                </div>    
+            </div>
+            
+            <div class="row-cols-auto" th:if="${#strings.isEmpty(msgsuccess)==false}">
+                <div class="alert alert-info" role="alert">
+                    [[${msgsuccess}]]
+                </div>    
+            </div>
+            
+            <h2>Pedidos</h2>
+            <div class="row">
+                <div class="col">
+                </div>
+                <div class="col-6">
+                </div>
+                <div class="col">
+                    <div class="text-right mb-2">
+                        <a th:href="@{/pedidos/nuevo}" class="btn btn-success">Nuevo pedido</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="w-25">Fecha</th>
+                                <th class="w-25">Estado</th>
+                                <th class="w-25">Total $</th>
+                                <th class="w-25"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="pedido : ${pedidos}">
+                                <td>
+                                    <label th:text="${pedido.getFechaStr()}"></label>
+                                </td>
+                                <td>
+                                    <label th:text="${pedido.estado}"></label>
+                                </td>
+                                <td>
+                                    <label th:text="${pedido.getFormatedPrice()}"></label>
+                                </td>
+                                <td>
+                                    <form th:action="@{/pedidos/del/{id}(id=${pedido.id})}" method="POST" class="edit-form">
+                                        <input type="hidden" name="_method" value="POST" />
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="bi bi-trash"></i> Borrar
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+</html>
+
+</style>
