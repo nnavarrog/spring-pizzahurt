@@ -49,7 +49,8 @@ public class MedioDePago {
     private Long id;
 
     @NotBlank(groups = MedioPago.class, message = "Debe ingresar al menos un emisor")
-    @Column(length = 15)
+    @Size(groups = MedioPago.class,min = 4, max = 20)
+    @Column(length = 20)
     @JsonProperty("emisor_tarjeta")
     private String emisor_tarjeta;
 
