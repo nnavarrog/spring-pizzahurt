@@ -4,32 +4,36 @@
         "th:text": {
             "context": "label"
         },
-        "th:if": {
-            "context": "p"
-        },
+        "ht:href": {},
         "th:action": {
             "context": "form"
         },
         "th:insert": {
             "context": "header"
         },
-        "th:src": {
-            "context": "img"
-        },
-        "th:replace": {
-            "context": "head"
-        },
         "th:field": {
             "context": "input"
-        },
-        "th:href": {
-            "context": "a"
         },
         "th:each": {
             "context": "tr"
         },
         "th:fragment": {
             "context": "header"
-        }
+        },
+        "th:if": {
+            "context": "p"
+        },
+        "th:unless": {},
+        "th:src": {
+            "context": "img"
+        },
+        "sec:authorize": {},
+        "th:replace": {
+            "context": "head"
+        },
+        "th:href": {
+            "context": "a"
+        },
+        "th:value": {}
     }
 }

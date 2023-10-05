@@ -24,10 +24,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import uy.edu.ort.obligatorio.pizzahurt.exceptions.EntidadNoExiste;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.*;
 import uy.edu.ort.obligatorio.pizzahurt.service.DomicilioService;
-import uy.edu.ort.obligatorio.pizzahurt.service.UsuarioService;
 
 
 @Controller

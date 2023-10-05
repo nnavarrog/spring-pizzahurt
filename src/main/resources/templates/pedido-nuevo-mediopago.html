@@ -20,51 +20,56 @@
         <header th:insert="~{base-layout :: header-home}"></header>
 
         <div class="container-fluid">
+            
+            <div class="row-cols-auto" th:if="${#strings.isEmpty(msgerror)}">
+                <div class="alert alert-danger" role="alert">
+                    [[${msgerror}]]
+                </div>    
+            </div>
+            
             <div class="row">
                 <div class="col-lg-12">
                     <br>
-                    <h2>1) Armar pedido nuevo</h2>
+                    <h2>3) Con que pag&aacute;s?</h2>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-6 align-content-center text-center">
-                    <h4>Agreg&aacute; tus creaciones al pedido!</h4>
+                    <h4>Seleccion&aacute; uno de tus medios de pago</h4>
                     <hr>
-                    <div th:unless="${#lists.isEmpty(creaciones)}">
-                        <form th:action="@{/pedidos/additem}" th:object="${item}" method="POST" id="form-add-item">
-                            <div class="row">
-                                <div class="col">
-                                    <label for="creacion" class="form-label">Creaci&oacute;n</label>
-                                    <select class="form-select" aria-label="Default select example" id="creacion" th:field="*{creacion}">
-                                        <option th:each="creacion:${creaciones}" th:value="${creacion.id}" th:text="${creacion.getFormatedLabel2()}"></option>
-                                    </select>
-                                </div>
-                                <div class="col">
-                                    <label for="tamanio" class="form-label">Tamaño</label>
-                                    <select class="form-select" aria-label="Default select example" id="tamanio" th:field="*{tamanio}">
-                                        <option th:each="tamanio : ${tamanios}" th:value="${tamanio.id}" th:text="${tamanio.getFormatedLabel()}"></option>
-                                    </select>
-                                </div>
-                                <div class="col">
-                                    <label for="cantidad" class="form-label">Tamaño</label>
-                                    <input type="number" class="form-control" placeholder="Cantidad" aria-label="Cantidad" id="cantidad" min="1" max="30" step="1" value="1" th:field="*{cantidad}">
+                    <div th:unless="${#lists.isEmpty(mediospago)}">
+                        <form th:action="@{/pedidos/mediopagoadd}" th:object="${pedidonuevo}" method="POST" id="form-add-address">
+                            <div class="row-cols-auto">
+                                <div class="card text-bg-dark text-start" th:each="medio : ${mediospago}" style="margin-bottom: 12px;">
+                                    <div class="card-header">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="domicilio" id="domicilio" th:field="*{medioPago}" th:value="${medio.id}">
+                                            <label class="form-check-label" for="domicilio" th:text="${medio.getMediooShortLabel()}"></label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row-cols-3" style="margin-top: 20px;">
-                                <button type="submit" class="btn btn-primary"><i class="bi bi-plus"></i>&nbsp;Añadir al pedido</button>
+                            <div class="row" style="margin-top: 20px;">
+                                <div class="col-4">
+                                    <a th:href="@{/pedidos/domicilio}" class="btn btn-primary"><i class="bi bi-arrow-left"></i>&nbsp;Volver a domicilios</a>
+                                </div>
+                                <div class="col-4"></div>
+                                <div class="col-4">
+                                    <button type="submit" class="btn btn-primary">Finalizar compra&nbsp;<i class="bi bi-bag-check-fill"></i></button>
+                                </div>
                             </div>
                         </form>
                     </div>
 
-                    <div th:if="${#lists.isEmpty(creaciones)}">
+                    <div th:if="${#lists.isEmpty(mediospago)}">
                         <div class="alert alert-warning" role="alert">
-                            Ten&eacute;s que inventar una creaci&oacute;n para poder realizar el pedido.
+                            Ten&eacute;s que agregar un medio de pago a tu cuenta
                         </div>
                         <div>
-                            <a class="btn btn-outline-info btn-lg" th:href="@{/creaciones}">Hac&eacute; click ac&aacute; para crear!!</a>
+                            <a class="btn btn-outline-info btn-lg" th:href="@{/medios-de-pago/nuevo}">Hac&eacute; click ac&aacute; para agregar uno!!</a>
                         </div>
                     </div>
-                    
+
                     <!--/*<div class="row-cols-1">
                         <h2>2) Seleccione un medio de pago</h2>
                     </div>
@@ -72,7 +77,7 @@
                     <div class="row-cols-1">
                         <h2>3) Seleccione domicilio de entrega</h2>
                     </div>*/-->
-                    
+
                 </div>
 
                 <div class="col-lg-6 align-content-center text-center">
@@ -110,13 +115,6 @@
                         </tfoot>
                     </table>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4"></div>
-                <div class="col-lg-4 col-sd-12">
-                    <a class="btn btn-success btn-lg" th:href="@{/pedidos/domicilio}">Siguiente</a>
-                </div>
-                <div class="col-lg-4"></div>
             </div>
         </div>
 

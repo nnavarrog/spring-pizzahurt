@@ -79,4 +79,29 @@ public class Domicilio {
     public String toString() {
         return "Domicilios{" + "id=" + id + ", barrio=" + barrio + ", codigo_postal=" + codigo_postal + ", calle=" + calle + ", ndepuerta=" + ndepuerta + ", apto=" + apto + ", observaciones=" + observaciones + '}';
     }
+    
+    public String getDomicilioShortLabel()
+    {
+        return (new StringBuilder())
+                .append(calle)
+                .append(" ")
+                .append(ndepuerta)
+                .toString();
+    }
+    
+    public String getDomicilioFullLabel()
+    {
+        return (new StringBuilder())
+                .append("Domicilio: ")
+                .append(calle)
+                .append(" ")
+                .append(ndepuerta)
+                .append(" ")
+                .append(apto)
+                .append("\nLocalidad: ")
+                .append(barrio)
+                .append("\nCod. Postal:")
+                .append(codigo_postal)
+                .toString();
+    }
 }

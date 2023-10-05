@@ -80,4 +80,15 @@ public class MedioDePago {
         return fecVtoForm;
 
     }
+    
+    public String getMediooShortLabel()
+    {
+        return (new StringBuilder())
+                .append(emisor_tarjeta)
+                .append("<br>")
+                .append(numero_de_tarjeta)
+                .append(" ")
+                .append(getFecVtoForm())
+                .toString();
+    }
 }

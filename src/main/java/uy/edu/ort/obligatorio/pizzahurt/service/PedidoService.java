@@ -6,6 +6,7 @@ package uy.edu.ort.obligatorio.pizzahurt.service;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import uy.edu.ort.obligatorio.pizzahurt.exceptions.EntidadNoExiste;
@@ -47,6 +48,7 @@ public class PedidoService
 
     public Pedido guardar(@NotNull @Valid Pedido pedido)
     {
+        pedido.setLastUpdate(new Date());
         return pedidoRepo.save(pedido);
     }
 
