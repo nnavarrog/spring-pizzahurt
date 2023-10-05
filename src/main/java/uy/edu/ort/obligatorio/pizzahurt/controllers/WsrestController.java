@@ -20,9 +20,11 @@ import jakarta.validation.Valid;
 import java.text.ParseException;
 import java.util.List;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import uy.edu.ort.obligatorio.pizzahurt.constraints.MedioPago;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.MedioDePago;
 import uy.edu.ort.obligatorio.pizzahurt.model.entities.Usuario;
 import uy.edu.ort.obligatorio.pizzahurt.service.MediodepagoService;
@@ -58,7 +61,7 @@ public class WsrestController {
     @PostMapping("/registrarse")
     public ResponseEntity registrarse(@Valid @RequestBody Usuario usuario) {
         usuarioservice.crearUsuario(usuario);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.created(null).body(usuario);
     }
 
     @GetMapping("/mediosdepago/{id}")
@@ -71,11 +74,11 @@ public class WsrestController {
         }
     }
 
-    @PostMapping("/nuevomediodepago/{id}")
-    public ResponseEntity nuevomediodepago(@PathVariable("id") Usuario usuario, @Valid @RequestBody MedioDePago mediodepago) throws ParseException {
+    @PostMapping(value = "/nuevomediodepago/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<MedioDePago> nuevomediodepago(@PathVariable("id") Usuario usuario, @Validated(MedioPago.class) @RequestBody MedioDePago mediodepago) throws ParseException {
         mediodepago.setUsuario(usuario);
         mediodepagoService.createMediodepago(mediodepago);
-        return ResponseEntity.ok(mediodepago);
+        return ResponseEntity.created(null).body(mediodepago);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
