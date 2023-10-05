@@ -20,6 +20,8 @@
  */
 package uy.edu.ort.obligatorio.pizzahurt.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
@@ -43,32 +45,39 @@ public class MedioDePago {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
 
     @NotBlank(groups = MedioPago.class, message = "Debe ingresar al menos un emisor")
     @Size(groups = MedioPago.class,min = 4, max = 20)
     @Column(length = 20)
+    @JsonProperty("emisor_tarjeta")
     private String emisor_tarjeta;
 
     @NotNull (message = "Debe ingresar una fecha de vencimiento")
+    @JsonIgnore
     private Date fecha_de_vencimiento;
 
     @NotBlank(groups = MedioPago.class, message = "Debe ingresar un número de tarjeta")
     @Size(groups = MedioPago.class,min = 13, max = 18)
+    @JsonProperty("numero_de_tarjeta")
     private String numero_de_tarjeta;
 
     @NotBlank(groups = MedioPago.class, message = "Debe ingresar el código cvv")
     @Size(min = 3, max = 3,groups = MedioPago.class)
     @Column(length = 3)
+    @JsonProperty("cvv")
     private String cvv;
 
     @ManyToOne
     @JoinColumn(name= "usuario_id")
+    @JsonIgnore
     private Usuario usuario;
 
     @Transient
     @FechaExpiracion(groups = MedioPago.class, message = "La fecha de vencimiento debe ser posterior a la fecha actual")
     @Pattern(regexp = "^(0[1-9]|1[0-2])\\/\\d{2}$",groups = MedioPago.class, message = "Debe ingresar un fecha válida")
+    @JsonProperty("fecVtoForm")
     private String fecVtoForm;
 
 
@@ -81,7 +90,8 @@ public class MedioDePago {
         return fecVtoForm;
 
     }
-    
+
+    @JsonIgnore
     public String getMediooShortLabel()
     {
         return (new StringBuilder())

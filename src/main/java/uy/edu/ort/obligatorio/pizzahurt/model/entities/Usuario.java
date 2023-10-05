@@ -16,6 +16,7 @@
 
 package uy.edu.ort.obligatorio.pizzahurt.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -47,6 +48,7 @@ public class Usuario implements UserDetails{
 
     @Id
     @GeneratedValue
+    @JsonIgnore
     private Long id;
 
     @NotNull
@@ -72,30 +74,37 @@ public class Usuario implements UserDetails{
     @NotNull
     //@Past
     @Builder.Default
+    @JsonIgnore
     private Date createDate = new Date();
 
     @NotNull
 //    @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}_\\d{2}:\\d{2}:\\d{2}") YYYY-MM-DD_hh:mm:ss
     @Builder.Default
+    @JsonIgnore
     private Date lstUpdate = new Date();
 
     @NotNull
+    @JsonIgnore
     private boolean activo;
     
     @Builder.Default
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.PERSIST)
+    @JsonIgnore
     private List<Domicilio> domicilios = new LinkedList<>();
   
     @Builder.Default
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.PERSIST)
+    @JsonIgnore
     private List<MedioDePago> mediosdepago = new LinkedList<>();
     
     @Builder.Default
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.PERSIST)
+    @JsonIgnore
     private List<Creacion> creaciones = new LinkedList<>();
    
     @Builder.Default
     @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+    @JsonIgnore
     private List<Pedido> pedidos = new LinkedList<>();
 
     @Override
@@ -105,6 +114,7 @@ public class Usuario implements UserDetails{
     
     @Builder.Default
     @Transient
+    @JsonIgnore
     private List<GrantedAuthority> authorities = new LinkedList<>();
 
     @Override
@@ -114,24 +124,28 @@ public class Usuario implements UserDetails{
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired()
     {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked()
     {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired()
     {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isEnabled()
     {
         return this.activo;
