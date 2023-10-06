@@ -41,7 +41,7 @@ El equipo donde se ejecutará la aplicación debe contar con la plataforma Java 
 
 ## Diagrama de entidades
 
-![Texto alternativo](./doc/minimer.png)
+![Texto alternativo](./doc/minimer.jpg)
 
 ## Iniciar el sistema
 ### Opción 1
