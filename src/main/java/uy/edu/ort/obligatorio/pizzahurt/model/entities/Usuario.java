@@ -64,7 +64,7 @@ public class Usuario implements UserDetails{
     @NotNull
     @NotEmpty(message = "El password no puede ser vacío.")
 //	@Column(length = 20)
-    @Size(min = 10)
+    @Size(min = 10,message = "El password debe tener 10 caracteres como mínimo")
     private String password;
 
     @NotNull

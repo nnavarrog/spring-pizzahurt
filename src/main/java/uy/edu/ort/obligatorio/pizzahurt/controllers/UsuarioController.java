@@ -47,13 +47,14 @@ public class UsuarioController
     }
 
     @PostMapping("form_registro")
-    public String registro_usuario(@Valid @ModelAttribute Usuario usuario, BindingResult result, RedirectAttributes redirectAttributes)
+    public String registro_usuario(@Valid @ModelAttribute Usuario usuario, BindingResult result, RedirectAttributes redirectAttributes, Model model)
     {
 
         if (result.hasErrors())
         {
-            redirectAttributes.addFlashAttribute("msgerror", processErrors(result));
-            return "redirect:/form_registro";
+            /*redirectAttributes.addFlashAttribute("msgerror", processErrors(result));*/
+            model.addAttribute("usuario", usuario);
+            return "form_registro";
         }
         usuariosService.crearUsuario(usuario);
 
@@ -70,7 +71,7 @@ public class UsuarioController
         {
             if (auth.isAuthenticated())
             {
-                page = "redirect:/table-creaciones";
+                page = "redirect:/creaciones";
             }
         }
         return page;
