@@ -166,7 +166,7 @@ El cuerpo de la solicitud debe contener los siguientes campos:
 ```json
 {
     "email": "usuario@mail.com",
-    "password": "password2023
+    "password": "password2023"
 }
 ```
 
