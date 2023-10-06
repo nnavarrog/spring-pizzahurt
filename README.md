@@ -89,11 +89,17 @@ En la barra de menú superior, seleccionar el menú "Mi perfil" y hacer click en
 
 ### Pedidos
 En la sección de "Mis pedidos" se podrán ver todos los pedidos y el estado de los mismos.
+
 Al realizar un nuevo pedido, este estará en estado pendiente hasta que se termine el proceso.
+
 El proceso de realizar un pedido comienza seleccionando las creaciones, el tamaño y la cantidad de pizzas y se debe agregar al "pedido". Se pueden agregar tantas como el usuario lo desee. Cada vez que se agrega un nuevo item al pedido, del lado derecho aparecerá el detalle de cada uno de estos, mostrando el total a pagar.
+
 Luego de ingresar los items, se deberá presionar el botón "Siguiente" para seleccionar el domicilio de envio.
+
 Posteriormente, se deberá seleccionar alguno de los domicilios ingresados para realizar la entrega del pedido. También se cuenta con la posibilidad de volver para atrás y continuar añadiendo items al pedido.
+
 Después de seleccionar el domicilio, se deberá continuar para seleccionar uno de los medios de pago ingresados. También se cuenta con la posibilidad de volver para atrás y cambiar el domicilio o los items.
+
 Una vez finalizado el pedido, éste quedará en estado ENVIADO, cerrando el ciclo en lo que refiere a la realización de un pedido.
 
 
