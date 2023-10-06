@@ -93,6 +93,18 @@ Al agregar una creación, se solicitará ingresar un nombre y seleccionar los di
 ### Ingresar un domicilio y medio de pago
 En la barra de menú superior, seleccionar el menú "Mi perfil" y hacer click en cualquiera de las opciones de "Domicilios" o "Medios de pago". Se navegará a una página donde se mostrarán todos los domicilios o medios de pago ingresados. Para añadir, presione el botón de "Agregar" y se mostrará un formulario que deberá completar con los datos solicitados.
 
+#### Validación de número de tarjetas de crédito
+Se trató de utilizar la anotación llamada @CreditCard la cual es implementada en este proyecto utilizando el algoritmo de Luhn para validar el número de la tarjeta de crédito. El problema radica en que no se pueden utilizar números de tarjeta de testeo, por lo cual se deshabilita la validación.
+
+Otro punto a destacar es que se deben ingresar tarjetas válidas de las empresas MasterCard, Visa, American Express o Diners Club ya que el nombre del emisor es obtenido a través de Javascript.
+Se dejan empplos para testing de números de tarjetas que cumplen con el algoritmo y que su formato se corresponde con alguno de los emisores anteriores.
+
+- 5404000000000001 (MasterCard)
+- 4555400000555123 (Visa)
+- 370000000000002  (American Express)
+- 36341198481885   (Diners Club)
+
+
 ### Pedidos
 En la sección de "Mis pedidos" se podrán ver todos los pedidos y el estado de los mismos.
 

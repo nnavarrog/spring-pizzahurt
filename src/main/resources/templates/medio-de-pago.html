@@ -30,27 +30,30 @@
                                 <input class="form-check-input hiding"  type="hidden" th:value="${medioDePago.id}" name="id" th:field="*{id}">
                                 <div class="mb-3">
                                     <label for="cardNumber">Número de Tarjeta</label>
-                                    <input type="text" class="form-control" id="cardNumber" name="cardNumber" required th:field="*{numero_de_tarjeta}">
+                                    <input type="text" class="form-control" id="cardNumber" name="cardNumber" required th:field="*{numero_de_tarjeta}" pattern="[0-9]+" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" autocomplete="off" maxlength="20" minlength="13">
                                     <div th:if="${#fields.hasErrors('numero_de_tarjeta')}">
-                                        <span th:errors="*{numero_de_tarjeta}" class="error">Debe ingresar un número de tarjeta correcto</span>
+                                        <span th:errors="*{numero_de_tarjeta}" class="error text-danger">Debe ingresar un número de tarjeta correcto</span>
                                     </div>
                                 </div>
                                 <div class="mb-3">
                                     <img id="issuerIcon" th:src="@{/img/__issuerName__.png}" alt="Emisor de Tarjeta" class="img-fluid">
                                     <input  class="form-control" type="hidden" id="emisorTarjeta" style="" name="emisor" required th:field="${medioDePago.emisor_tarjeta}">
+                                    <div th:if="${#fields.hasErrors('emisor_tarjeta')}">
+                                        <span th:errors="*{emisor_tarjeta}" class="error text-danger">Emisor de tarjeta incorrecto</span>
+                                    </div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="expiration">Fecha de Vencimiento (MM/YY)</label>
                                     <input type="text" class="form-control" id="expiration" name="expiration" placeholder="MM/YY" required th:field="${medioDePago.fecVtoForm}">
                                     <div th:if="${#fields.hasErrors('fecVtoForm')}">
-                                        <span  th:errors="*{fecVtoForm}" class="error">Debe ingresar una fecha de expiración correcta</span>
+                                        <span  th:errors="*{fecVtoForm}" class="error text-danger">Debe ingresar una fecha de expiración correcta</span>
                                     </div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="cvv">CVV</label>
-                                    <input type="text" class="form-control" id="cvv" name="cvv" required th:field="${medioDePago.cvv}">
+                                    <input type="text" class="form-control" id="cvv" name="cvv" required th:field="${medioDePago.cvv}" maxlength="3" pattern="[0-9]+" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" autocomplete="off">
                                     <div th:if="${#fields.hasErrors('cvv')}">
-                                        <span th:errors="*{cvv}" class="error">Debe ingresar un cvv correcto</span>
+                                        <span th:errors="*{cvv}" class="error text-danger">Debe ingresar un cvv correcto</span>
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Guardar tarjeta</button>
@@ -73,17 +76,17 @@
                 emisorTarjetaInput.value = issuerName;
             }
 
-            function obtenerEmisor(){
+            function obtenerEmisor() {
                 let inputElement = document.getElementById("cardNumber");
 
                 let cardNumber = inputElement.value;
 
                 // Definir los rangos de números de tarjeta para cada emisor
                 const issuers = [
-                    { name: 'Visa', pattern: /^4/ },
-                    { name: 'Mastercard', pattern: /^5[1-5]/ },
-                    { name: 'American Express', pattern: /^3[47]/ },
-                    { name: 'Diners Club', pattern: /^3(?:0[0-5]|[68][0-9])[0-9]{4,}$/ },
+                    {name: 'Visa', pattern: /^4/},
+                    {name: 'Mastercard', pattern: /^5[1-5]/},
+                    {name: 'American Express', pattern: /^3[47]/},
+                    {name: 'Diners Club', pattern: /^3(?:0[0-5]|[68][0-9])[0-9]{4,}$/},
                 ];
 
                 let matchedIssuer = null;
@@ -103,7 +106,7 @@
                 }
             }
 
-            document.getElementById('cardNumber').addEventListener('input',obtenerEmisor);
+            document.getElementById('cardNumber').addEventListener('input', obtenerEmisor);
 
             window.addEventListener('load', obtenerEmisor);
 

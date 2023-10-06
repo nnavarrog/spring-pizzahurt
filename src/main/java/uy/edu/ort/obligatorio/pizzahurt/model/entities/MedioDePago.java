@@ -32,6 +32,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import uy.edu.ort.obligatorio.pizzahurt.constraints.CreditCard;
 import uy.edu.ort.obligatorio.pizzahurt.constraints.FechaExpiracion;
 import uy.edu.ort.obligatorio.pizzahurt.constraints.MedioPago;
 
@@ -48,8 +49,8 @@ public class MedioDePago {
     @JsonIgnore
     private Long id;
 
-    @NotBlank(groups = MedioPago.class, message = "Debe ingresar al menos un emisor")
-    @Size(groups = MedioPago.class,min = 4, max = 20)
+    @NotBlank(groups = MedioPago.class, message = "Emisor de tarjeta inválido")
+    @Size(groups = MedioPago.class,min = 4, max = 20, message = "")
     @Column(length = 20)
     @JsonProperty("emisor_tarjeta")
     private String emisor_tarjeta;
@@ -58,9 +59,10 @@ public class MedioDePago {
     @JsonIgnore
     private Date fecha_de_vencimiento;
 
-    @NotBlank(groups = MedioPago.class, message = "Debe ingresar un número de tarjeta")
-    @Size(groups = MedioPago.class,min = 13, max = 18)
+    @NotBlank(groups = MedioPago.class, message = "Emisor de tarjeta incorrecto")
+    @Size(groups = MedioPago.class,min = 13, max = 20)
     @JsonProperty("numero_de_tarjeta")
+    //@CreditCard(groups = MedioPago.class, message = "El número de tarjeta es inválido")
     private String numero_de_tarjeta;
 
     @NotBlank(groups = MedioPago.class, message = "Debe ingresar el código cvv")
