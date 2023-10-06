@@ -41,6 +41,8 @@ Así mismo, para cada una de las entidades se realizaron implementaciones de Bea
 ## Requerimientos no funcionales para ejecutar la aplicación
 El equipo donde se ejecutará la aplicación debe contar con la plataforma Java (JVM / JRE) versión 17 o superior.
 
+Para cargar el proyecto de código, es necesario contar con las herramientas de Maven. En el repositorio git se dejan los wrappers.
+
 ## Diagrama de entidades
 
 ![Texto alternativo](./doc/minimer.jpg)
