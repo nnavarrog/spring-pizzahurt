@@ -86,13 +86,13 @@
                             </li>
                         </ul>
                         <div class="d-flex" sec:authorize="isAuthenticated()">
-                            <p class="my-2 my-sm-0"><i class="bi bi-person-circle"></i>&nbsp;<span sec:authentication="principal.nombre"></span></p>
+                            <p class="my-2 my-sm-0 mx-4 text-light"><i class="bi bi-person-circle"></i>&nbsp;<span sec:authentication="principal.nombre"></span></p>
                         </div>
                         <form class="d-flex" sec:authorize="isAuthenticated()==false">
                             <a class="btn btn-secondary my-2 my-sm-0" th:href="@{/form_registro}"><i class="bi bi-person-plus-fill"></i>&nbsp;Registrarse</a>
                         </form>&nbsp;
-                        <form class="d-flex" sec:authorize="isAuthenticated()">
-                            <a class="btn btn-secondary my-2 my-sm-0" th:href="@{/logout}"><i class="bi bi-box-arrow-left"></i>&nbsp;Cerrar sesi&oacute;n</a>
+                        <form class="d-flex" sec:authorize="isAuthenticated()" method="POST" th:action="@{/logout}">
+                            <button type="submit" class="btn btn-primary my-2 my-sm-0 text-light" ><i class="bi bi-box-arrow-left"></i>&nbsp;Cerrar sesi&oacute;n</button>
                         </form>
                     </div>
                 </div>

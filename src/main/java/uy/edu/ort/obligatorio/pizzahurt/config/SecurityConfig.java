@@ -16,6 +16,7 @@
 package uy.edu.ort.obligatorio.pizzahurt.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -30,23 +31,21 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 import uy.edu.ort.obligatorio.pizzahurt.service.UsuarioService;
 
 @Configuration
-public class SecurityConfig
-{
+public class SecurityConfig {
 
     @Autowired
     private UsuarioService userService;
-    
+
     @Autowired
     private PasswordEncoder encoder;
 
-    private final String[] sessionedUris =
-    {
-        "/creaciones", "/creaciones/**", "/domicilios", "/domicilios/**", "/medios-de-pago", "/medios-de-pago/**", "/pedidos", "/pedidos/**"
-    };
+    private final String[] sessionedUris
+            = {
+                "/creaciones", "/creaciones/**", "/domicilios", "/domicilios/**", "/medios-de-pago", "/medios-de-pago/**", "/pedidos", "/pedidos/**"
+            };
 
     @Bean
-    public AuthenticationProvider authenticationProvider()
-    {
+    public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userService);
         provider.setPasswordEncoder(encoder);
@@ -54,12 +53,23 @@ public class SecurityConfig
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception
-    {
+    public SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
         return http
-                .authorizeHttpRequests(auth ->
-                {
-                    auth.requestMatchers(antMatcher("/h2-console/**")).permitAll()
+                .headers(headers -> {
+                    headers.frameOptions(frame->{
+                        frame.sameOrigin();
+                    });
+                })
+                .csrf(csrf
+                        -> {
+                    csrf.ignoringRequestMatchers(toH2Console());
+                })
+                .cors(cors -> {
+                    cors.disable();
+                })
+                .authorizeHttpRequests(auth
+                        -> {
+                    auth.requestMatchers(toH2Console()).permitAll()
                             .requestMatchers(mvc.pattern("/creaciones")).hasAnyAuthority("USER")
                             .requestMatchers(mvc.pattern("/creaciones/**")).hasAnyAuthority("USER")
                             .requestMatchers(mvc.pattern("/domicilios")).hasAnyAuthority("USER")
@@ -84,8 +94,8 @@ public class SecurityConfig
                             .requestMatchers(antMatcher("/**")).permitAll()
                             .anyRequest().authenticated();
                 })
-                .formLogin(login ->
-                {
+                .formLogin(login
+                        -> {
                     login.loginPage("/login")
                             .permitAll()
                             .failureUrl("/login?error=true")
@@ -93,25 +103,17 @@ public class SecurityConfig
                             .usernameParameter("username")
                             .passwordParameter("password");
                 })
-                .logout(logout ->
-                {
+                .logout(logout
+                        -> {
                     logout.logoutUrl("/logout")
                             .logoutSuccessUrl("/")
                             .permitAll();
-                })
-                .csrf(csrf ->
-                {
-                    csrf.disable();
-                })
-                .cors(cors -> {
-                    cors.disable();
                 })
                 .build();
     }
 
     @Bean
-    public MvcRequestMatcher.Builder mvc(HandlerMappingIntrospector introspector)
-    {
+    public MvcRequestMatcher.Builder mvc(HandlerMappingIntrospector introspector) {
         return new MvcRequestMatcher.Builder(introspector);
     }
 }
