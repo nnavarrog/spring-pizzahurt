@@ -21,6 +21,8 @@ El frontend está realizado con Spring MVC + Thymeleaf + HTML + Bootstrap con ba
 
 En cuanto a seguridad, mencionar que se aplica csrf para evitar el cross site.
 
+La persistencia se realiza en memoria en la base de datos H2.
+
 ## Requerimientos funcionales implementados
 - Autenticación de usuarios
 - Registro de usuarios nuevos
@@ -69,6 +71,8 @@ Para esta opción necesitará de un IDE de desarrollo integrado como Intellij ID
 
 ### Datos precargados
 Al iniciar la aplicación se precargarán los datos acerca de los Tipos de Masa, Tipos de Salsa, Tipos de Quesos y Tamaños, además de un par de usuarios (con sus datos de domicilio y medios de pagos) que se describirán más adelante.
+
+Los datos son precargados en el Bean CommandLineRunner initDatabase(...) en la clase InitDB.java
 
 ### Inicio de sesión
 Al ingresar en el ![index](http://localhost:8080/) del sistema, se presentará la pantalla de Login, donde se pide un email y contraseña.
