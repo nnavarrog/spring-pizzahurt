@@ -24,7 +24,7 @@
 
 **URL** 
 
-`POST localhost:8080/api/nuevomediodepago/{usuarioId}`
+POST [localhost:8080/api/nuevomediodepago/{usuarioId}](README.md)
 
 **Descripción**
 
@@ -41,13 +41,14 @@ Este endpoint permite a los usuarios agregar un nuevo medio de pago a su cuenta.
 * _cvv_ (string): El cvv de la tarjeta.
 * _fecVtoForm_ (string): Fecha de vencimiento de la tarjeta.
 
-`{
+```json
+{
     "emisor_tarjeta": "mastercard",
     "numero_de_tarjeta": "5111111111111118",
     "cvv": "125",
     "fecVtoForm": "08/30"
 }
-`
+```
 
 
 **Respuesta exitosa**
@@ -57,19 +58,20 @@ Este endpoint permite a los usuarios agregar un nuevo medio de pago a su cuenta.
 
 **Ejemplo de respuesta**
 
-`{
+```json
+{
     "emisor_tarjeta": "mastercard",
     "numero_de_tarjeta": "5111111111111118",
     "cvv": "125",
     "fecVtoForm": "08/30"
 }
-`
+```
 
 #### Endpoint para Obtener Medios de Pago
 
 **URL** 
 
-`GET localhost:8080/api/mediosdepago/{usuarioId}`
+GET [localhost:8080/api/mediosdepago/{usuarioId}](README.md)
 
 **Descripción**
 
@@ -86,7 +88,8 @@ Respuesta: Un listado de medios de pago del usuario en formato JSON.
 
 **Ejemplo de respuesta**
 
-`[
+```json
+[
     {
     "emisor_tarjeta": "Visa",
         "numero_de_tarjeta": "4005550000000001",
@@ -99,13 +102,14 @@ Respuesta: Un listado de medios de pago del usuario en formato JSON.
         "cvv": "125",
         "fecVtoForm": "08/30"
     }
-]`
+]
+```
 
 #### Endpoint para Registrar Usuario
 
 **URL**
 
-POST localhost:8080/api/registrarse
+POST [localhost:8080/api/registrarse](README.md)
 
 **Descripción**
 Este endpoint permite a los usuarios registrarse en la aplicación proporcionando los detalles necesarios. La información del usuario se envía en el cuerpo de la solicitud en formato JSON.
@@ -117,12 +121,14 @@ Este endpoint permite a los usuarios registrarse en la aplicación proporcionand
 * _nombre_ (string): El nombre completo del usuario.
 * _email_ (string): La dirección de correo electrónico del usuario.
 
-`{
+```json
+{
     "password": "12345678910",
     "telefono": "098989898",
     "nombre": "Pepe Argento",
     "email": "pepe@gmail.com"
-}`
+}
+```
 
 **Respuesta exitosa**
 
@@ -131,19 +137,21 @@ Respuesta: Los datos del usuario recién registrado en formato JSON.
 
 **Ejemplo de respuesta**
 
-`{
+```json
+{
     "email": "pepe@gmail.com",
     "nombre": "Pepe Argento",
     "password": "$2a$10$7ddS.gxv0TbcFi5Y1zHEKe.W5bo/Vc7R3m.xy55I14letkk98syxS",
     "telefono": "098989898",
     "username": "Pepe Argento"
-}`
+}
+```
 
 #### Endpoint para Iniciar Sesión
 
 **URL**
 
-`POST localhost:8080/api/login`
+POST [localhost:8080/api/login](README.md)
 
 **Descripción**
 Este endpoint permite a los usuarios iniciar sesión en la aplicación proporcionando su dirección de correo electrónico y contraseña. La información de inicio de sesión se envía en el cuerpo de la solicitud en formato JSON.
@@ -155,10 +163,12 @@ El cuerpo de la solicitud debe contener los siguientes campos:
 * _email_ (string): La dirección de correo electrónico del usuario.
 * _password_ (string): La contraseña del usuario.
 
-`{
+```json
+{
     "email": "usuario@mail.com",
     "password": "password2023
-}`
+}
+```
 
 **Respuesta exitosa**
 
