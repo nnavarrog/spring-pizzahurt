@@ -26,6 +26,8 @@
                             <label for="calle" class="black-text">Calle:</label>
                             <input type="text" id="calle" name="calle" class="form-control" placeholder="Calle" required th:field="*{calle}">
                             <p class="error" th:if="${#fields.hasErrors('calle')}" th:errors="*{calle}">Calle incorrecto</p>
+
+                            <input class="form-check-input hiding" type="hidden" th:value="${domicilio.id}" name="id" th:field="*{id}">
                             
                             <label for="ndepuerta" class="black-text">Numero de puerta:</label>
                             <input type="text" id="ndepuerta" name="ndepuerta" class="form-control" placeholder="Numero de puerta" required th:field="*{ndepuerta}">
@@ -54,7 +56,7 @@
                     <div class="col w-50">
                         <button type="submit" class="btn btn-primary rounded-circle" style="width: 100px; height: 100px;">
                             <i class="fa-solid fa-house"></i>
-                            Agregar domicilio
+                            Guardar domicilio
                         </button>
                     </div>
                 </div>

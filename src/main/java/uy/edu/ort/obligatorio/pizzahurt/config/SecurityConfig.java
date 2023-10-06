@@ -62,7 +62,8 @@ public class SecurityConfig {
                 })
                 .csrf(csrf
                         -> {
-                    csrf.ignoringRequestMatchers(toH2Console());
+                    csrf.ignoringRequestMatchers(toH2Console())
+                    .ignoringRequestMatchers(mvc.pattern("/api/**"));
                 })
                 .cors(cors -> {
                     cors.disable();

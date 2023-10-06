@@ -65,9 +65,9 @@ public class DomicilioController {
     }
 
     @PostMapping("/modificar/{id}")
-    public String modificarDomicilio(@PathVariable("id") Domicilio domicilio, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("domicilio", domicilio);
-        return "redirect:/domicilios/nueva";
+    public String modificarDomicilio(@PathVariable("id") Domicilio domicilio, Model model) {
+        model.addAttribute("domicilio", domicilio);
+        return "domicilio";
     }
 
     @PostMapping("/eliminar/{id}")
