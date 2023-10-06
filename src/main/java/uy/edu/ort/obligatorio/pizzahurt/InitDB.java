@@ -1,3 +1,18 @@
+/**
+ * NO LICENCE
+ *
+ * Proyecto obligatorio final.
+ * Curso: Desarrollo de aplicaciones con Spring / Spring Boot
+ * Universidad ORT
+ * Agosto 2023 - Octubre 2023
+ *
+ * Docente: Juan Larrayoz
+ *
+ * Authors:
+ *      Fourment, Juan
+ *      Navarro Gutérrez, Nicolás
+ *      Ortuzar, Martín
+ */
 package uy.edu.ort.obligatorio.pizzahurt;
 
 import org.springframework.boot.CommandLineRunner;
@@ -231,7 +246,7 @@ public class InitDB
             Date fechaFutura = DateUtils.getNewDateFromStr("01/05/2025");
             //Medio de pago
             MedioDePago mediodepagoVisa = MedioDePago.builder()
-                    .emisor_tarjeta("visa")
+                    .emisor_tarjeta("Visa")
                     .fecha_de_vencimiento(fechaFutura)
                     .numero_de_tarjeta("4005550000000001")
                     .cvv("123")
@@ -250,6 +265,17 @@ public class InitDB
                     .usuario(unUsuario)
                     .build();
             domicilioRepo.save(domicilio);
+            
+            unUsuario = Usuario.builder()
+                    .activo(true)
+                    .email("juan.larrayoz@gmail.com")
+                    .lstUpdate(new Date())
+                    .createDate(new Date())
+                    .nombre("Juan Larrayoz")
+                    .password(encoder.encode("password2023"))
+                    .telefono("0912345678")
+                    .build();
+            usuarioRepo.save(unUsuario);
             };
     }
 }

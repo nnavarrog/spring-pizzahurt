@@ -10,7 +10,7 @@
     </parent>
     <groupId>uy.edu.ort.obligatorio</groupId>
     <artifactId>pizzahurt</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <name>pizzahurt</name>
     <description>Obligatorio curso Java Srping</description>
     <properties>
